@@ -1,1 +1,4 @@
-../.hgrc
+[ui]
+username = Franck "kushou" Michea <franck.michea@gmail.com>
+verbose = True
+editor = emacs
