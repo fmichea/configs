@@ -41,6 +41,7 @@ alias cp='cp -v'
 alias mv='mv -v'
 alias rm='rm -v'
 alias rmold='rm **/*~ **/.*~'
+alias emacs='emacs -nw'
 
 ###############
 # My Functions
