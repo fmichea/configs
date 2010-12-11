@@ -30,7 +30,6 @@
 (setq c-default-style "bsd")
 (setq c-basic-offset 2)
 
-
 ;; Python Configuration
 (add-to-list 'load-path "~/.emacs.d/python-mode")
 (autoload 'python-mode "python-mode" "Python Mode." t)

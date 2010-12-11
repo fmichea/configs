@@ -1,0 +1,19 @@
+######################################################################
+# .commonshrc: kushou's configuration file for common configurations #
+#	       for zsh and bash (like aliases).                      #
+######################################################################
+
+##########
+# Aliases
+
+alias ls='ls --color=auto'
+alias ll='ls -l'
+alias la='ls -la'
+alias ne='emacs -nw'
+alias j='jobs'
+alias df='df -h'
+alias du='du -h'
+alias cp='cp -v'
+alias mv='mv -v'
+alias rm='rm -v'
+alias c='clean'

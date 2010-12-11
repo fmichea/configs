@@ -1,19 +1,21 @@
 !---------------------------------------------------------------!
-! .Xdefaults: kushou's main configuration file for rxvt-unicode !
+! .Xdefaults: kushou s main configuration file for rxvt-unicode !
 !---------------------------------------------------------------!
-
 !--------------------
 ! Main Configuration
 
 URxvt.background:	#2c2c2c
 URxvt.foreground:	#dcdccd
-URxvt.font:		xft:Bitstream Vera Sans Mono:pixelsize=10
+URxvt.font:		xft:Bitstream Vera Sans Mono:pixelsize=11
 URxvt.scrollBar:	false
 URxvt.urgentOnBell:	true
 
 URxvt.perl-ext-common:  default,matcher
 URxvt.urlLauncher:      /usr/bin/chromium
 URxvt.matcher.button:   1
+
+URxvt.inheritPixmap:	true
+URxvt.shading:		65
 
 !-------------------------------------------------
 ! Colors

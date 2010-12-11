@@ -16,6 +16,7 @@ setopt correct
 setopt hist_verify
 setopt nobeep
 setopt HIST_IGNORE_DUPS
+setopt TRANSIENT_RPROMPT
 
 #######################
 # Prompt Configuration
@@ -34,14 +35,8 @@ RPS1="${CL_B}(%*)${CL_N}"
 ##########
 # Aliases
 
-alias ls='ls --color=auto'
-alias df='df -h'
-alias du='du -h'
-alias cp='cp -v'
-alias mv='mv -v'
-alias rm='rm -v'
-alias rmold='rm **/*~ **/.*~'
-alias emacs='emacs -nw'
+alias reload='. ${HOME}/.zshrc'
+alias rmold='rm -f **/*~ **/.*~'
 
 ###############
 # My Functions
@@ -58,3 +53,17 @@ ctrash()
 {
     rm -rf ~/.trash
 }
+
+################################################################
+# Including .commonshrc, common configuration for bash and zsh.
+# Including .zsh_opt, location specific configuration.
+
+if [ -f ${HOME}/.commonshrc ]; then
+    source ${HOME}/.commonshrc
+else
+    echo "Common configuration file is not found !"
+fi
+
+if [ -f ${HOME}/.zshrc_opt ]; then
+    source ${HOME}/.zshrc_opt
+fi
