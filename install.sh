@@ -9,7 +9,7 @@ echo "Installing basic files in $INSTALL_PATH directory."
 for index in "${files[@]}"
 do
     echo "=> Installing $pwd/$index as a symlink."
-    ln -sf $pwd/$index ${INSTALL_PATH}$index
+    ln -sf $pwd/$index ${INSTALL_PATH}/$index
 done
 
 unset files
