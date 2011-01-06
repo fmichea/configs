@@ -13,6 +13,7 @@ Here is the list of software I use:
  * mercurial - http://mercurial.selenic.com/
  * rxvt-unicode (a.k.a. urxvt) - http://software.schmorp.de/pkg/rxvt-unicode.html
  * zsh (usually) - http://www.zsh.org/
+ * feh - Background wallpaper - 
 
 If you're thinking about « that .zsh_opt included in .zsh configuration file,
 but missing on the repository », the answer is that it is a specific system
@@ -23,4 +24,5 @@ file included if existing, .zsh_opt.
 
 Now, the big part, awesome configuration. For this, I have used vicious, which
 is written in LUA by Adrian "anrxc" C. . I also used a lot of his icon set and
-his configuration file. I thank him a lot, he was helpful.
+his configuration file, and I used also tdy's configuration. Thanks for both of
+them.

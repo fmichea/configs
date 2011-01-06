@@ -152,16 +152,19 @@ for s = 1, screen.count() do
 	 mypromptbox[s],
 	 layout = awful.widget.layout.horizontal.leftright
       },
-      {
-	 separator, batterylabel, batterywidget, separator,
-	 mpdlabel, mpdwidget, separator,
-	 memlabel, memwidget, separator,
-	 cpulabel, cpuwidget, separator,
-	 layout = awful.widget.layout.horizontal.leftright
-      },
       mylayoutbox[s],
       mytextclock,
-      s == 1 and mysystray or nil,
+      {
+	 separator, batterywidget, batterylabel, separator,
+	 mpdwidget, mpdlabel, separator,
+	 memwidget, memlabel, separator,
+	 cpuwidget, cpulabel, separator,
+	 layout = awful.widget.layout.horizontal.rightleft
+      },
+      s == 1 and {
+	 mysystray, separator,
+	 layout = awful.widget.layout.horizontal.rightleft
+      } or nil,
       mytasklist[s],
       layout = awful.widget.layout.horizontal.rightleft
    }
