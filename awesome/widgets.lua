@@ -68,3 +68,22 @@ vicious.register(mpdwidget, vicious.widgets.mpd,
 		    return " - MPD - "
 		 end)
 -- }}}
+
+-- {{{ Network Usage Widget
+-- Labels
+netuplabel		= widget({ type = "imagebox" })
+netdownlabel		= widget({ type = "imagebox" })
+netuplabel.image	= image(beautiful.widget_net_up)
+netdownlabel.image	= image(beautiful.widget_net_down)
+-- Widgets
+-- {{ Ethernet
+netwidget		= widget({ type = "textbox" })
+vicious.register(netwidget, vicious.widgets.net, "${eth0 down_kb} - ${eth0 up_kb}")
+-- }}
+-- {{ Wifi
+wifiupdownwidget	= widget({ type = "textbox" })
+wifisignwidget		= widget({ type = "textbox" })
+vicious.register(wifiupdownwidget, vicious.widgets.net, "${wlan0 down_kb} - ${wlan0 up_kb}")
+vicious.register(wifisignwidget, vicious.widget.wifi, "{ssid}: {sign}%")
+-- }}
+-- }}}
