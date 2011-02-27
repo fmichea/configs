@@ -2,3 +2,7 @@
 
 username = Franck "kushou" Michea <franck.michea@gmail.com>
 verbose = True
+
+[web]
+
+cacerts = /etc/ssl/certs/ca-certificates.crt
