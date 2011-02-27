@@ -104,6 +104,8 @@ theme.widget_cpu	= confdir .. "/icons/cpu.png"
 theme.widget_mem	= confdir .. "/icons/mem.png"
 theme.widget_mpd	= confdir .. "/icons/music.png"
 theme.widget_sep	= confdir .. "/icons/sep.png"
+theme.widget_net_up	= confdir .. "/icons/netup.png"
+theme.widget_net_down	= confdir .. "/icons/netdown.png"
 
 return theme
 -- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=80

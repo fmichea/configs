@@ -87,3 +87,18 @@ vicious.register(wifiupdownwidget, vicious.widgets.net, "${wlan0 down_kb} - ${wl
 vicious.register(wifisignwidget, vicious.widgets.wifi, "{ssid}: {sign}%")
 -- }}
 -- }}}
+
+-- {{{ Including config file
+local function widget_filepath(filename)
+   return (awful.util.getdir("config") .. "/widgets.d/" .. filename .. ".lua")
+end
+
+local filename = widget_filepath(string.sub (io.popen("hostname"):read(), 0, -1))
+local file, msg
+file, msg = io.open(filename, "r")
+if not file then
+   dofile(widget_filepath("default"))
+else
+   dofile(filename)
+end
+-- }}}
