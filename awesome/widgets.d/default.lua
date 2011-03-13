@@ -1,6 +1,9 @@
 -- {{ Default Widget File.
 
-widgets = {}
+widgets = {
+   separator,
+   layout = awful.widget.layout.horizontal.rightleft
+}
 return widgets
 
 -- }}
