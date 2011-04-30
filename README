@@ -20,7 +20,7 @@ in the repository. It's a specific system configuration file. If you want to had
 some features, and don't want to up it on a repository, you should add these
 features in the ~/.zsh_opt.
 
-About the .commonzshrc file, it's a configuration used on both zsh and bash. It
+About the .commonshrc file, it's a configuration used on both zsh and bash. It
 contains my aliases, or so, and implies that they are indeed available on both
 shells, and are exactly the same.
 
