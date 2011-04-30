@@ -1,7 +1,56 @@
--- {{{ Key bindings
+-- {{{ kushou's keyboard bindings in awesome
+--
+-- ** Notation:
+-- # = Modkey
+-- C = Control
+-- M = Meta
+-- > = Right Arrow
+-- < = Left Arrow
+--
+-- ** Basic bindings :
+-- #C<: Previous Tag (modified)
+-- #C>: Right: Next Tag (modified)
+-- #{ESC} : Last Tag
+-- #j: Next Client
+-- #k: Previous Client
+-- #w: Awesome Menu
+-- #Mj: Swap Current Client With Next One
+-- #Mk: Swap Current Client With Previous One
+-- #Cj: FIXME?
+-- #Ck: FIXME?
+-- #u: Jump To Urgent
+-- #{TAB}: Last Client
+-- #{RET}: Spawn Terminal
+-- #Cr: Restart Awesome
+-- #Sq: Quit Awesome
+-- #l: Inc Master Width
+-- #h: Reduce Master Width
+-- #Sh: FIXME?
+-- #Sl: FIXME?
+-- #Ch: FIXME?
+-- #{SPC}: Next Layout
+-- #S{SPC}: Previous Layout
+-- #r: Run Prompt
+-- #x: Run Lua Code Prompt
+-- #f: FullScreen Mode
+-- #Sc: Kill Current Client
+-- #C{SPC}: Toggle Floating 
+-- #C{RET}: Get Current Client Master
+-- #o: FIXME?
+-- #Sr: Redraw Client
+-- #t: Toggle Ontop 
+-- #n: Toggle Minimized
+-- #m: Toggle Minimized
+--
+-- Added by me (uses ncmpcpp):
+-- #p: Toggle Playback/Pause
+-- #>: Next Song
+-- #<: Previous Song
+-- #s: Stop Music
+
 globalkeys = awful.util.table.join(
-   awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
-   awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
+   awful.key({ modkey, "Control" }, "Left",   awful.tag.viewprev       ),
+   awful.key({ modkey, "Control" }, "Right",  awful.tag.viewnext       ),
    awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
 
    awful.key({ modkey,           }, "j",
@@ -53,7 +102,11 @@ globalkeys = awful.util.table.join(
 				 mypromptbox[mouse.screen].widget,
 				 awful.util.eval, nil,
 				 awful.util.getdir("cache") .. "/history_eval")
-	     end)
+	     end),
+   awful.key({ modkey }, "p", function () awful.util.pread("ncmpcpp toggle") end),
+   awful.key({ modkey }, "Left", function () awful.util.pread("ncmpcpp prev") end),
+   awful.key({ modkey }, "Right", function () awful.util.pread("ncmpcpp next") end),
+   awful.key({ modkey }, "s", function () awful.util.pread("ncmpcpp stop") end)
 )
 
 clientkeys = awful.util.table.join(
