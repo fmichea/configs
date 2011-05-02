@@ -36,6 +36,14 @@
 (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
 (add-to-list 'interpreter-mode-alist '("python" . python-mode))
 
+;; highlight trailing whitespace
+(setq-default show-trailing-whitespace t)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; highlight long lines
+;;(setq whitespace-style '(lines))
+;;(setq whitespace-line-column 79)
+;;(global-whitespace-mode 1)
 ;; Doxymacs
-(add-to-list 'load-path "~/.emacs.d/doxymacs")
-(require 'doxymacs)
+;;(add-to-list 'load-path "~/.emacs.d/doxymacs")
+;;(require 'doxymacs)

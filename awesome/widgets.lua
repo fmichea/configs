@@ -20,7 +20,7 @@ batterylabel.image = image(beautiful.widget_bat_std)
 batterywidget	= widget({ type = "textbox" })
 vicious.register(batterywidget, vicious.widgets.bat,
 		 function (widget, args)
-		    -- Init		    
+		    -- Init
 		    if args[1] == "⌁" then
 		       if notice then
 			  naughty.destroy(notice)
@@ -43,10 +43,10 @@ vicious.register(batterywidget, vicious.widgets.bat,
 							hover_timeout = 2
 						     })
 			  end
-		       elseif args[1] "-" and args[2] < 30 then
+		       elseif args[1] == "-" and args[2] < 30 then
 			  batterylabel.image = image(beautiful.widget_bat_low)
-			  if popup_percent > 15 then
-			     popup_percent = 15
+			  if popup_percent > 30 then
+			     popup_percent = 30
 			     if notice then
 				naughty.destroy(notice)
 			     end
@@ -66,7 +66,7 @@ vicious.register(batterywidget, vicious.widgets.bat,
 		    end
 		    return args[1] .. args[2] .. "%"
 		 end,
-		 5, "BAT0")
+		 2, "BAT0")
 -- }}}
 
 -- {{{ CPU Usage Widget
@@ -75,7 +75,7 @@ cpulabel	= widget({ type = "imagebox" })
 cpulabel.image	= image(beautiful.widget_cpu)
 -- Widget
 cpuwidget	= widget({ type = "textbox" })
-vicious.register(cpuwidget, vicious.widgets.cpu, "$1%") 
+vicious.register(cpuwidget, vicious.widgets.cpu, "$1%")
 -- }}}
 
 -- {{{ Memory Usage Widget
