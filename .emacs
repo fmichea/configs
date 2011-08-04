@@ -17,6 +17,8 @@
 
 ;; Main configuration
 (column-number-mode t)
+(setq-default show-trailing-whitespace t)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; C configuration
 (setq c-default-style "bsd")
