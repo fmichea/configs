@@ -123,7 +123,7 @@ vicious.register(netwidget, vicious.widgets.net, "${eth0 down_kb} - ${eth0 up_kb
 wifiupdownwidget	= widget({ type = "textbox" })
 wifisignwidget		= widget({ type = "textbox" })
 vicious.register(wifiupdownwidget, vicious.widgets.net, "${wlan0 down_kb} - ${wlan0 up_kb}")
-vicious.register(wifisignwidget, vicious.widgets.wifi, "{ssid}: {sign}%")
+vicious.register(wifisignwidget, vicious.widgets.wifi, "${ssid}: ${link}%", 5, "wlan0")
 -- }}
 -- }}}
 

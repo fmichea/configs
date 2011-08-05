@@ -1,8 +1,10 @@
 -- {{{ Aquila-chrysaetos' Widget Configuration
 
 widgets = {
-   separator, mpdwidget, separator,
-   batterywidget, batterylabel, separator,
+   separator, batterywidget, batterylabel, separator,
+   mpdwidget, separator,
+   netuplabel, wifiupdownwidget, netdownlabel, separator,
+   wifisignwidget, separator,
    memwidget, memlabel, separator,
    cpuwidget, cpulabel, separator,
    layout = awful.widget.layout.horizontal.rightleft
