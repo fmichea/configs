@@ -16,43 +16,58 @@ setopt correct
 setopt hist_verify
 setopt nobeep
 setopt HIST_IGNORE_DUPS
-setopt TRANSIENT_RPROMPT
+
+export EDITOR="emacs -nw"
+
+#######################################################
+# KeyBoard Bindings found in magicking's configuration
+
+bindkey "^[[1~" beginning-of-line
+bindkey "^[OH"  beginning-of-line
+bindkey "\e[1~" beginning-of-line
+bindkey "\e[7~" beginning-of-line
+
+bindkey "\e[4~" end-of-line
+bindkey "\e[8~" end-of-line
+bindkey "^[[4~" end-of-line
+bindkey "^[OF"  end-of-line
+
+bindkey "^[[3~" delete-char
+bindkey "\e[3~" delete-char
+
+bindkey "\e[2~" overwrite-mode
 
 #######################
 # Prompt Configuration
 
-CL_R="%{"$'\033[0;31m'"%}"	# RED
-CL_B="%{"$'\033[1;34m'"%}"	# BLUE
-CL_P="%{"$'\033[0;35m'"%}"	# PURPLE
-CL_Y="%{"$'\033[1;33m'"%}"	# YELLOW
-CL_N="%{"$'\033[0m'"%}"		# NORMAL
+autoload colors zsh/terminfo
+if [[ "$terminfo[colors]" -ge 8 ]]; then
+    colors
+fi
+for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
+    eval CL_${${color}[1]}='%{$terminfo[bold]$fg[${(L)color}]%}'
+    eval CL_L${${color}[1]}='%{$fg[${(L)color}]%}'
+done
+CL_N="%{$terminfo[sgr0]%}"
 
+# Default prompt if not defined in another file loaded after.
+#
 # [root@localhost pwd]# ... (hour)
 # [username@localhost pwd]% ... (hour)
-PS1="${CL_B}[${CL_Y}%n${CL_B}@${CL_R}%m ${CL_P}%~${CL_B}]%#${CL_N} "
-RPS1="${CL_B}(%*)${CL_N}"
+
+PROMPT="${CL_B}[${CL_Y}%n${CL_B}@${CL_N}${CL_LR}%m ${CL_LM}%~${CL_N}${CL_B}]%#${CL_N} "
+RPROMPT="${CL_B}(%*)${CL_N}"
+
+# This file should overwrite PROMPT and RPROMPT.
+if [ -f ${HOME}/.zsh/prompt.sh ]; then
+    source ${HOME}/.zsh/prompt.sh
+fi
 
 ##########
 # Aliases
 
 alias reload='. ${HOME}/.zshrc'
-alias rmold='rm -f **/*~ **/.*~'
-
-###############
-# My Functions
-
-srm() # Safe RM
-{
-    mkdir -vp ~/.trash;
-    for i in $*; do
-	mv "$i" ~/.trash;
-    done
-}
-
-ctrash()
-{
-    rm -rf ~/.trash
-}
+alias clfiles='find . \( -name "*~" -o -name "*.pyc" \) -delete'
 
 ################################################################
 # Including .commonshrc, common configuration for bash and zsh.
