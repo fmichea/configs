@@ -26,7 +26,7 @@ done
 
 # Getting Vicious.
 git clone http://git.sysphere.org/vicious
-mv vicious $XDG_CONFIG_HOME/awesome/
+mv vicious $XDG_CONFIG_HOME/awesome/vicious
 
 unset files
 unset files_xdg
