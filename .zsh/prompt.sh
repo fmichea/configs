@@ -11,7 +11,7 @@ function precmd {
     PR_FILLBAR=""
     PR_PWDLEN=""
 
-    local promptsize=${#${(%):---(%n@%m)---()--}}
+    local promptsize=${#${(%):---(%n@%m)-()--}}
     local pwdsize=${#${(%):-%~}}
 
     if [[ "$promptsize + $pwdsize" -gt $TERMWIDTH ]]; then
@@ -19,6 +19,17 @@ function precmd {
     else
 	PR_FILLBAR="\${(l.(($TERMWIDTH - ($promptsize + $pwdsize)))..${PR_HBAR}.)}"
     fi
+
+    if [[ "$TERM" != "linux" ]]; then
+	print -rP '$PR_SET_CHARSET$PR_STITLE${(e)PR_TITLEBAR}\
+$CL_B$PR_SHIFT_IN$PR_ULCORNER$PR_HBAR$PR_SHIFT_OUT(\
+$CL_Y%(!.%SROOT%s.%n)$CL_B@$CL_N$CL_LR%m$CL_N$CL_B\
+)$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT(\
+$CL_N$CL_LM%$PR_PWDLEN<...<%~%<<\
+$CL_N$CL_B)$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT'
+    fi
+
+    #${(e)PR_FILLBAR}$PR_URCORNER
 }
 
 setopt extended_glob
@@ -73,22 +84,20 @@ setprompt () {
     ###
     # Finally, the prompt.
 
-    PROMPT='$PR_SET_CHARSET$PR_STITLE${(e)PR_TITLEBAR}\
-$CL_B$PR_SHIFT_IN$PR_ULCORNER$PR_HBAR$PR_SHIFT_OUT(\
-$CL_Y%(!.%SROOT%s.%n)$CL_B@$CL_N$CL_LR%m$CL_N$CL_B\
-)$PR_SHIFT_IN$PR_HBAR$PR_HBAR${(e)PR_FILLBAR}$PR_HBAR$PR_SHIFT_OUT(\
-$CL_N$CL_LM%$PR_PWDLEN<...<%~%<<\
-$CL_N$CL_B)$PR_SHIFT_IN$PR_HBAR$PR_URCORNER$PR_SHIFT_OUT\
-
-$PR_SHIFT_IN$PR_LLCORNER$PR_HBAR$PR_SHIFT_OUT(\
+    if [[ "$TERM" != "linux" ]]; then
+	PS1='$PR_SET_CHARSET$PR_STITLE${(e)PR_TITLEBAR}\
+$CL_B$PR_SHIFT_IN$PR_LLCORNER$PR_HBAR$PR_SHIFT_OUT(\
 $CL_N%(?.$CL_LG.$CL_LR)%?$CL_N$CL_B)\
-$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT%(!.$CL_R.$CL_B)%#$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT$CL_N '
+$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT%(!.$CL_R.$CL_B)%#\
+$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT$CL_N '
 
-    RPROMPT=' $CL_B$PR_SHIFT_IN$PR_HBAR$PR_HBAR$PR_SHIFT_OUT($CL_Y%D{%a %d %b},\
- %*$CL_B)$PR_SHIFT_IN$PR_HBAR$PR_LRCORNER$PR_SHIFT_OUT$CL_N'
+	RPS1=' $CL_B$PR_SHIFT_IN$PR_HBAR$PR_HBAR$PR_SHIFT_OUT($CL_Y%D{%a %d %b},\
+ %*$CL_B)$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT$CL_N'
+    #$PR_LRCORNER
 
-    PS2='$CL_B$PR_SHIFT_IN$PR_LLCORNER$PR_SHIFT_OUT(\
+	PS2='$CL_B$PR_SHIFT_IN$PR_LLCORNER$PR_SHIFT_OUT(\
 $CL_N$CL_LG%4>.>%_%>>$CL_N$CL_B)$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT$CL_N '
+    fi
 }
 
 setprompt
