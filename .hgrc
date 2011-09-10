@@ -11,3 +11,7 @@ cacerts = /etc/ssl/certs/ca-certificates.crt
 [merge-tools]
 
 emacs.args = -nw -q --eval "(ediff-merge-with-ancestor \"$local\" \"$other\" \"$base\" nil \"$output\")"
+
+[extensions]
+
+hgext.graphlog =
