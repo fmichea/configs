@@ -42,3 +42,9 @@ if [ -f $HOME/.commonshrc ]; then
 else
     echo "Common configration file is not found !"
 fi
+
+if [ -f  $HOME/.bashrc_opt ]; then
+    source $HOME/.bashrc_opt
+fi
+
+# EOF

@@ -18,8 +18,6 @@ setopt nobeep
 setopt HIST_IGNORE_DUPS
 setopt TRANSIENT_RPROMPT
 
-export EDITOR="emacs -nw"
-
 #######################################################
 # KeyBoard Bindings found in magicking's configuration
 
@@ -68,7 +66,6 @@ fi
 # Aliases
 
 alias reload='. ${HOME}/.zshrc'
-alias clfiles='find . \( -name "*~" -o -name "*.pyc" \) -delete'
 
 ################################################################
 # Including .commonshrc, common configuration for bash and zsh.
@@ -83,3 +80,5 @@ fi
 if [ -f ${HOME}/.zshrc_opt ]; then
     source ${HOME}/.zshrc_opt
 fi
+
+# EOF

@@ -11,17 +11,40 @@
 (require 'python-mode)
 (require 'scss-mode)
 (require 'tuareg)
+(require 'column-marker)
 
 ;; Main configuration
 (column-number-mode t)
-
 (setq-default show-trailing-whitespace t)
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(show-paren-mode t)
+
+;; C configuration
 
 (setq c-default-style "bsd")
 (setq c-basic-offset 2)
 
-(show-paren-mode t)
+(add-hook 'c-mode-common-hook
+	  (lambda()
+	    (add-hook 'local-write-file-hooks
+		      '(lambda()
+			 (save-excursion
+			   (delete-trailing-whitespace))))))
+
+(add-hook 'c-mode-common-hook
+	  (lambda ()
+	    (add-hook 'local-write-file-hooks
+		      '(lambda()
+			 (save-excursion
+			   (save-restriction
+			     (widen)
+			     (goto-char (point-max))
+			     (delete-blank-lines)
+			     (let ((trailnewlines (abs (skip-chars-backward "\n\t"))))
+			       (if (> trailnewlines 0)
+				   (progn
+				     (delete-char trailnewlines))))))))))
+
+(add-hook 'c-mode-hook (lambda () (interactive) (column-marker-3 80)))
 
 ;; Keyboard bindings
 
@@ -47,10 +70,10 @@
              (upcase (replace-regexp-in-string "[-.]" "_" (buffer-name)))))
         (save-excursion
           (goto-char (point-min))
-          (insert "#ifndef " header-guard "\n")
-          (insert "# define " header-guard "\n\n")
+          (insert "#ifndef " header-guard "_\n")
+          (insert "# define " header-guard "_\n\n")
           (goto-char (point-max))
-          (insert "\n#endif /* !" header-guard " */")))
+          (insert "\n#endif /* !" header-guard "_ */")))
     (message "Invalid C/C++ header file.")))
 
 (if (file-exists-p "~/.emacs_opt")

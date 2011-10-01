@@ -34,11 +34,11 @@
 -- #x: Run Lua Code Prompt
 -- #f: FullScreen Mode
 -- #Sc: Kill Current Client
--- #C{SPC}: Toggle Floating 
+-- #C{SPC}: Toggle Floating
 -- #C{RET}: Get Current Client Master
 -- #o: FIXME?
 -- #Sr: Redraw Client
--- #t: Toggle Ontop 
+-- #t: Toggle Ontop
 -- #n: Toggle Minimized
 -- #m: Toggle Minimized
 --
@@ -47,6 +47,8 @@
 -- #>: Next Song
 -- #<: Previous Song
 -- #s: Stop Music
+--
+-- #z: zlock
 
 globalkeys = awful.util.table.join(
    awful.key({ modkey, "Control" }, "Left",   awful.tag.viewprev       ),
@@ -106,7 +108,8 @@ globalkeys = awful.util.table.join(
    awful.key({ modkey }, "p", function () awful.util.pread("ncmpcpp toggle") end),
    awful.key({ modkey }, "Left", function () awful.util.pread("ncmpcpp prev") end),
    awful.key({ modkey }, "Right", function () awful.util.pread("ncmpcpp next") end),
-   awful.key({ modkey }, "s", function () awful.util.pread("ncmpcpp stop") end)
+   awful.key({ modkey }, "s", function () awful.util.pread("ncmpcpp stop") end),
+   awful.key({ modkey }, "z", function () awful.util.spawn("zlock -immed") end)
 )
 
 clientkeys = awful.util.table.join(
