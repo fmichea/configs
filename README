@@ -29,3 +29,6 @@ found on https://awesome.naquadah.org/wiki/User_Configuration_Files. My work is
 mostly inspired by their work, you should take a look at their own
 configuration. The icons are from anrxc configuration, I just recentered them,
 and get it in grey.
+
+Vim configuration is a fork of delroth's configuration found on
+https://bitbucket.org/delroth/configs . Thanks to him.
