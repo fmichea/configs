@@ -133,12 +133,6 @@ local function widget_filepath(filename)
 end
 
 local filename = widget_filepath(io.popen("echo -n $HOSTNAME"):read())
-naughty.notify({
-		  title = "FOOOOO",
-		  text = filename,
-		  timeout = 0,
-		  hover_timeout = 2
-	       })
 local file, msg
 file, msg = io.open(filename, "r")
 if not file then
