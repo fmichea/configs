@@ -2,15 +2,15 @@
 
 username = Franck "kushou" Michea <franck.michea@gmail.com>
 verbose = True
-merge = emacs
+#merge = emacs
 
 [web]
 
 cacerts = /etc/ssl/certs/ca-certificates.crt
 
-[merge-tools]
+#[merge-tools]
 
-emacs.args = -nw -q --eval "(ediff-merge-with-ancestor \"$local\" \"$other\" \"$base\" nil \"$output\")"
+#emacs.args = -nw -q --eval "(ediff-merge-with-ancestor \"$local\" \"$other\" \"$base\" nil \"$output\")"
 
 [extensions]
 

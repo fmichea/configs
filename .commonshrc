@@ -19,7 +19,7 @@ alias rm='rm -v'
 alias c='clean'
 alias clfiles='find . \( -name "*~" -o -name "*.pyc" -o -name "*.o" \) -delete'
 
-export EDITOR="emacs -nw"
+export EDITOR="vim"
 export PAGER="most"
 
 if [ -f $HOME/.commonshrc_opt ]; then
