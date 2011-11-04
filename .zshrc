@@ -21,6 +21,8 @@ setopt TRANSIENT_RPROMPT
 #######################################################
 # KeyBoard Bindings found in magicking's configuration
 
+bindkey -e
+
 bindkey "^[[1~" beginning-of-line
 bindkey "^[OH"  beginning-of-line
 bindkey "\e[1~" beginning-of-line

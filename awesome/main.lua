@@ -6,24 +6,24 @@
 require("awful")
 require("awful.autofocus")
 require("awful.rules")
+
 -- Theme handling library
 require("beautiful")
--- Notification library
-require("naughty")
--- Widget library
-require("vicious")
-
--- {{{ Variable definitions
--- Themes define colours, icons, and wallpapers
 beautiful.init(awful.util.getdir("config") .. "/theme.lua")
 
--- Widgets
+-- Notification library
+require("naughty")
+
+-- Widget library
+require("vicious")
 require("widgets")
 
--- This is used later as the default terminal and editor to run.
-terminal = "urxvt"
-editor = os.getenv("EDITOR") or "nano"
-editor_cmd = terminal .. " -e " .. editor
+-- Menu
+require("menu")
+
+-- {{{ Variable definitions
+
+-- Widgets
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -59,24 +59,6 @@ for s = 1, screen.count() do
 end
 -- }}}
 
--- {{{ Menu
--- Create a laucher widget and a main menu
-myawesomemenu = {
-   { "manual", terminal .. " -e man awesome" },
-   { "edit config", editor_cmd .. " " .. awful.util.getdir("config") .. "/rc.lua" },
-   { "restart", awesome.restart },
-   { "quit", awesome.quit }
-}
-
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "open terminal", terminal }
-                                  }
-                        })
-
-mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
-                                     menu = mymainmenu })
--- }}}
-
 -- {{{ Wibox
 -- Create a textclock widget
 mytextclock = awful.widget.textclock({ align = "right" },"%a %b %d, %H:%M:%S", 1)
@@ -90,102 +72,123 @@ mypromptbox = {}
 mylayoutbox = {}
 mytaglist = {}
 mytaglist.buttons = awful.util.table.join(
-                    awful.button({ }, 1, awful.tag.viewonly),
-                    awful.button({ modkey }, 1, awful.client.movetotag),
-                    awful.button({ }, 3, awful.tag.viewtoggle),
-                    awful.button({ modkey }, 3, awful.client.toggletag),
-                    awful.button({ }, 4, awful.tag.viewnext),
-                    awful.button({ }, 5, awful.tag.viewprev)
-                    )
+    awful.button({ }, 1, awful.tag.viewonly),
+    awful.button({ modkey }, 1, awful.client.movetotag),
+    awful.button({ }, 3, awful.tag.viewtoggle),
+    awful.button({ modkey }, 3, awful.client.toggletag),
+    awful.button({ }, 4, awful.tag.viewnext),
+    awful.button({ }, 5, awful.tag.viewprev)
+)
+
 mytasklist = {}
 mytasklist.buttons = awful.util.table.join(
-   awful.button({ }, 1, function (c)
-			   if not c:isvisible() then
-			      awful.tag.viewonly(c:tags()[1])
-			   end
-			   client.focus = c
-			   c:raise()
-			end),
-   awful.button({ }, 3, function ()
-			   if instance then
-			      instance:hide()
-			      instance = nil
-			   else
-			      instance = awful.menu.clients({ width=250 })
-			   end
-			end),
-   awful.button({ }, 4, function ()
-			   awful.client.focus.byidx(1)
-			   if client.focus then client.focus:raise() end
-			end),
-   awful.button({ }, 5, function ()
-			   awful.client.focus.byidx(-1)
-			   if client.focus then client.focus:raise() end
-			end))
+    awful.button({ }, 1, function (c)
+        if not c:isvisible() then
+            awful.tag.viewonly(c:tags()[1])
+        end
+        client.focus = c
+        c:raise()
+    end),
+    awful.button({ }, 3, function ()
+        if instance then
+            instance:hide()
+            instance = nil
+        else
+            instance = awful.menu.clients({ width=250 })
+        end
+    end),
+    awful.button({ }, 4, function ()
+        awful.client.focus.byidx(1)
+        if client.focus then client.focus:raise() end
+    end),
+    awful.button({ }, 5, function ()
+        awful.client.focus.byidx(-1)
+        if client.focus then client.focus:raise() end
+    end)
+)
 
 for s = 1, screen.count() do
-   -- Create a promptbox for each screen
-   mypromptbox[s] = awful.widget.prompt({ layout = awful.widget.layout.horizontal.leftright })
-   -- Create an imagebox widget which will contains an icon indicating which layout we're using.
-   -- We need one layoutbox per screen.
-   mylayoutbox[s] = awful.widget.layoutbox(s)
-   mylayoutbox[s]:buttons(awful.util.table.join(
-			     awful.button({ }, 1, function () awful.layout.inc(layouts, 1) end),
-			     awful.button({ }, 3, function () awful.layout.inc(layouts, -1) end),
-			     awful.button({ }, 4, function () awful.layout.inc(layouts, 1) end),
-			     awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)))
-   -- Create a taglist widget
-   mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.label.all, mytaglist.buttons)
+    -- Create a promptbox for each screen
+    mypromptbox[s] = awful.widget.prompt({
+        layout = awful.widget.layout.horizontal.leftright
+    })
+    -- Create an imagebox widget which will contains an icon indicating which
+    -- layout we're using. We need one layoutbox per screen.
+    mylayoutbox[s] = awful.widget.layoutbox(s)
+    mylayoutbox[s]:buttons(awful.util.table.join(
+        awful.button({ }, 1, function () awful.layout.inc(layouts, 1) end),
+        awful.button({ }, 3, function () awful.layout.inc(layouts, -1) end),
+        awful.button({ }, 4, function () awful.layout.inc(layouts, 1) end),
+        awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)
+    ))
+    -- Create a taglist widget
+    mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.label.all,
+                                        mytaglist.buttons)
 
-   -- Create a tasklist widget
-   mytasklist[s] = awful.widget.tasklist(function(c)
-					    return awful.widget.tasklist.label.currenttags(c, s)
-					 end, mytasklist.buttons)
+    -- Create a tasklist widget
+    mytasklist[s] = awful.widget.tasklist(function(c)
+        return awful.widget.tasklist.label.currenttags(c, s)
+    end, mytasklist.buttons)
 
-   -- Create the wibox
-   mywibox[s] = awful.wibox({ position = "top", screen = s })
-   -- Add widgets to the wibox - order matters
-   mywibox[s].widgets = {
-      {
-	 mylauncher,
-	 mytaglist[s],
-	 mypromptbox[s],
-	 layout = awful.widget.layout.horizontal.leftright
-      },
-      mylayoutbox[s],
-      mytextclock,
-      widgets,
-      s == 1 and {
-	 mysystray, separator,
-	 layout = awful.widget.layout.horizontal.rightleft
-      } or nil,
-      mytasklist[s],
-      layout = awful.widget.layout.horizontal.rightleft
-   }
+    -- Create the wibox
+    mywibox[s] = awful.wibox({ position = "top", screen = s })
+    -- Add widgets to the wibox - order matters
+    mywibox[s].widgets = {
+        {
+            mylauncher,
+            mytaglist[s],
+            mypromptbox[s],
+            layout = awful.widget.layout.horizontal.leftright
+        },
+        mylayoutbox[s],
+        mytextclock,
+        widgets,
+        s == 1 and {
+            mysystray, separator,
+            layout = awful.widget.layout.horizontal.rightleft
+        } or nil,
+        mytasklist[s],
+        layout = awful.widget.layout.horizontal.rightleft
+    }
 end
 -- }}}
 
 -- {{{ Mouse bindings
-root.buttons(awful.util.table.join(awful.button({ }, 3, function () mymainmenu:toggle() end)))
+root.buttons(awful.util.table.join(awful.button({ }, 3, function ()
+    mymainmenu:toggle()
+end)))
 -- }}}
 
+-- Keyboard Bindings
 require("keyboard")
 
 -- {{{ Rules
 awful.rules.rules = {
     -- All clients will match this rule.
-    { rule = { },
-      properties = { border_width = beautiful.border_width,
-                     border_color = beautiful.border_normal,
-                     focus = true,
-                     keys = clientkeys,
-                     buttons = clientbuttons } },
-    { rule = { class = "MPlayer" },
-      properties = { floating = true } },
-    { rule = { class = "pinentry" },
-      properties = { floating = true } },
-    { rule = { class = "gimp" },
-      properties = { floating = true } },
+    {
+        rule = { },
+        properties = {
+            border_width = beautiful.border_width,
+            border_color = beautiful.border_normal,
+            focus = true,
+            keys = clientkeys,
+            buttons = clientbuttons
+        }
+    },
+    {
+        rule = { class = "MPlayer" },
+        properties = {
+            floating = true
+        }
+    },
+    {
+        rule = { class = "pinentry" },
+        properties = { floating = true }
+    },
+    {
+        rule = { class = "gimp" },
+        properties = { floating = true }
+    },
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },
@@ -200,8 +203,8 @@ client.add_signal("manage", function (c, startup)
 
     -- Enable sloppy focus
     c:add_signal("mouse::enter", function(c)
-        if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
-            and awful.client.focus.filter(c) then
+        if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier and
+           awful.client.focus.filter(c) then
             client.focus = c
         end
     end)
@@ -211,14 +214,20 @@ client.add_signal("manage", function (c, startup)
         -- i.e. put it at the end of others instead of setting it master.
         -- awful.client.setslave(c)
 
-        -- Put windows in a smart way, only if they does not set an initial position.
-        if not c.size_hints.user_position and not c.size_hints.program_position then
+        -- Put windows in a smart way, only if they does not set an initial
+        -- position.
+        if not c.size_hints.user_position and
+           not c.size_hints.program_position then
             awful.placement.no_overlap(c)
             awful.placement.no_offscreen(c)
         end
     end
 end)
 
-client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+client.add_signal("focus", function(c)
+    c.border_color = beautiful.border_focus
+end)
+client.add_signal("unfocus", function(c)
+    c.border_color = beautiful.border_normal
+end)
 -- }}}

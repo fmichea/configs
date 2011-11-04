@@ -1,6 +1,7 @@
 -- {{{ kushou's widgets using vicious }}}
 require("vicious")
 require("naughty")
+require("settings")
 
 -- {{{ Global Values
 popup_percent = 100
@@ -127,17 +128,8 @@ vicious.register(wifisignwidget, vicious.widgets.wifi, "${ssid}: ${link}%", 5, "
 -- }}
 -- }}}
 
--- {{{ Including config file
-local function widget_filepath(filename)
-   return (awful.util.getdir("config") .. "/widgets.d/" .. filename .. ".lua")
+if settings.widget_config then
+    dofile(settings.widget_config)
 end
 
-local filename = widget_filepath(io.popen("echo -n $HOSTNAME"):read())
-local file, msg
-file, msg = io.open(filename, "r")
-if not file then
-   dofile(widget_filepath("default"))
-else
-   dofile(filename)
-end
--- }}}
+-- EOF

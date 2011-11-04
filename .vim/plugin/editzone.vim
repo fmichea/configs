@@ -17,4 +17,11 @@ if version >= 703
 endif
 
 set list
-set listchars=eol:¬
+set listchars=tab:.\ ,eol:¬
+
+imap <silent> <F2> <ESC>:w<CR>
+map <silent> <F2> :w<CR>
+imap <silent> <F3> <ESC>:x<CR>
+map <silent> <F3> :x<CR>
+imap <silent> <F4> <ESC>:q<CR>
+map <silent> <F4> :q<CR>
