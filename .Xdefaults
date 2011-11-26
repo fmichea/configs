@@ -1,40 +1,40 @@
 !---------------------------------------------------------------!
-! .Xdefaults: kushou s main configuration file for rxvt-unicode !
+! .Xdefaults:  kushou s main configuration file for rxvt-unicode !
 !---------------------------------------------------------------!
 !--------------------
 ! Main Configuration
 
-URxvt.background:	#2c2c2c
-URxvt.foreground:	#dcdccd
-URxvt.font:		xft:Bitstream Vera Sans Mono:pixelsize=11
-URxvt.scrollBar:	false
-URxvt.urgentOnBell:	true
+URxvt.background: #2c2c2c
+URxvt.foreground: #dcdccd
+URxvt.font: xft:Bitstream Vera Sans Mono:pixelsize=11
+URxvt.scrollBar: false
+URxvt.urgentOnBell: true
 
-URxvt.perl-ext-common:  default,matcher
-URxvt.urlLauncher:      /usr/bin/chromium
-URxvt.matcher.button:   1
+URxvt.perl-ext-common: default,matcher
+URxvt.urlLauncher: /usr/bin/chromium
+URxvt.matcher.button: 1
 
-URxvt.inheritPixmap:	true
-URxvt.shading:		35
+URxvt.inheritPixmap: true
+URxvt.shading: 35
 
 !-------------------------------------------------
 ! Colors
-! 0: Black; 1: Red; 2: Green; 3: Yellow; 4: Blue;
-! 5: Magenta; 6: Cyan; 7: White; n+8 = light
+! 0:  Black; 1:  Red; 2:  Green; 3:  Yellow; 4:  Blue;
+! 5:  Magenta; 6:  Cyan; 7:  White; n+8 = light
 
-URxvt.color0:		#3F3F3F
-URxvt.color1:		#705050
-URxvt.color2:		#60B48A
-URxvt.color3:		#DFAF8F
-URxvt.color4:		#9AB9D7
-URxvt.color5:		#DC8CC4
-URxvt.color6:		#8CD1D3
-URxvt.color7:		#DCDCCD
-URxvt.color8:		#709080
-URxvt.color9:		#DCA3A3
-URxvt.color10:		#72D5A2
-URxvt.color11:		#F0DFAF
-URxvt.color12:		#9AB9D7
-URxvt.color13:		#EC93D5
-URxvt.color14:		#93E1E3
-URxvt.color15:		#FFFFFF
+URxvt.color0: #3F3F3F
+URxvt.color1: #705050
+URxvt.color2: #60B48A
+URxvt.color3: #DFAF8F
+URxvt.color4: #9AB9D7
+URxvt.color5: #DC8CC4
+URxvt.color6: #8CD1D3
+URxvt.color7: #DCDCCD
+URxvt.color8: #709080
+URxvt.color9: #DCA3A3
+URxvt.color10: #72D5A2
+URxvt.color11: #F0DFAF
+URxvt.color12: #9AB9D7
+URxvt.color13: #EC93D5
+URxvt.color14: #93E1E3
+URxvt.color15: #FFFFFF

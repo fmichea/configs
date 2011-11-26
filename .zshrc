@@ -13,7 +13,7 @@ autoload -Uz compinit
 compinit
 
 setopt correct
-setopt hist_verify
+#setopt hist_verify
 setopt nobeep
 setopt HIST_IGNORE_DUPS
 setopt TRANSIENT_RPROMPT
