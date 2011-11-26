@@ -1,0 +1,8 @@
+[user]
+
+name = Franck Michea
+email = franck.michea@gmail.com
+
+[core]
+
+excludesfile = ~/.gitignore
