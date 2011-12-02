@@ -26,7 +26,7 @@ else
 end
 -- }}}
 
-if settings.hostname == "pc-michea_f" then
+if settings.hostname == "pc-michea-f" then
     settings.locker = "zlock -immed"
 else
     settings.locker = "slock"
