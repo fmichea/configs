@@ -31,4 +31,7 @@ syn region djangoVarBlock start="{{" end="}}" contains=djangoFilter,djangoArgume
 syn region djangoComment start="{%\s*comment\s*%}" end="{%\s*endcomment\s*%}" contains=djangoTodo containedin=ALLBUT,@djangoBlocks
 syn region djangoComBlock start="{#" end="#}" contains=djangoTodo containedin=ALLBUT,@djangoBlocks
 
+set textwidth=0
+set nowrap
+
 let b:current_syntax = "htmldjango"
