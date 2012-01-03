@@ -38,7 +38,6 @@
 -- #C{RET}: Get Current Client Master
 -- #o: FIXME?
 -- #Sr: Redraw Client
--- #t: Toggle Ontop
 -- #n: Toggle Minimized
 -- #m: Toggle Minimized
 --
@@ -49,8 +48,11 @@
 -- #s: Stop Music
 --
 -- #z: zlock
+-- #t: Toggle touchpad ableness.
 
 require("settings")
+
+touchpad_enabled = true
 
 globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "Left",   awful.tag.viewprev       ),
@@ -149,6 +151,14 @@ globalkeys = awful.util.table.join(
     end),
     awful.key({ modkey }, "z", function ()
         awful.util.spawn(settings.locker)
+    end),
+    awful.key({ modkey }, "t", function ()
+        touchpad_enabled = not touchpad_enabled
+        if touchpad_enabled then
+            awful.util.pread("synclient TouchpadOff=0")
+        else
+            awful.util.pread("synclient TouchpadOff=1")
+        end
     end)
 )
 
@@ -163,7 +173,6 @@ clientkeys = awful.util.table.join(
     end),
     awful.key({ modkey }, "o", awful.client.movetoscreen),
     awful.key({ modkey, "Shift" }, "r", function (c) c:redraw() end),
-    awful.key({ modkey }, "t", function (c) c.ontop = not c.ontop end),
     awful.key({ modkey }, "n", function (c) c.minimized = not c.minimized end),
     awful.key({ modkey }, "m", function (c)
         c.maximized_horizontal = not c.maximized_horizontal
