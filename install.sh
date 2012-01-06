@@ -28,8 +28,8 @@ INSTALL_TYPE=$1
 INSTALL_PATH_FILE=~/.config_installpath
 
 function make_link {
-    echo "=> Installing $1 in $2."
-    ln -sf $1 $2
+    echo "=> Installing $2 in $1."
+    ln -sf `pwd`/$2 $1/$2
 }
 
 function remove_link {
@@ -55,10 +55,9 @@ fi
 
 function install_files {
     for filename in $1; do
-        file=$2/$filename
         case $INSTALL_TYPE in
-            install ) [ -e $file ] || make_link $filename $file;;
-            uninstall ) [ -e $file ] && remove_link $file;;
+            install ) [ -e "$2/$filename" ] || make_link $2 $filename;;
+            uninstall ) [ -e "$2/$filename" ] && remove_link "$2/$filename";;
         esac
     done
 }
