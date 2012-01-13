@@ -18,7 +18,7 @@ mymainmenu = awful.menu({
     items = {
         { "awesome", myawesomemenu, beautiful.awesome_icon },
         { "open terminal", terminal },
-        { "open browser", "chromium" },
+        { "open browser", "firefox" },
         { "open mail client", "claws-mail" }
     }
 })
