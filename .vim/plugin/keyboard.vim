@@ -20,6 +20,9 @@ map <silent> <F5> :make<CR>
 map <silent> <F6> :cp<CR>
 map <silent> <F7> :cn<CR>
 
+" Other stuff.
+map <C-f> ][%<up>0v<down>%
+
 " Arrows
 "imap <silent> <Left> <nop>
 "imap <silent> <Up> <nop>
