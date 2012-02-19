@@ -8,7 +8,7 @@ function usage {
 [ $# -lt 1 ] && usage
 
 FILES=".commonshrc .emacs .emacs.d .hgrc .Xdefaults .zsh .zshrc .bashrc"
-FILES+=" .gitignore .gitconfig .vim .vimrc"
+FILES+=" .gitignore .gitconfig .vim .vimrc .tmux.conf"
 FILES_XDG="awesome"
 
 INSTALL_PATH=${HOME}
