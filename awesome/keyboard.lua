@@ -8,38 +8,38 @@
 -- < = Left Arrow
 --
 -- ** Basic bindings :
+-- #Ch: FIXME?
+-- #Cj: Focus next screen.
+-- #Ck: Foxus previous screen.
 -- #C<: Previous Tag (modified)
+-- #C{RET}: Get Current Client Master
 -- #C>: Right: Next Tag (modified)
+-- #Cr: Restart Awesome
+-- #C{SPC}: Toggle Floating
 -- #{ESC} : Last Tag
+-- #f: FullScreen Mode
+-- #h: Reduce Master Width
 -- #j: Next Client
 -- #k: Previous Client
--- #w: Awesome Menu
+-- #l: Inc Master Width
 -- #Mj: Swap Current Client With Next One
 -- #Mk: Swap Current Client With Previous One
--- #Cj: FIXME?
--- #Ck: FIXME?
--- #u: Jump To Urgent
--- #{TAB}: Last Client
+-- #m: Toggle Minimized
+-- #n: Toggle Minimized
+-- #o: Change client of screen.
 -- #{RET}: Spawn Terminal
--- #Cr: Restart Awesome
--- #Sq: Quit Awesome
--- #l: Inc Master Width
--- #h: Reduce Master Width
+-- #r: Run Prompt
+-- #Sc: Kill Current Client
 -- #Sh: FIXME?
 -- #Sl: FIXME?
--- #Ch: FIXME?
 -- #{SPC}: Next Layout
--- #S{SPC}: Previous Layout
--- #r: Run Prompt
--- #x: Run Lua Code Prompt
--- #f: FullScreen Mode
--- #Sc: Kill Current Client
--- #C{SPC}: Toggle Floating
--- #C{RET}: Get Current Client Master
--- #o: FIXME?
+-- #Sq: Quit Awesome
 -- #Sr: Redraw Client
--- #n: Toggle Minimized
--- #m: Toggle Minimized
+-- #S{SPC}: Previous Layout
+-- #{TAB}: Last Client
+-- #u: Jump To Urgent
+-- #w: Awesome Menu [REMOVED]
+-- #x: Run Lua Code Prompt
 --
 -- Added by me (uses ncmpcpp):
 -- #p: Toggle Playback/Pause
@@ -49,6 +49,8 @@
 --
 -- #z: zlock
 -- #t: Toggle touchpad ableness.
+-- #q: Focus previous screen.
+-- #w: Focus next screen.
 
 require("settings")
 
@@ -159,6 +161,12 @@ globalkeys = awful.util.table.join(
         else
             awful.util.pread("synclient TouchpadOff=1")
         end
+    end),
+    awful.key({ modkey }, "w", function ()
+        awful.screen.focus_relative(1)
+    end),
+    awful.key({ modkey }, "q", function ()
+        awful.screen.focus_relative(-1)
     end)
 )
 
