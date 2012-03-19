@@ -20,54 +20,53 @@ batterylabel.image = image(beautiful.widget_bat_std)
 -- Widget + Update Function
 batterywidget	= widget({ type = "textbox" })
 vicious.register(batterywidget, vicious.widgets.bat,
-		 function (widget, args)
-		    -- Init
-		    if args[1] == "⌁" then
-		       if notice then
-			  naughty.destroy(notice)
-		       end
-		       batterylabel.image = image(beautiful.widget_bat_rcp)
-		       return ""
-		    else
-		       batterylabel.image = image(beautiful.widget_bat_std)
-		       if args[1] == "-" and args[2] < 15 then
-			  batterylabel.image = image(beautiful.widget_bat_crt)
-			  if popup_percent > 15 then
-			     popup_percent = 15
-			     if notice then
-				naughty.destroy(notice)
-			     end
-			     notice = naughty.notify({
-							title = "Critical Battery State",
-							text = "The percentage of battery is now lower than <b>15</b> percents.",
-							timeout = 0,
-							hover_timeout = 2
-						     })
-			  end
-		       elseif args[1] == "-" and args[2] < 30 then
-			  batterylabel.image = image(beautiful.widget_bat_low)
-			  if popup_percent > 30 then
-			     popup_percent = 30
-			     if notice then
-				naughty.destroy(notice)
-			     end
-			     notice = naughty.notify({
-							title = "Dangerous Battery State",
-							text = "The percentage of battery is now lower than <b>30</b> percents.",
-							timeout = 0,
-							hover_timeout = 2
-						     })
-			  end
-		       else
-			  popup_percent = 100
-			  if notice then
-			     naughty.destroy(notice)
-			  end
-		       end
-		    end
-		    return args[1] .. args[2] .. "%"
-		 end,
-		 2, "BAT0")
+    function (widget, args)
+        -- Init
+        if args[1] == "⌁" then
+            if notice then
+                naughty.destroy(notice)
+            end
+            batterylabel.image = image(beautiful.widget_bat_rcp)
+            return ""
+        else
+            batterylabel.image = image(beautiful.widget_bat_std)
+            if args[1] == "-" and args[2] < 15 then
+                batterylabel.image = image(beautiful.widget_bat_crt)
+                if popup_percent > 15 then
+                    popup_percent = 15
+                    if notice then
+                        naughty.destroy(notice)
+                    end
+                    notice = naughty.notify({
+                        title = "Critical Battery State",
+                        text = "The percentage of battery is now lower than <b>15</b> percents.",
+                        timeout = 0,
+                        hover_timeout = 2
+                    })
+                end
+            elseif args[1] == "-" and args[2] < 30 then
+                batterylabel.image = image(beautiful.widget_bat_low)
+                if popup_percent > 30 then
+                    popup_percent = 30
+                    if notice then
+                        naughty.destroy(notice)
+                    end
+                    notice = naughty.notify({
+                        title = "Dangerous Battery State",
+                        text = "The percentage of battery is now lower than <b>30</b> percents.",
+                        timeout = 0,
+                        hover_timeout = 2
+                    })
+                end
+            else
+                popup_percent = 100
+                if notice then
+                    naughty.destroy(notice)
+                end
+            end
+        end
+        return args[1] .. args[2] .. "%"
+    end, 2, "BAT0")
 -- }}}
 
 -- {{{ CPU Usage Widget
@@ -94,19 +93,13 @@ mpdlabel	= widget({ type = "imagebox" })
 mpdlabel.image	= image(beautiful.widget_mpd)
 -- Widget + Update Function
 mpdwidget = widget({ type = "textbox" })
-function mpdfun (widget, args)
-   if not (args["{state}"] == "Stop") then
-      return args["{state}"] .. ": " .. args["{Artist}"] .. " - " .. args["{Title}"]
-   end
-   return " - MPD - "
-end
 vicious.register(mpdwidget, vicious.widgets.mpd,
-		 function (widget, args)
-		    if not (args["{state}"] == "Stop") then
-		       return args["{state}"] .. ": " .. args["{Artist}"] .. " - " .. args["{Title}"]
-		    end
-		    return " - MPD - "
-		 end)
+    function (widget, args)
+        if not (args["{state}"] == "Stop" or args["{state}"] == "N/A") then
+            return args["{state}"] .. ": " .. args["{Artist}"] .. " - " .. args["{Title}"]
+        end
+        return " - MPD - "
+    end)
 -- }}}
 
 -- {{{ Network Usage Widget
