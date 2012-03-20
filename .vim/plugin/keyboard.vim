@@ -22,6 +22,8 @@ map <silent> <F7> :cn<CR>
 
 " Other stuff.
 map <C-f> ][%<up>0v<down>%
+nnoremap <Space> <C-w>
+nnoremap <Space><Space> <C-w>w
 
 " Arrows
 "imap <silent> <Left> <nop>
