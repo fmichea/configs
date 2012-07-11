@@ -29,7 +29,8 @@ end
 if settings.hostname == "pc-michea-f" then
     settings.locker = "zlock -immed"
 else
-    settings.locker = "slock"
+    confdir = awful.util.getdir("config")
+    settings.locker = "i3lock -t -i " .. confdir .. "/locker.png"
 end
 
 -- {{{ MPD Client Config
