@@ -1,5 +1,5 @@
 -- {{{ kushou's widgets using vicious }}}
-require("vicious")
+vicious = require("vicious")
 require("naughty")
 require("settings")
 
