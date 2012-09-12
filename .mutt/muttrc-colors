@@ -1,0 +1,35 @@
+# Color theme in mutt.
+
+# Status lines
+color status white red
+
+# Default mail header color and attachment.
+color hdrdefault black default
+color attachment yellow default
+
+# Email header
+color header yellow default "Date: "
+color header brightwhite default "Subject: "
+color header white default "From: "
+color header white default "Cc: "
+
+# Quoted messages
+color quoted green default
+color quoted1 cyan default
+color quoted2 green default
+color quoted3 cyan default
+
+# Mail signature
+color error red default
+color indicator white black
+color markers red default
+color message white default
+color normal white default
+color search white red
+color signature black default
+color tilde white default
+color tree red default
+
+color index yellow default '~N'
+color index brightred default '~F'
+color index black default '~D'
