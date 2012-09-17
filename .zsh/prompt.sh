@@ -15,9 +15,9 @@ function precmd {
     local pwdsize=${#${(%):-%~}}
 
     if [[ "$promptsize + $pwdsize" -gt $TERMWIDTH ]]; then
-	((PR_PWDLEN=$TERMWIDTH - $promptsize))
+        ((PR_PWDLEN=$TERMWIDTH - $promptsize))
     else
-	PR_FILLBAR="\${(l.(($TERMWIDTH - ($promptsize + $pwdsize)))..${PR_HBAR}.)}"
+        PR_FILLBAR="\${(l.(($TERMWIDTH - ($promptsize + $pwdsize)))..${PR_HBAR}.)}"
     fi
 
     if [[ "$TERM" != "linux" ]]; then
@@ -35,8 +35,8 @@ $CL_N$CL_B)$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT'
 setopt extended_glob
 preexec () {
     if [[ "$TERM" == "screen" ]]; then
-	local CMD=${1[(wr)^(*=*|sudo|-*)]}
-	echo -n "\ek$CMD\e\\"
+        local CMD=${1[(wr)^(*=*|sudo|-*)]}
+        echo -n "\ek$CMD\e\\"
     fi
 }
 
@@ -65,37 +65,37 @@ setprompt () {
     # Decide if we need to set titlebar text.
 
     case $TERM in
-	screen)
-	    PR_TITLEBAR=$'%{\e_screen \005 | %(!.-=[ROOT]=- | .)%n@%m | %~ \e\\%}'
-	    ;;
-	*)
-	    PR_TITLEBAR=$'%{\e]0;%(!.-=*[ROOT]*=- | .)%n@%m | %~\a%}'
-	    ;;
+    screen)
+        PR_TITLEBAR=$'%{\e_screen \005 | %(!.-=[ROOT]=- | .)%n@%m | %~ \e\\%}'
+        ;;
+    *)
+        PR_TITLEBAR=$'%{\e]0;%(!.-=*[ROOT]*=- | .)%n@%m | %~\a%}'
+        ;;
     esac
 
     ###
     # Decide whether to set a screen title
     if [[ "$TERM" == "screen" ]]; then
-	PR_STITLE=$'%{\ekzsh\e\\%}'
+        PR_STITLE=$'%{\ekzsh\e\\%}'
     else
-	PR_STITLE=''
+        PR_STITLE=''
     fi
 
     ###
     # Finally, the prompt.
 
     if [[ "$TERM" != "linux" ]]; then
-	PS1='$PR_SET_CHARSET$PR_STITLE${(e)PR_TITLEBAR}\
+        PS1='$PR_SET_CHARSET$PR_STITLE${(e)PR_TITLEBAR}\
 $CL_B$PR_SHIFT_IN$PR_LLCORNER$PR_HBAR$PR_SHIFT_OUT(\
 $CL_N%(?.$CL_LG.$CL_LR)%?$CL_N$CL_B)\
 $PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT%(!.$CL_R.$CL_B)%#\
 $PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT$CL_N '
 
-	RPS1=' $CL_B$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT($CL_Y%D{%a %d %b},\
+        RPS1=' $CL_B$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT($CL_Y%D{%a %d %b},\
  %*$CL_B)$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT$CL_N'
     #$PR_LRCORNER
 
-	PS2='$CL_B$PR_SHIFT_IN$PR_LLCORNER$PR_SHIFT_OUT(\
+        PS2='$CL_B$PR_SHIFT_IN$PR_LLCORNER$PR_SHIFT_OUT(\
 $CL_N$CL_LG%4>.>%_%>>$CL_N$CL_B)$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT$CL_N '
     fi
 }
