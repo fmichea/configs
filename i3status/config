@@ -1,0 +1,48 @@
+general {
+        colors = true
+        interval = 5
+}
+
+order += "load"
+order += "disk /"
+order += "disk /home"
+order += "wireless wlan0"
+order += "ethernet eth0"
+order += "run_watch VPN"
+order += "battery 0"
+order += "time"
+
+wireless wlan0 {
+        format_up = "W: (%quality at %essid) %ip"
+        format_down = "W: down"
+}
+
+ethernet eth0 {
+        format_up = "E: %ip"
+        format_down = "E: down"
+}
+
+battery 0 {
+        # %status %remaining"
+        format = "%percentage"
+}
+
+run_watch VPN {
+        pidfile = "/var/run/openvpn_*.pid"
+}
+
+time {
+        format = "%Y-%m-%d %H:%M:%S"
+}
+
+load {
+        format = "%1min"
+}
+
+disk "/" {
+        format = "%free"
+}
+
+disk "/home" {
+        format = "%free"
+}

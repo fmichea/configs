@@ -8,4 +8,5 @@ skype &
 keepassx &
 
 # Window manager.
-exec awesome
+exec i3
+#exec awesome
