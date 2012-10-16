@@ -1,7 +1,9 @@
 " keyboard.vim - Key Bindings
 
-" F[1-4]
-imap <silent> <F1> <nop>
+" F1
+set pastetoggle=<F1>
+
+" F[2-4]
 imap <silent> <F2> <ESC>:w<CR>
 imap <silent> <F3> <ESC>:x<CR>
 imap <silent> <F4> <ESC>:q<CR>
