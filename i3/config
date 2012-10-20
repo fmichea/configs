@@ -25,6 +25,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 
 # personal key bindings
 bindsym $mod+z exec ~/.config/i3/scripts/lock.sh
+bindsym $mod+p exec ~/.config/i3/scripts/suspend.sh
 bindsym $mod+t exec ~/.config/i3/scripts/toggle_touchpad.sh
 
 # kill focused window
@@ -58,7 +59,7 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+semicolon split h
+bindsym $mod+b split h
 
 # split in vertical orientation
 bindsym $mod+v split v
