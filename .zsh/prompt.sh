@@ -2,6 +2,8 @@
 # available at http://aperiodic.net/phil/prompt/
 
 function precmd {
+    echo -ne "\a"
+
     local TERMWIDTH
     (( TERMWIDTH = ${COLUMNS} - 1 ))
 
