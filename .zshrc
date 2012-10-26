@@ -13,30 +13,17 @@ autoload -Uz compinit
 compinit
 
 setopt correct
-#setopt hist_verify
+setopt hist_ignore_dups # Don't put duplicates in history.
+setopt no_bang_hist # Don't redefine ! (useful for commit messages etc...).
 setopt nobeep
-setopt HIST_IGNORE_DUPS
-setopt TRANSIENT_RPROMPT
+setopt transient_rprompt # Don't keep RPROMPT when command is entered.
 
-#######################################################
-# KeyBoard Bindings found in magicking's configuration
+########################
+# Keyboard configuration
 
-bindkey -e
-
-bindkey "^[[1~" beginning-of-line
-bindkey "^[OH"  beginning-of-line
-bindkey "\e[1~" beginning-of-line
-bindkey "\e[7~" beginning-of-line
-
-bindkey "\e[4~" end-of-line
-bindkey "\e[8~" end-of-line
-bindkey "^[[4~" end-of-line
-bindkey "^[OF"  end-of-line
-
-bindkey "^[[3~" delete-char
-bindkey "\e[3~" delete-char
-
-bindkey "\e[2~" overwrite-mode
+if [ -f "${HOME}/.zsh/keyboard.sh" ]; then
+    source "${HOME}/.zsh/keyboard.sh"
+fi
 
 #######################
 # Prompt Configuration
@@ -60,8 +47,8 @@ PROMPT="${CL_B}[${CL_Y}%n${CL_B}@${CL_N}${CL_LR}%m ${CL_LM}%~${CL_N}${CL_B}]%#${
 RPROMPT="${CL_B}(%*)${CL_N}"
 
 # This file should overwrite PROMPT and RPROMPT.
-if ! [ $SSH_TTY ] && [ -f ${HOME}/.zsh/prompt.sh ]; then
-    source ${HOME}/.zsh/prompt.sh
+if ! [ $SSH_TTY ] && [ -f "${HOME}/.zsh/prompt.sh" ]; then
+    source "${HOME}/.zsh/prompt.sh"
 fi
 
 ##########
