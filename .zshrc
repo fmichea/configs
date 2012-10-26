@@ -67,6 +67,7 @@ fi
 ##########
 # Aliases
 
+alias find='noglob find'
 alias reload='. ${HOME}/.zshrc'
 
 ################################################################
