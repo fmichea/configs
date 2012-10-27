@@ -28,15 +28,8 @@ key[PageDown]="${terminfo[knp]}"
 [[ -n "${key[Left]}" ]] && bindkey "${key[Left]}" backward-char
 [[ -n "${key[Right]}" ]] && bindkey "${key[Right]}" forward-char
 
-# Up and Down begin a search in history, from the beginning of the line. It
-# searches for all of commands that start like the left of your cursor in
-# history. If cursor is at the beginning of the line it will just behave like
-# normal Up/Down behavior.
-#
-# Note: if you want to append content to the current line, just hit End or
-# Ctrl-E.
-[[ -n "${key[Up]}" ]] && bindkey "${key[Up]}" history-beginning-search-backward
-[[ -n "${key[Down]}" ]] && bindkey "${key[Down]}" history-beginning-search-forward
+[[ -n "${key[Up]}" ]] && bindkey "${key[Up]}" up-line-or-history
+[[ -n "${key[Down]}" ]] && bindkey "${key[Down]}" down-line-or-history
 
 # Xterm compatibility layer AFAIK.
 function zle-line-init () {
@@ -48,9 +41,17 @@ function zle-line-finish () {
 zle -N zle-line-init
 zle -N zle-line-finish
 
+# Up and Down begin a search in history, from the beginning of the line. It
+# searches for all of commands that start like the left of your cursor in
+# history. If cursor is at the beginning of the line it will just behave like
+# normal Up/Down behavior.
+#
+# Note: if you want to append content to the current line, just hit End or
+# Ctrl-E.
+#
 # FIXME: Find a way to use terminfos.
-bindkey "^[Oa" up-line-or-history
-bindkey '^[Ob' down-line-or-history
+bindkey "^[Oa" history-beginning-search-backward
+bindkey '^[Ob' history-beginning-search-forward
 bindkey '^[Od' emacs-backward-word
 bindkey '^[Oc' emacs-forward-word
 

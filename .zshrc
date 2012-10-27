@@ -17,6 +17,7 @@ setopt hist_ignore_dups # Don't put duplicates in history.
 setopt no_bang_hist # Don't redefine ! (useful for commit messages etc...).
 setopt nobeep
 setopt transient_rprompt # Don't keep RPROMPT when command is entered.
+setopt prompt_subst
 
 ########################
 # Keyboard configuration
@@ -27,6 +28,10 @@ fi
 
 #######################
 # Prompt Configuration
+
+fpath=($fpath "$HOME/.zsh/functions")
+typeset -U fpath
+autoload -Uz add-zsh-hook
 
 autoload colors zsh/terminfo
 if [[ "$terminfo[colors]" -ge 8 ]]; then
