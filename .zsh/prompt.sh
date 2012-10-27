@@ -120,12 +120,6 @@ function _prompt_setup() {
     typeset -Ag prompt_modifiers
     prompt_modifiers=(${(kv)pr})
 
-#    local p_date p_line p_rc
-#
-    p_date=
-#
-#    p_line="$pc[line]%y$pc[reset]"
-
     PROMPT=
     PROMPT+="$pc[#]$pr[in]$pr[ul]$pr[h]$pr[out]($pc[reset]"
     PROMPT+="$pc[user]%(!.%SROOT%s.%n)$pc[reset]$pc[#]@$pc[reset]$pc[host]%m$pc[reset]$pc[reset]"
@@ -204,15 +198,9 @@ function _scm_status {
                 revs_ahead=($(git rev-list --reverse $track_merge..HEAD))
                 revs_behind=($(git rev-list --reverse HEAD..$track_merge))
                 if [ $#revs_ahead -gt 0 ] || [ $#revs_behind -gt 0 ]; then
-                    local base=""
-                    local base_name=$(git name-rev --name-only $base)
-                    local base_short=$(revstring $base)
-
                     if [ $#revs_behind -gt 0 ]; then
-                        base=$(revstring $revs_behind[1]~1)
                         commits+="$pc[ko]-$pc[reset]$#revs_behind"
                     else
-                        base=$(revstring $revs_ahead[1]~1)
                         commits+="$pc[ok]+$pc[reset]$#revs_ahead"
                     fi
                 fi
@@ -237,18 +225,17 @@ function _scm_status {
     if [ $#commits -gt 0 ]; then
         echo -n "$pc[#]($pc[reset]"
         local sep="$pc[#])$pr[in]$pr[h]$pr[out]($pc[reset]"
-        for idx in `seq $#commits`; do
-            if [ $idx -ne 1 ]; then
-                echo -ne "$sep"
-            fi
-            echo -n "${commits[idx]}"
+        for idx in `seq $(($#commits - 1))`; do
+            echo -n "${commits[idx]}$sep"
         done
+        echo -n "${commits[$#commits]}"
         echo -n "$pc[#])$pr[in]$pr[h]$pr[out]"
     fi
 }
 
 _scm_branch() {
     zgit_isgit || return
+
     local -A pc
     pc=(${(kv)prompt_colors})
 
