@@ -39,8 +39,7 @@ _prompt_precmd() {
 
     if [[ $ex -ge 128 ]]; then
         sig=$signals[$ex-127]
-        psvar[1]="sig${(L)sig}"
-        psvar[1]="${(U)psvar[1]}"
+        psvar[1]="${sig}"
     else
         psvar[1]="$ex"
     fi
@@ -98,15 +97,12 @@ function _prompt_setup() {
 
     local -A pc
     pc[default]='default'
-    pc[date]='yellow'
-    pc[time]='yellow'
+    pc[date]='Yellow'
+    pc[time]='Yellow'
     pc[host]='red'
     pc[user]='Yellow "" bold'
     pc[punc]='blue'
-    #pc[line]='magenta'
-    #pc[hist]='green'
     pc[path]='magenta'
-    #pc[shortpath]='default'
     pc[ok]='green'
     pc[ko]='red'
     pc[scm_branch]='Cyan'
@@ -126,7 +122,7 @@ function _prompt_setup() {
 
 #    local p_date p_line p_rc
 #
-#    p_date="$pc[date]%D{%Y-%m-%d} $pc[time]%D{%T}$pc[reset]"
+    p_date=
 #
 #    p_line="$pc[line]%y$pc[reset]"
 
@@ -146,27 +142,9 @@ function _prompt_setup() {
     PROMPT+="%(!.$pc[ko].$pc[#])%#$pc[reset]"
     PROMPT+="$pc[#]$pr[in]$pr[h]$pr[out]$pc[reset] "
 
-    RPROMPT=
-
-#    if [ $verbose ]; then
-#        PROMPT+="$pc[host]%m$pc[reset] "
-#    fi
-#    PROMPT+="$pc[path]%(2~.%~.%/)$pc[reset]"
-#    PROMPT+="\$(prompt_wunjo_scm_status)"
-#    PROMPT+="%(?.. $pc[rc]exited %1v$pc[reset])"
-#    PROMPT+="
-#"
-#    PROMPT+="$pc[hist]%h$pc[reset] "
-#    PROMPT+="$pc[shortpath]%1~$pc[reset]"
-#    PROMPT+="\$(prompt_wunjo_scm_branch)"
-#    PROMPT+=" $pc[#]%#$pc[reset] "
-#
-#    RPROMPT=
-#    if [ $verbose ]; then
-#        RPROMPT+="$p_date "
-#    fi
-#    RPROMPT+="$pc[user]%n$pc[reset]"
-#    RPROMPT+=" $p_line"
+    RPROMPT="$pc[#]$pr[in]$pr[h]$pr[out]($pr[reset]"
+    RPROMPT+="$pc[time]%D{%T}$pc[reset]"
+    RPROMPT+="$pc[#])$pr[in]$pr[h]$pr[out]$pc[reset]"
 
     export PROMPT RPROMPT
     add-zsh-hook precmd _prompt_precmd
@@ -237,8 +215,6 @@ function _scm_status {
                         base=$(revstring $revs_ahead[1]~1)
                         commits+="$pc[ok]+$pc[reset]$#revs_ahead"
                     fi
-
-                    #commits+="$pc[scm_branch]$base_name$pc[punc]($pc[scm_commitid]$base_short$pc[punc])$pc[reset]"
                 fi
 
                 if [ -n "$tracked" ]; then
@@ -307,101 +283,5 @@ _scm_branch() {
 
     echo $pc[reset]
 }
-#function precmd {
-#    echo -ne "\a"
-#
-#    local TERMWIDTH
-#    (( TERMWIDTH = ${COLUMNS} - 1 ))
-#
-#    ###
-#    # Truncate the path if it's too long.
-#
-#    PR_FILLBAR=""
-#    PR_PWDLEN=""
-#
-#    local promptsize=${#${(%):---(%n@%m)-()--}}
-#    local pwdsize=${#${(%):-%~}}
-#
-#    if [[ "$promptsize + $pwdsize" -gt $TERMWIDTH ]]; then
-#        ((PR_PWDLEN=$TERMWIDTH - $promptsize))
-#    else
-#        PR_FILLBAR="\${(l.(($TERMWIDTH - ($promptsize + $pwdsize)))..${PR_HBAR}.)}"
-#    fi
-#
-#    if [[ "$TERM" != "linux" ]]; then
-#        print -rP '$PR_SET_CHARSET$PR_STITLE${(e)PR_TITLEBAR}\
-#$CL_B$PR_SHIFT_IN$PR_ULCORNER$PR_HBAR$PR_SHIFT_OUT(\
-#$CL_Y%(!.%SROOT%s.%n)$CL_B@$CL_N$CL_LR%m$CL_N$CL_B\
-#)$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT(\
-#$CL_N$CL_LM%$PR_PWDLEN<...<%~%<<\
-#$CL_N$CL_B)$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT'
-#    fi
-#}
-#
-#setopt extended_glob
-#preexec () {
-#    if [[ "$TERM" == "screen" ]]; then
-#        local CMD=${1[(wr)^(*=*|sudo|-*)]}
-#        echo -n "\ek$CMD\e\\"
-#    fi
-#}
-
-
-#setprompt () {
-#    ###
-#    # Need this so the prompt will work.
-#    setopt prompt_subst
-#
-#    ###
-#    # See if we can use extended characters to look nicer.
-#    typeset -A altchar
-#    set -A altchar ${(s..)terminfo[acsc]}
-#    PR_SET_CHARSET="%{$terminfo[enacs]%}"
-#    PR_SHIFT_IN="%{$terminfo[smacs]%}"
-#    PR_SHIFT_OUT="%{$terminfo[rmacs]%}"
-#    PR_HBAR=${altchar[q]:--}
-#    PR_ULCORNER=${altchar[l]:--}
-#    PR_LLCORNER=${altchar[m]:--}
-#    PR_LRCORNER=${altchar[j]:--}
-#    PR_URCORNER=${altchar[k]:--}
-#
-#    ###
-#    # Decide if we need to set titlebar text.
-#    case $TERM in
-#    screen)
-#        PR_TITLEBAR=$'%{\e_screen \005 | %(!.-=[ROOT]=- | .)%n@%m | %~ \e\\%}'
-#        ;;
-#    *)
-#        PR_TITLEBAR=$'%{\e]0;%(!.-=*[ROOT]*=- | .)%n@%m | %~\a%}'
-#        ;;
-#    esac
-#
-#    ###
-#    # Decide whether to set a screen title
-#    if [[ "$TERM" == "screen" ]]; then
-#        PR_STITLE=$'%{\ekzsh\e\\%}'
-#    else
-#        PR_STITLE=''
-#    fi
-#
-#    ###
-#    # Finally, the prompt.
-#    if [[ "$TERM" != "linux" ]]; then
-#        PS1='$PR_SET_CHARSET$PR_STITLE${(e)PR_TITLEBAR}\
-#$CL_B$PR_SHIFT_IN$PR_LLCORNER$PR_HBAR$PR_SHIFT_OUT(\
-#$CL_N%(?.$CL_LG.$CL_LR)%?$CL_N$CL_B)\
-#$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT%(!.$CL_R.$CL_B)%#\
-#$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT$CL_N '
-#
-#        RPS1=' $CL_B$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT($CL_Y%D{%a %d %b},\
-# %*$CL_B)$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT$CL_N'
-#    #$PR_LRCORNER
-#
-#        PS2='$CL_B$PR_SHIFT_IN$PR_LLCORNER$PR_SHIFT_OUT(\
-#$CL_N$CL_LG%4>.>%_%>>$CL_N$CL_B)$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT$CL_N '
-#    fi
-#}
-#
-#setprompt
 
 _prompt_setup "$@"
