@@ -38,8 +38,7 @@ _prompt_precmd() {
     psvar=()
 
     if [[ $ex -ge 128 ]]; then
-        sig=$signals[$ex-127]
-        psvar[1]="${sig}"
+        psvar[1]="${signals[$ex-127]}"
     else
         psvar[1]="$ex"
     fi
@@ -121,6 +120,8 @@ function _prompt_setup() {
     prompt_modifiers=(${(kv)pr})
 
     PROMPT=
+
+    # First line (all informations).
     PROMPT+="$pc[#]$pr[in]$pr[ul]$pr[h]$pr[out]($pc[reset]"
     PROMPT+="$pc[user]%(!.%SROOT%s.%n)$pc[reset]$pc[#]@$pc[reset]$pc[host]%m$pc[reset]$pc[reset]"
     PROMPT+="$pc[#])$pr[in]$pr[h]$pr[out]($pc[reset]"
@@ -130,17 +131,25 @@ function _prompt_setup() {
 
     PROMPT+=$'\n'
 
+    # Second line, actual prompt.
     PROMPT+="$pc[#]$pr[in]$pr[ll]$pr[h]$pr[out]($pc[reset]"
     PROMPT+="%(?.$pc[ok].$pc[ko])%1v$pc[reset]"
     PROMPT+="$pc[#])$pr[in]$pr[h]$pr[out]$pc[reset]"
     PROMPT+="%(!.$pc[ko].$pc[#])%#$pc[reset]"
     PROMPT+="$pc[#]$pr[in]$pr[h]$pr[out]$pc[reset] "
 
+    # Right prompt.
     RPROMPT="$pc[#]$pr[in]$pr[h]$pr[out]($pr[reset]"
     RPROMPT+="$pc[time]%D{%T}$pc[reset]"
     RPROMPT+="$pc[#])$pr[in]$pr[h]$pr[out]$pc[reset]"
 
-    export PROMPT RPROMPT
+    # Continuation prompt.
+    PROMPT2=
+    PROMPT2="$pc[#]$pr[in]$pr[ll]$pr[h]$pr[out]($pc[reset]"
+    PROMPT2+="$pc[ok]%_$pc[reset]"
+    PROMPT2+="$pc[#])$pr[in]$pr[h]$pr[out]$pc[reset] "
+
+    export PROMPT RPROMPT PROMPT2
     add-zsh-hook precmd _prompt_precmd
 }
 
