@@ -119,7 +119,9 @@ function _prompt_setup() {
     typeset -Ag prompt_modifiers
     prompt_modifiers=(${(kv)pr})
 
+    # Window title.
     PROMPT=
+    PROMPT+="`echo -ne "\e]2;%n@%m | %~\a"`"
 
     # First line (all informations).
     PROMPT+="$pc[#]$pr[in]$pr[ul]$pr[h]$pr[out]($pc[reset]"
@@ -129,9 +131,8 @@ function _prompt_setup() {
     PROMPT+="$pc[#])$pr[in]$pr[h]$pr[out]$pc[reset]"
     PROMPT+="\$(_scm_status)\$(_scm_branch)"
 
-    PROMPT+=$'\n'
-
     # Second line, actual prompt.
+    PROMPT+=$'\n'
     PROMPT+="$pc[#]$pr[in]$pr[ll]$pr[h]$pr[out]($pc[reset]"
     PROMPT+="%(?.$pc[ok].$pc[ko])%1v$pc[reset]"
     PROMPT+="$pc[#])$pr[in]$pr[h]$pr[out]$pc[reset]"
@@ -139,13 +140,14 @@ function _prompt_setup() {
     PROMPT+="$pc[#]$pr[in]$pr[h]$pr[out]$pc[reset] "
 
     # Right prompt.
-    RPROMPT="$pc[#]$pr[in]$pr[h]$pr[out]($pr[reset]"
+    RPROMPT=
+    RPROMPT+="$pc[#]$pr[in]$pr[h]$pr[out]($pr[reset]"
     RPROMPT+="$pc[time]%D{%T}$pc[reset]"
     RPROMPT+="$pc[#])$pr[in]$pr[h]$pr[out]$pc[reset]"
 
     # Continuation prompt.
     PROMPT2=
-    PROMPT2="$pc[#]$pr[in]$pr[ll]$pr[h]$pr[out]($pc[reset]"
+    PROMPT2+="$pc[#]$pr[in]$pr[ll]$pr[h]$pr[out]($pc[reset]"
     PROMPT2+="$pc[ok]%_$pc[reset]"
     PROMPT2+="$pc[#])$pr[in]$pr[h]$pr[out]$pc[reset] "
 
