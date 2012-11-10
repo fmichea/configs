@@ -6,3 +6,5 @@ email = franck.michea@gmail.com
 [core]
 
 excludesfile = ~/.gitignore
+[push]
+	default = simple
