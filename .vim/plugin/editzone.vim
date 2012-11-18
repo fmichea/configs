@@ -10,10 +10,8 @@ set novisualbell
 
 set cursorline
 
-set wrap
-set textwidth=79
 if version >= 703
-   set colorcolumn=+1
+   set colorcolumn=81
 endif
 
 set list
