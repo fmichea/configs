@@ -10,7 +10,7 @@ function usage {
 FILES=".commonshrc .emacs .emacs.d .hgrc .Xdefaults .zsh .zshrc .bashrc"
 FILES+=" .gitignore .gitconfig .vim .vimrc .tmux.conf .xinitrc .mutt"
 
-FILES_XDG="i3 i3status"
+FILES_XDG="i3 i3status dunst"
 
 INSTALL_PATH=${HOME}
 XDG_PATH=${XDG_CONFIG_HOME:-"$HOME/.config"}
