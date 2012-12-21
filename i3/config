@@ -146,3 +146,7 @@ bindsym $mod+r mode "resize"
 bar {
         status_command i3status
 }
+
+# Floating windows
+for_window [class="nebula" instance="nebula"] floating enable
+for_window [class="Steam" instance="Steam"] floating enable
