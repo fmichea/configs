@@ -32,14 +32,16 @@ key[PageDown]="${terminfo[knp]}"
 [[ -n "${key[Down]}" ]] && bindkey "${key[Down]}" down-line-or-history
 
 # Xterm compatibility layer AFAIK.
-function zle-line-init () {
-    echoti smkx
-}
-function zle-line-finish () {
-    echoti rmkx
-}
-zle -N zle-line-init
-zle -N zle-line-finish
+if [ -n "$DISPLAY" ]; then
+    function zle-line-init () {
+        echoti smkx
+    }
+    function zle-line-finish () {
+        echoti rmkx
+    }
+    zle -N zle-line-init
+    zle -N zle-line-finish
+fi
 
 # Up and Down begin a search in history, from the beginning of the line. It
 # searches for all of commands that start like the left of your cursor in
