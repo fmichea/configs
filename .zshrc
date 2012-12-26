@@ -52,7 +52,7 @@ PROMPT="${CL_B}[${CL_Y}%n${CL_B}@${CL_N}${CL_LR}%m ${CL_LM}%~${CL_N}${CL_B}]%#${
 RPROMPT="${CL_B}(%*)${CL_N}"
 
 # This file should overwrite PROMPT and RPROMPT.
-if ! [ $SSH_TTY ] && [ -f "${HOME}/.zsh/prompt.sh" ]; then
+if ! [ $SSH_TTY ] && [ -f "${HOME}/.zsh/prompt.sh" ] && [ -n "$DISPLAY" ]; then
     source "${HOME}/.zsh/prompt.sh"
 fi
 
