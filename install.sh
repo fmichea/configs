@@ -67,11 +67,11 @@ install_files "$FILES" $INSTALL_PATH
 install_files "$FILES_XDG" $XDG_PATH
 
 # Getting vicious for widgets
-if ! [ -x $XDG_PATH/awesome/vicious ]; then
-    echo "Downloading and  installing vicious for awesome."
-    git clone http://git.sysphere.org/vicious
-    mv vicious $XDG_PATH/awesome/vicious
-fi
+#if ! [ -x $XDG_PATH/awesome/vicious ]; then
+#    echo "Downloading and  installing vicious for awesome."
+#    git clone http://git.sysphere.org/vicious
+#    mv vicious $XDG_PATH/awesome/vicious
+#fi
 
 exit 0
 
