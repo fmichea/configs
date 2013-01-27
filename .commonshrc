@@ -7,6 +7,7 @@
 # Aliases
 
 alias c='clear'
+alias cdtemp='cd `mktemp -d`'
 alias clfiles='find . \( -name "*~" -o -name "*.pyc" -o -name "*.o" \) -delete'
 alias cp='cp -v'
 alias df='df -h'
@@ -35,5 +36,11 @@ export PATH="/opt/android-sdk/platform-tools:$HOME/.local/bin:${PATH}"
 if [ -f $HOME/.commonshrc_opt ]; then
    source $HOME/.commonshrc_opt
 fi
+
+function mkcd {
+    dir="$1"
+    mkdir -p "$dir"
+    cd "$dir"
+}
 
 # EOF
