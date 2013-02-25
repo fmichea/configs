@@ -4,8 +4,8 @@ function Epita_c_insert_guards()
   let basename=substitute(@%, "[^/]*/", "", "g")
   let underscored=tr(basename, ".", "_")
   let const=substitute(underscored, ".*", "\\U\\0", "")."_"
-  exe "normal i#ifndef ".const."\n\e"
-  exe "normal i# define ".const."\n\n\n\n\e"
+  exe "normal i#ifndef ".const."\r\e"
+  exe "normal i# define ".const."\r\r\r\r\e"
   exe "normal i#endif /"."* !".const." */\e"
   exe "normal 4G"
 endfunction
