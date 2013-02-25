@@ -150,3 +150,4 @@ bar {
 # Floating windows
 for_window [class="nebula" instance="nebula"] floating enable
 for_window [class="Steam" instance="Steam"] floating enable
+for_window [class="Bochs" instance="bochs"] floating enable
