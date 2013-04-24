@@ -17,6 +17,9 @@ URxvt.matcher.button: 1
 URxvt.inheritPixmap: true
 URxvt.shading: 35
 
+URxvt.iso14755: false
+URxvt.iso14755_52: false
+
 !-------------------------------------------------
 ! Colors
 ! 0:  Black; 1:  Red; 2:  Green; 3:  Yellow; 4:  Blue;
