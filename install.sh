@@ -7,10 +7,10 @@ function usage {
 
 [ $# -lt 1 ] && usage
 
-FILES=".commonshrc .hgrc .Xdefaults .zsh .zshrc .bashrc"
-FILES+=" .gitignore .gitconfig .vim .vimrc .tmux.conf .xinitrc .mutt .gvimrc"
+FILES=".hgrc .Xdefaults .zsh .zshrc .gitignore .gitconfig .vim .vimrc"
+FILES+=".tmux.conf .xinitrc .mutt .gvimrc"
 
-FILES_XDG="i3 i3status dunst"
+FILES_XDG="i3 i3status"
 
 INSTALL_PATH=${HOME}
 XDG_PATH=${XDG_CONFIG_HOME:-"$HOME/.config"}
@@ -65,13 +65,6 @@ function install_files {
 
 install_files "$FILES" $INSTALL_PATH
 install_files "$FILES_XDG" $XDG_PATH
-
-# Getting vicious for widgets
-#if ! [ -x $XDG_PATH/awesome/vicious ]; then
-#    echo "Downloading and  installing vicious for awesome."
-#    git clone http://git.sysphere.org/vicious
-#    mv vicious $XDG_PATH/awesome/vicious
-#fi
 
 exit 0
 
