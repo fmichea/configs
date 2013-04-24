@@ -7,7 +7,7 @@ function usage {
 
 [ $# -lt 1 ] && usage
 
-FILES=".commonshrc .emacs .emacs.d .hgrc .Xdefaults .zsh .zshrc .bashrc"
+FILES=".commonshrc .hgrc .Xdefaults .zsh .zshrc .bashrc"
 FILES+=" .gitignore .gitconfig .vim .vimrc .tmux.conf .xinitrc .mutt .gvimrc"
 
 FILES_XDG="i3 i3status dunst"
