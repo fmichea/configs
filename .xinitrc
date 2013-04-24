@@ -4,7 +4,6 @@
 setxkbmap us intl
 
 # Skype, Password manager.
-skype &
 keepassx &
 
 # Window manager.
