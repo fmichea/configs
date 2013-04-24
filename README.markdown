@@ -25,20 +25,13 @@ add configuration on several computers without pushing it to your repository.
 The following list is a list of programs used by the configuration and
 configured at the time I am writing this README. I'll try to keep it updated.
 
-### Configured (Still used)
+### Configured
 
-* git - DCVS
-* i3/i3status - i3 WM suite (tiling window manager).
 * [rxvt-unicode][3] - Terminal emulator
-* vim - Text editor
 * [zsh][4] - Powerful shell
-
-### Configured (Not used anymore)
-
-* [awesome WM][5] - Window Manager
-* bash - Another shell
-* [emacs][6] - Text editor
-* [mercurial][7] - DCVS
+* git, mercurial - DCVS
+* i3, i3status - i3 WM suite (tiling window manager).
+* vim - Text editor
 
 ### Used programs (dependencies)
 
