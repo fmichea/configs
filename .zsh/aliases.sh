@@ -1,8 +1,3 @@
-######################################################################
-# .commonshrc: kushou's configuration file for common configurations #
-#	           for zsh and bash (like aliases).                      #
-######################################################################
-
 ##########
 # Aliases
 
@@ -31,16 +26,8 @@ alias s='ls'
 export EDITOR="vim"
 export PAGER="most"
 
-export PATH="/opt/android-sdk/platform-tools:$HOME/.local/bin:${PATH}"
-
-if [ -f $HOME/.commonshrc_opt ]; then
-   source $HOME/.commonshrc_opt
-fi
-
 function mkcd {
     dir="$1"
     mkdir -p "$dir"
     cd "$dir"
 }
-
-# EOF

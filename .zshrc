@@ -19,6 +19,13 @@ setopt nobeep
 setopt transient_rprompt # Don't keep RPROMPT when command is entered.
 setopt prompt_subst
 
+#########
+# Aliases
+
+if [ -f "${HOME}/.zsh/aliases.sh" ]; then
+    source "${HOME}/.zsh/aliases.sh"
+fi
+
 ########################
 # Keyboard configuration
 
@@ -62,18 +69,11 @@ fi
 alias find='noglob find'
 alias reload='. ${HOME}/.zshrc'
 
-################################################################
-# Including .commonshrc, common configuration for bash and zsh.
+######################################################
 # Including .zsh_opt, location specific configuration.
 
-if [ -f ${HOME}/.commonshrc ]; then
-    source ${HOME}/.commonshrc
-else
-    echo "Common configuration file is not found !"
-fi
-
-if [ -f ${HOME}/.zshrc_opt ]; then
-    source ${HOME}/.zshrc_opt
+if [ -f "${HOME}/.zshrc_opt" ]; then
+    source "${HOME}/.zshrc_opt"
 fi
 
 # EOF
