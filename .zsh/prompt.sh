@@ -42,7 +42,7 @@ _prompt_precmd() {
     else
         psvar[1]="$ex"
     fi
-    echo -ne "\a"
+    echo -ne "\a" 2> /dev/null
 }
 
 function _prompt_setup() {
@@ -156,6 +156,7 @@ function _prompt_setup() {
 }
 
 function _scm_status {
+    if ! zgit_isgit; then true; return 0; fi
     zgit_isgit || return
 
     local -A pc
@@ -245,7 +246,7 @@ function _scm_status {
 }
 
 _scm_branch() {
-    zgit_isgit || return
+    if ! zgit_isgit; then true; return 0; fi
 
     local -A pc
     pc=(${(kv)prompt_colors})
