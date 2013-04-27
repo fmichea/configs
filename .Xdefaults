@@ -6,7 +6,7 @@
 
 URxvt.background: #2c2c2c
 URxvt.foreground: #dcdccd
-URxvt.font: xft:Deja Vu Sans Mono:pixelsize=10
+URxvt.font: xft:DejaVu Sans Mono-8,xft:DejaVu Sans Mono for Powerline-8
 URxvt.scrollBar: false
 URxvt.urgentOnBell: true
 
