@@ -2,4 +2,4 @@
 
 set wildmenu
 set wildmode=list:longest:full
-set wildignore+=*.o,*.egg-info/
+set wildignore+=*.o,*.egg-info/,build.*/
