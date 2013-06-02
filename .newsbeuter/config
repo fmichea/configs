@@ -1,0 +1,13 @@
+# Loading configuration.
+notify-beep yes
+refresh-on-startup yes
+auto-reload yes
+
+# Quiting options.
+confirm-exit yes
+cleanup-on-quit yes
+
+# Color/displaying configuration.
+text-width 80
+color listfocus default red
+color info default red
