@@ -21,5 +21,3 @@
     changed = green
     untracked = cyan
 
-[gui]
-    recentrepo = /home/kushou/projects/zgeg
