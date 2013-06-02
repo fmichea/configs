@@ -152,3 +152,4 @@ bar {
 for_window [class="nebula" instance="nebula"] floating enable
 for_window [class="Steam" instance="Steam"] floating enable
 for_window [class="Bochs" instance="bochs"] floating enable
+for_window [class="qemu-system-i386" instance="qemu-system-i386"] floating enable
