@@ -15,7 +15,8 @@ exec feh --bg-scale ~/.config/i3/wallpaper.jpg
 set $mod Mod4
 
 # font for window titles. ISO 10646 = Unicode
-font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+#font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+font pango:DejaVu Sans Mono 10px
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
