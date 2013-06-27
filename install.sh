@@ -7,13 +7,13 @@ function usage {
 
 [ $# -lt 1 ] && usage
 
-FILES=".hgrc .Xdefaults .zsh .zshrc .gitignore .gitconfig .vim .vimrc"
-FILES+=".tmux.conf .xinitrc .mutt .gvimrc"
+FILES="hgrc Xdefaults zsh zshrc gitignore gitconfig vim vimrc gdbinit "
+FILES+="tmux.conf xinitrc mutt gvimrc"
 
 FILES_XDG="i3 i3status"
 
-INSTALL_PATH=${HOME}
-XDG_PATH=${XDG_CONFIG_HOME:-"$HOME/.config"}
+INSTALL_PATH="${HOME}/."
+XDG_PATH=${XDG_CONFIG_HOME:-"$HOME/.config/"}
 
 while getopts "p:x:" arg; do
     case $arg in
@@ -29,12 +29,12 @@ INSTALL_TYPE=$1
 INSTALL_PATH_FILE=~/.config_installpath
 
 function make_link {
-    echo "=> Installing $2 in $1."
-    ln -sf `pwd`/$2 $1/$2
+    echo "=> Installing $2 as $1$2"
+    ln -sf `pwd`/$2 $1$2
 }
 
 function remove_link {
-    echo "=> Removing link created at $1."
+    echo "=> Removing link created at $1"
     rm -f $1
 }
 
@@ -57,8 +57,8 @@ fi
 function install_files {
     for filename in $1; do
         case $INSTALL_TYPE in
-            install ) [ -e "$2/$filename" ] || make_link $2 $filename;;
-            uninstall ) [ -e "$2/$filename" ] && remove_link "$2/$filename";;
+            install ) [ -e "$2$filename" ] || make_link $2 $filename;;
+            uninstall ) [ -e "$2$filename" ] && remove_link "$2$filename";;
         esac
     done
 }
