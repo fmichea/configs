@@ -4,6 +4,9 @@
 # startup.sh: Launched by i3 when it starts.                                   #
 ################################################################################
 
+# Disable audible bell.
+xset b off
+
 # Screen layout.
 if [ -f ~/scripts/misc/screen_switch.py ]; then
     python ~/scripts/misc/screen_switch.py
