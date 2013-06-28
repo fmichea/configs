@@ -2,6 +2,11 @@
 # .zshrc: kushou's main configuration file for zsh #
 ####################################################
 
+################
+# Login in a TTY
+
+[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx &> /dev/null
+
 #####################
 # Main Configuration
 
