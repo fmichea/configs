@@ -1,11 +1,6 @@
-# Script launched after login.
-
-# Keymap.
-setxkbmap us intl
-
-# Skype, Password manager.
-keepassx &
+################################################################################
+# .xinitrc: Script launched after the start of X.                              #
+################################################################################
 
 # Window manager.
 exec i3
-#exec awesome
