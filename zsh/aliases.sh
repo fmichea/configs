@@ -12,8 +12,6 @@ alias grep='grep --color=auto'
 alias ipy2='ipython2'
 alias ipy='ipython'
 alias j='jobs'
-alias ks='ls'
-alias l='ls'
 alias la='ls -la'
 alias ll='ls -l'
 alias ls='ls --color=auto'
@@ -22,7 +20,12 @@ alias ne='emacs -nw'
 alias py2='python2'
 alias py='python'
 alias rm='rm -v'
+
+alias kls='ls'
+alias ks='ls'
+alias l='ls'
 alias s='ls'
+alias sl='ls'
 
 export EDITOR="vim"
 export PAGER="most"
