@@ -20,6 +20,7 @@ alias ne='emacs -nw'
 alias py2='python2'
 alias py='python'
 alias rm='rm -v'
+alias objdump='objdump -M intel'
 
 alias kls='ls'
 alias ks='ls'
