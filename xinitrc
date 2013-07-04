@@ -4,3 +4,5 @@
 
 # Window manager.
 exec i3
+
+# vim: filetype=sh

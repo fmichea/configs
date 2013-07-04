@@ -17,3 +17,5 @@ set follow-fork-mode child
 
 # Per computer safe-paths are configured here.
 source ~/.gdbinit_safepaths
+
+# vim: filetype=gdb
