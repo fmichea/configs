@@ -21,6 +21,7 @@ alias py2='python2'
 alias py='python'
 alias rm='rm -v'
 alias objdump='objdump -M intel'
+alias vo,='vim'
 
 alias kls='ls'
 alias ks='ls'
