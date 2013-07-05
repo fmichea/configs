@@ -15,4 +15,4 @@ if version >= 703
 endif
 
 set list
-set listchars=tab:.\ ,eol:¬
+set listchars=tab:»\ ,eol:¬
