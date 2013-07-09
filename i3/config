@@ -26,9 +26,9 @@ bindsym $mod+Return         exec i3-sensible-terminal
 bindsym $mod+Shift+Return   exec i3-sensible-terminal -cd "`xcwd`"
 
 # personal key bindings
-bindsym $mod+z          exec ~/scripts/misc/wm/lock.sh
-bindsym $mod+Shift+Z    exec ~/scripts/misc/wm/suspend.sh
-bindsym $mod+t          exec ~/scripts/misc/wm/toggle_touchpad.sh
+bindsym $mod+z          exec sh ~/scripts/misc/wm/lock.sh
+bindsym $mod+Shift+Z    exec sh ~/scripts/misc/wm/suspend.sh
+bindsym $mod+t          exec sh ~/scripts/misc/wm/toggle_touchpad.sh
 bindsym $mod+Shift+T    exec python ~/scripts/misc/keymap_switch.py
 
 # kill focused window
