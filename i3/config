@@ -30,6 +30,7 @@ bindsym $mod+z          exec sh ~/scripts/misc/wm/lock.sh
 bindsym $mod+Shift+Z    exec sh ~/scripts/misc/wm/suspend.sh
 bindsym $mod+t          exec sh ~/scripts/misc/wm/toggle_touchpad.sh
 bindsym $mod+Shift+T    exec python ~/scripts/misc/keymap_switch.py
+bindsym $mod+minus      exec python ~/scripts/misc/wm/scratchpad.py
 bindsym $mod+Shift+S    exec python ~/scripts/misc/screen_switch.py
 
 # kill focused window
@@ -156,3 +157,6 @@ for_window [class="nebula" instance="nebula"] floating enable
 for_window [class="Steam" instance="Steam"] floating enable
 for_window [class="Bochs" instance="bochs"] floating enable
 for_window [class="qemu-system-i386" instance="qemu-system-i386"] floating enable
+
+# Scratchpad helper for window creation.
+for_window [instance="^scratchpad$"] move scratchpad, scratchpad show
