@@ -161,7 +161,8 @@ bar {
 for_window [class="nebula" instance="nebula"] floating enable
 for_window [class="Steam" instance="Steam"] floating enable
 for_window [class="Bochs" instance="bochs"] floating enable
-for_window [class="qemu-system-i386" instance="qemu-system-i386"] floating enable
+for_window [class="qemu-*" instance="qemu-*"] floating enable
+for_window [title="/usr/bin/Xnest*"] floating enable
 
 # Scratchpad helper for window creation.
 for_window [instance="^scratchpad$"] move scratchpad, scratchpad show
