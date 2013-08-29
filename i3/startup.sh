@@ -24,3 +24,4 @@ feh --bg-scale ~/.config/i3/wallpaper.jpg
 # Default programs.
 pulseaudio --start
 keepassx &
+kmix
