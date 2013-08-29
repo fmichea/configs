@@ -38,3 +38,8 @@ function mkcd {
     mkdir -p "$dir"
     cd "$dir"
 }
+
+function nn { # No Network access to a command.
+    cmd="$@"
+    sg no-network $cmd
+}
