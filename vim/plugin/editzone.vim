@@ -1,6 +1,7 @@
 " editzone.vim
 
 set number
+set relativenumber
 
 set laststatus=2
 set statusline=%f\ %l:%c\ %m%=%p%%\ %y\ %r
