@@ -57,10 +57,15 @@ bindkey '^[Ob' history-beginning-search-forward
 bindkey '^[Od' emacs-backward-word
 bindkey '^[Oc' emacs-forward-word
 
+# tmux local + remote, wtf?
 bindkey "^[[A" history-beginning-search-backward
+bindkey "^[0A" history-beginning-search-backward
 bindkey '^[[B' history-beginning-search-forward
+bindkey '^[0B' history-beginning-search-forward
 bindkey '^[[D' emacs-backward-word
+bindkey '^[0D' emacs-backward-word
 bindkey '^[[C' emacs-forward-word
+bindkey '^[0C' emacs-forward-word
 
 # Stop on slash in paths when using ^W.
 tcsh-backward-kill-word () {
