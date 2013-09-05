@@ -164,6 +164,7 @@ for_window [class="Bochs" instance="bochs"] floating enable
 for_window [class="qemu-*" instance="qemu-*"] floating enable
 for_window [title="Kerbal Space Program"] floating enable
 for_window [title="/usr/bin/Xnest*"] floating enable
+for_window [title="^Git Gui *"] floating disable
 
 # Scratchpad helper for window creation.
 for_window [instance="^scratchpad$"] move scratchpad, scratchpad show
