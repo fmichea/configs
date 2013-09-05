@@ -57,6 +57,11 @@ bindkey '^[Ob' history-beginning-search-forward
 bindkey '^[Od' emacs-backward-word
 bindkey '^[Oc' emacs-forward-word
 
+bindkey "^[[A" history-beginning-search-backward
+bindkey '^[[B' history-beginning-search-forward
+bindkey '^[[D' emacs-backward-word
+bindkey '^[[C' emacs-forward-word
+
 # Opens man of the command.
 autoload run-help
 bindkey "^xh" run-help
