@@ -43,3 +43,13 @@ function nn { # No Network access to a command.
     cmd="$@"
     sg no-network $cmd
 }
+
+function clipcp {
+    if [ $# -eq 3 ]; then
+        CONTENT=`cat $1 | head -n $(( $2 + $3 )) | tail -n $(( $3 + 1))`
+    else
+        CONTENT=`cat -`
+    fi
+    echo "$CONTENT" | xclip
+    xclip -o
+}
