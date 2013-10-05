@@ -59,7 +59,7 @@ bindkey '^[Oc' emacs-forward-word
 
 # Stop on slash in paths when using ^W.
 tcsh-backward-kill-word () {
-    local WORDCHARS="${WORDCHARS:s#/#}"
+    local WORDCHARS="${WORDCHARS//[\/.-]/}"
     zle backward-delete-word
 }
 zle -N backward-kill-word tcsh-backward-kill-word
