@@ -100,6 +100,8 @@ bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
+bindsym $mod+i exec i3-input -l 2 -F 'workspace %s' -P 'Double digit workspace: '
+bindsym $mod+o exec i3-input -F 'workspace "%s"' -P 'Workspace name: '
 
 # move focused container to workspace
 bindsym $mod+Shift+exclam move container to workspace 1
@@ -112,6 +114,8 @@ bindsym $mod+Shift+ampersand move container to workspace 7
 bindsym $mod+Shift+asterisk move container to workspace 8
 bindsym $mod+Shift+parenleft move container to workspace 9
 bindsym $mod+Shift+parenright move container to workspace 10
+bindsym $mod+Shift+i exec i3-input -l 2 -F 'move container to workspace %s' -P 'Move container to double digit workspace: '
+bindsym $mod+Shift+o exec i3-input -F 'move container to workspace "%s"' -P 'Move container to workspace name: '
 
 # reload the configuration file
 bindsym $mod+Shift+C reload
