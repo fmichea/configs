@@ -1,10 +1,6 @@
 ######################
 # Mutt configuration
 
-# default identity
-set realname = "Franck Michea"
-set from = "franck.michea@gmail.com"
-
 set smart_wrap = yes
 set markers = no
 set mark_old = no
@@ -22,26 +18,13 @@ set uncollapse_jump = yes
 
 # sorting
 folder-hook "."             set sort=threads
-folder-hook "+[Gmail]/Sent" set sort=date-sent
 
 # forwarding
 set forward_format = "Fwd: [ %s ]"
 set forward_quote = yes
 
-# imap configuration.
-set folder = "imaps://imap.gmail.com/"
-set spoolfile = +INBOX
-set postponed = "+[Gmail]/Drafts"
-
 set mail_check = 90
 set timeout = 15
-
-set imap_user = "franck.michea"
-set imap_list_subscribed = yes
-
-# smtp configuration
-set smtp_url = "smtps://$imap_user@smtp.gmail.com/"
-set ssl_force_tls = yes
 
 # store message headers locally to speed things up
 set header_cache = ~/.mutt/hcache
