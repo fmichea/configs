@@ -17,3 +17,5 @@ endif
 
 set list
 set listchars=tab:»\ ,eol:¬
+
+set timeout timeoutlen=5000 ttimeoutlen=100
