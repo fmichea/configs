@@ -8,7 +8,7 @@ function usage {
 [ $# -lt 1 ] && usage
 
 FILES="hgrc Xdefaults zsh zshrc gitignore gitconfig vim vimrc gdbinit "
-FILES+="tmux.conf xinitrc mutt gvimrc pentadactylrc"
+FILES+="tmux.conf xinitrc mutt gvimrc pentadactylrc urxvt"
 
 FILES_XDG="i3 i3status"
 

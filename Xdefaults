@@ -1,6 +1,7 @@
 !----------------------------------------------------------------!
 ! .Xdefaults:  kushou s main configuration file for rxvt-unicode !
 !----------------------------------------------------------------!
+
 !--------------------
 ! Main Configuration
 
@@ -11,7 +12,7 @@ URxvt.letterSpace: -1
 URxvt.scrollBar: false
 URxvt.urgentOnBell: true
 
-URxvt.perl-ext-common: default,matcher
+URxvt.perl-ext-common: default,matcher,font-size
 URxvt.url-launcher: /usr/bin/firefox
 URxvt.matcher.button: 2
 
@@ -20,6 +21,15 @@ URxvt.shading: 35
 
 URxvt.iso14755: false
 URxvt.iso14755_52: false
+
+!--------------
+! Key Bindings
+
+URxvt.keysym.M-Delete: perl:matcher:list
+URxvt.keysym.C-Delete: perl:matcher:last
+
+URxvt.keysym.C-S-Up: perl:font-size:increase
+URxvt.keysym.C-S-Down: perl:font-size:decrease
 
 !-------------------------------------------------
 ! Colors
