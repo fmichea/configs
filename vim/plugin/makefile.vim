@@ -1,3 +1,3 @@
 " makefile.vim
 
-autocmd filetype make set noexpandtab
+autocmd filetype make setlocal noexpandtab
