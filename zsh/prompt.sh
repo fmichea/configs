@@ -104,6 +104,8 @@ function _prompt_setup() {
     pc[path]='magenta'
     pc[ok]='green'
     pc[ko]='red'
+    pc[venv_indicator]='Cyan'
+    pc[venv_name]='Yellow'
     pc[scm_branch]='Cyan'
     pc[scm_commitid]='Yellow'
     pc[scm_status_dirty]='Red'
@@ -129,7 +131,7 @@ function _prompt_setup() {
     PROMPT+="$pc[#])$pr[in]$pr[h]$pr[out]($pc[reset]"
     PROMPT+="$pc[path]%$pr[pwdlen]<...<%~%<<$pc[reset]"
     PROMPT+="$pc[#])$pr[in]$pr[h]$pr[out]$pc[reset]"
-    PROMPT+="\$(_scm_status)\$(_scm_branch)"
+    PROMPT+="\$(_venv_name)\$(_scm_status)\$(_scm_branch)"
 
     # Second line, actual prompt.
     PROMPT+=$'\n'
@@ -152,6 +154,7 @@ function _prompt_setup() {
     PROMPT2+="$pc[#])$pr[in]$pr[h]$pr[out]$pc[reset] "
 
     export PROMPT RPROMPT PROMPT2
+    export VIRTUAL_ENV_DISABLE_PROMPT=YES
     add-zsh-hook precmd _prompt_precmd
 }
 
@@ -281,6 +284,21 @@ _scm_branch() {
     fi
 
     echo $pc[reset]
+}
+
+_venv_name() {
+    local -A pc
+    pc=(${(kv)prompt_colors})
+
+    local -A pr
+    pr=(${(kv)prompt_modifiers})
+
+    if [ -n "$VIRTUAL_ENV" ]; then
+        res="$pc[#]($pc[reset]$pc[venv_indicator]venv:$pc[reset]$pc[venv_name]"
+        res+="`basename "$VIRTUAL_ENV"`"
+        res+="$pc[reset]$pc[#])$pr[in]$pr[h]$pr[out]$pr[reset]"
+        echo -n "$res"
+    fi
 }
 
 _prompt_setup "$@"
