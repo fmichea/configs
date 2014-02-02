@@ -16,7 +16,6 @@ fi
 if [ -f ~/scripts/misc/keymap_switch.py ]; then
     python ~/scripts/misc/keymap_switch.py
 fi
-setxkbmap -option caps:none
 
 # Background picutre.
 feh --bg-scale ~/.config/i3/wallpaper.jpg
