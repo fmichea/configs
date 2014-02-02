@@ -294,8 +294,13 @@ _venv_name() {
     pr=(${(kv)prompt_modifiers})
 
     if [ -n "$VIRTUAL_ENV" ]; then
+        name=`basename "$VIRTUAL_ENV"`
+        if [ "$name" = "venv" ]; then
+            tmp=`dirname "${VIRTUAL_ENV}"`
+            name=`basename "$tmp"`
+        fi
         res="$pc[#]($pc[reset]$pc[venv_indicator]venv:$pc[reset]$pc[venv_name]"
-        res+="`basename "$VIRTUAL_ENV"`"
+        res+="${name}"
         res+="$pc[reset]$pc[#])$pr[in]$pr[h]$pr[out]$pr[reset]"
         echo -n "$res"
     fi
