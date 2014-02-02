@@ -3,3 +3,4 @@
 *.pyc
 *.[oa]
 *.cm[ioa]
+venv
