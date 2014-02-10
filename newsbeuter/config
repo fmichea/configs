@@ -9,6 +9,10 @@ cleanup-on-quit yes
 
 # Color/displaying configuration.
 text-width 80
-color listfocus default red
 color info default red
+color listfocus default red
 color listfocus_unread white red bold
+color listnormal_unread magenta default
+
+# Read options.
+mark-as-read-on-hover yes
