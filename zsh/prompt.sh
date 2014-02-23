@@ -160,7 +160,7 @@ function _prompt_setup() {
 
 function _scm_status {
     if ! zgit_isgit; then true; return 0; fi
-    zgit_isgit || return
+    if [ -n "$PROMPT_NO_GIT" ]; then true; return 0; fi
 
     local -A pc
     pc=(${(kv)prompt_colors})
@@ -250,6 +250,7 @@ function _scm_status {
 
 _scm_branch() {
     if ! zgit_isgit; then true; return 0; fi
+    if [ -n "$PROMPT_NO_GIT" ]; then true; return 0; fi
 
     local -A pc
     pc=(${(kv)prompt_colors})
