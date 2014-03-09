@@ -38,6 +38,13 @@ if [ -f "${HOME}/.zsh/keyboard.sh" ]; then
     source "${HOME}/.zsh/keyboard.sh"
 fi
 
+##########################
+# Completion configuration
+
+if [ -f "${HOME}/.zsh/completion.sh" ]; then
+    source "${HOME}/.zsh/completion.sh"
+fi
+
 #######################
 # Prompt Configuration
 
