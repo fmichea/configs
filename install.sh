@@ -5,12 +5,21 @@ function usage {
     exit 1
 }
 
+HOST_OS=`uname`
+
 [ $# -lt 1 ] && usage
 
-FILES="hgrc Xdefaults zsh zshrc gitignore gitconfig vim vimrc gdbinit "
-FILES+="tmux.conf xinitrc mutt gvimrc pentadactylrc urxvt"
+FILES="hgrc zsh zshrc gitignore gitconfig vim vimrc gdbinit tmux.conf"
+FILES_XDG=""
 
-FILES_XDG="i3 i3status"
+if [ "$HOST_OS" = "Linux" ]; then
+    FILES+=" Xdefaults xinitrc mutt gvimrc pentadactylrc urxvt"
+    FILES_XDG=" i3 i3status"
+elif [ "$HOST_OS" = "Darwin" ]; then
+    # OS X specific files here.
+    true
+fi
+
 
 INSTALL_PATH="${HOME}/."
 XDG_PATH=${XDG_CONFIG_HOME:-"$HOME/.config/"}

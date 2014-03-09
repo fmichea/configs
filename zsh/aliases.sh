@@ -2,7 +2,6 @@
 # Aliases
 
 alias c='clear'
-alias cdtemp='cd `mktemp -d`'
 alias clfiles='find . \( -name "*~" -o -name "*.pyc" -o -name "*.o" \) -delete'
 alias cp='cp -v'
 alias dc='cd'
@@ -14,7 +13,6 @@ alias ipy='ipython'
 alias j='jobs'
 alias la='ls -la'
 alias ll='ls -l'
-alias ls='ls --color=auto'
 alias mv='mv -v'
 alias ne='emacs -nw'
 alias py2='python2'
@@ -31,25 +29,35 @@ alias s='ls'
 alias sl='ls'
 
 export EDITOR="vim"
-export PAGER="most"
+
+if [ "$HOST_OS" = "Linux" ]; then
+    alias cdtemp='cd `mktemp -d`'
+    alias ls='ls --color=auto'
+
+    export PAGER="most"
+
+    function nn { # No Network access to a command.
+        cmd="$@"
+        sg no-network $cmd
+    }
+
+    function clipcp {
+        if [ $# -eq 3 ]; then
+            CONTENT=`cat $1 | head -n $(( $2 + $3 )) | tail -n $(( $3 + 1))`
+        else
+            CONTENT=`cat -`
+        fi
+        echo "$CONTENT" | xclip
+        xclip -o
+    }
+elif [ "$HOST_OS" = "Darwin" ]; then
+    alias cdtemp='cd `mktemp -d /tmp/tmp.XXXXXXXX`'
+    alias ls='ls -G'
+    alias python='python3'
+fi
 
 function mkcd {
     dir="$1"
     mkdir -p "$dir"
     cd "$dir"
-}
-
-function nn { # No Network access to a command.
-    cmd="$@"
-    sg no-network $cmd
-}
-
-function clipcp {
-    if [ $# -eq 3 ]; then
-        CONTENT=`cat $1 | head -n $(( $2 + $3 )) | tail -n $(( $3 + 1))`
-    else
-        CONTENT=`cat -`
-    fi
-    echo "$CONTENT" | xclip
-    xclip -o
 }

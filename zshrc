@@ -2,10 +2,14 @@
 # .zshrc: kushou's main configuration file for zsh #
 ####################################################
 
+##################################################
+# Global variable determining the current OS used.
+export HOST_OS=`uname`
+
 ################
 # Login in a TTY
 
-[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx &> /dev/null
+[[ "$HOST_OS" = "Linux" && -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx &> /dev/null
 
 #####################
 # Main Configuration
@@ -71,7 +75,7 @@ PROMPT="${CL_B}[${CL_Y}%n${CL_B}@${CL_N}${CL_LR}%m ${CL_LM}%~${CL_N}${CL_B}]%#${
 RPROMPT="${CL_B}(%*)${CL_N}"
 
 # This file should overwrite PROMPT and RPROMPT.
-if ! [ $SSH_TTY ] && [ -f "${HOME}/.zsh/prompt.sh" ] && [ -n "$DISPLAY" ]; then
+if ! [ $SSH_TTY ] && [ -f "${HOME}/.zsh/prompt.sh" ] && [[ "$HOST_OS" != "Linux" || -n "$DISPLAY" ]]; then
     source "${HOME}/.zsh/prompt.sh"
 fi
 
