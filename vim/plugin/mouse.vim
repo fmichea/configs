@@ -1,3 +1,3 @@
 " mouse.vim
 
-set mouse=a
+set mouse=
