@@ -28,6 +28,9 @@ alias l='ls'
 alias s='ls'
 alias sl='ls'
 
+alias sshtmp='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+alias scptmp='scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+
 export EDITOR="vim"
 
 if [ "$HOST_OS" = "Linux" ]; then
