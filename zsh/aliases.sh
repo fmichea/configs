@@ -16,6 +16,7 @@ alias ll='ls -l'
 alias mv='mv -v'
 alias ne='emacs -nw'
 alias py2='python2'
+alias py3='python3'
 alias py='python'
 alias rm='rm -v'
 alias objdump='objdump -M intel'
@@ -56,7 +57,6 @@ if [ "$HOST_OS" = "Linux" ]; then
 elif [ "$HOST_OS" = "Darwin" ]; then
     alias cdtemp='cd `mktemp -d /tmp/tmp.XXXXXXXX`'
     alias ls='ls -G'
-    alias python='python3'
 fi
 
 function mkcd {
