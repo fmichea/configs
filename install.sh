@@ -9,7 +9,7 @@ HOST_OS=`uname`
 
 [ $# -lt 1 ] && usage
 
-FILES="hgrc zsh zshrc gitignore gitconfig vim vimrc gdbinit tmux.conf"
+FILES="hgrc zsh zshrc gitignore gitconfig vim vimrc gdbinit tmux.conf lldbinit"
 FILES_XDG=""
 
 if [ "$HOST_OS" = "Linux" ]; then

@@ -1,0 +1,2 @@
+# Set disassembly flavor to intel syntax.
+settings set target.x86-disassembly-flavor intel
