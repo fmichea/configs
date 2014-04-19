@@ -38,7 +38,7 @@ if [ "$HOST_OS" = "Linux" ]; then
     alias cdtemp='cd `mktemp -d`'
     alias ls='ls --color=auto'
 
-    export PAGER="most"
+    which most &> /dev/null && export PAGER="most"
 
     function nn { # No Network access to a command.
         cmd="$@"
