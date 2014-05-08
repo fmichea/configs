@@ -17,7 +17,7 @@ if [ "$HOST_OS" = "Linux" ]; then
     FILES_XDG=" i3 i3status"
 elif [ "$HOST_OS" = "Darwin" ]; then
     # OS X specific files here.
-    true
+    FILES+=" tmux-osx.conf"
 fi
 
 
