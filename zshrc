@@ -85,6 +85,23 @@ fi
 alias find='noglob find'
 alias reload='. ${HOME}/.zshrc'
 
+###################################
+# Virtualenv wrapper configuration.
+if [ "$HOST_OS" = "Linux" ]; then
+    VENV_WRAPPER="/usr/bin/virtualenvwrapper.sh"
+elif [ "$HOST_OS" = "Darwin" ]; then
+    VENV_WRAPPER="/usr/local/bin/virtualenvwrapper.sh"
+    export VIRTUALENVWRAPPER_PYTHON="/usr/local/bin/python"
+fi
+
+if [ -f "$VENV_WRAPPER" ]; then
+    # Create and install virtualenv directory.
+    export WORKON_HOME="$HOME/.virtualenvs"
+    mkdir -p "$WORKON_HOME"
+    # Load the virtualenv wrapper source.
+    source "$VENV_WRAPPER"
+fi
+
 ######################################################
 # Including .zsh_opt, location specific configuration.
 
