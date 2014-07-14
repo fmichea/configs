@@ -27,13 +27,6 @@ map <C-f> ][%<up>0v<down>%
 nnoremap <Space> <C-w>
 nnoremap <Space><Space> <C-w>w
 
-" Arrows
-"imap <silent> <Left> <nop>
-"imap <silent> <Up> <nop>
-"imap <silent> <Right> <nop>
-"imap <silent> <Down> <nop>
-"
-"map <silent> <Left> <nop>
-"map <silent> <Up> <nop>
-"map <silent> <Right> <nop>
-"map <silent> <Down> <nop>
+" CtrlP binding.
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
