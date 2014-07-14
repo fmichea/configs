@@ -102,6 +102,12 @@ if [ -f "$VENV_WRAPPER" ]; then
     source "$VENV_WRAPPER"
 fi
 
+#####################################
+# Add brew bin directories on MacOSX.
+if [ "$HOST_OS" = "Darwin" ]; then
+    export PATH="$PATH:/usr/local/sbin:/usr/local/bin"
+fi
+
 ######################################################
 # Including .zsh_opt, location specific configuration.
 
