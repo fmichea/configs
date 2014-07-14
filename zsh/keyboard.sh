@@ -52,10 +52,17 @@ fi
 # Ctrl-E.
 #
 # FIXME: Find a way to use terminfos.
-bindkey "^[Oa" history-beginning-search-backward
-bindkey '^[Ob' history-beginning-search-forward
-bindkey '^[Od' emacs-backward-word
-bindkey '^[Oc' emacs-forward-word
+if [ "$HOST_OS" = "Linux" ]; then
+    bindkey "^[Oa" history-beginning-search-backward
+    bindkey '^[Ob' history-beginning-search-forward
+    bindkey '^[Od' emacs-backward-word
+    bindkey '^[Oc' emacs-forward-word
+elif [ "$HOST_OS" = "Darwin" ]; then
+    bindkey ";5A" history-beginning-search-backward
+    bindkey ';5B' history-beginning-search-forward
+    bindkey ';5D' emacs-backward-word
+    bindkey ';5C' emacs-forward-word
+fi
 
 # Stop on slash in paths when using ^W.
 tcsh-backward-kill-word () {
