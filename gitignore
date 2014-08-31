@@ -1,6 +1,7 @@
-*~
-*.swp
-*.pyc
 *.[oa]
 *.cm[ioa]
+*.egg*
+*.pyc
+*.swp
+*~
 venv
