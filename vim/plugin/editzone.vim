@@ -19,3 +19,6 @@ set list
 set listchars=tab:»\ ,eol:¬
 
 set timeout timeoutlen=5000 ttimeoutlen=100
+
+" Size of the ctrlp buffer.
+let g:ctrlp_max_height = 20
