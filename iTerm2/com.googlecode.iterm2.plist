@@ -40,6 +40,8 @@
 	<false/>
 	<key>EnableRendezvous</key>
 	<false/>
+	<key>FlashTabBarInFullscreen</key>
+	<false/>
 	<key>FocusFollowsMouse</key>
 	<false/>
 	<key>FsTabDelay</key>
@@ -191,7 +193,7 @@
 	<key>HideScrollbar</key>
 	<false/>
 	<key>HideTab</key>
-	<true/>
+	<false/>
 	<key>HideTabCloseButton</key>
 	<false/>
 	<key>HideTabNumber</key>
@@ -243,22 +245,22 @@
 		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
 		hAErATGG
 		</data>
-		<string>302</string>
+		<string>322</string>
 	</array>
 	<key>NSTableView Hidden Columns KeyBingingTable</key>
 	<array/>
 	<key>NSTableView Sort Ordering KeyBingingTable</key>
 	<array/>
 	<key>NSWindow Frame Preferences</key>
-	<string>561 221 924 485 0 0 1920 1178 </string>
+	<string>561 575 796 474 0 0 1920 1178 </string>
 	<key>NSWindow Frame SUUpdateAlertFrame</key>
-	<string>694 589 575 392 0 0 1920 1178 </string>
+	<string>692 589 575 392 0 0 1920 1178 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>155 594 592 584 0 0 1920 1178 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>443 295 1450 867 0 0 1920 1178 </string>
+	<string>631 183 1210 828 0 0 1920 1178 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>470 191 1210 828 0 0 1920 1200 </string>
+	<string>671 26 1210 1049 0 0 1920 1178 </string>
 	<key>NeverWarnAboutShortLivedSessions_B089D4BA-4C34-4A6B-812F-AFB63DA9D6E9</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_E5681029-3FBE-4163-BCB1-F829DD16B4BC</key>
@@ -1044,7 +1046,7 @@
 			<key>Terminal Type</key>
 			<string>xterm</string>
 			<key>Transparency</key>
-			<real>0.13346894085407257</real>
+			<real>0.074244175295858</real>
 			<key>Triggers</key>
 			<array>
 				<dict>
@@ -1148,11 +1150,11 @@
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedURL</key>
-	<string>http://iterm2.com/appcasts/nightly.xml</string>
+	<string>https://iterm2.com/appcasts/nightly.xml</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2014-06-05T04:39:00Z</date>
+	<date>2014-09-15T05:49:34Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>
@@ -1164,7 +1166,7 @@
 	<key>SmartPlacement</key>
 	<false/>
 	<key>SplitPaneDimmingAmount</key>
-	<real>0.40000000596046448</real>
+	<real>0.29318409455128203</real>
 	<key>SwitchTabModifier</key>
 	<integer>4</integer>
 	<key>SwitchWindowModifier</key>
@@ -1197,7 +1199,11 @@
 	<integer>0</integer>
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>
+	<key>findIgnoreCase_iTerm</key>
+	<true/>
+	<key>findRegex_iTerm</key>
+	<false/>
 	<key>iTerm Version</key>
-	<string>1.0.0.20140601-nightly</string>
+	<string>2.9.20140803-nightly</string>
 </dict>
 </plist>

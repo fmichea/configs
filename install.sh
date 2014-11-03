@@ -56,8 +56,13 @@ if [ $INSTALL_TYPE = "uninstall" ]; then
         echo "$INSTALL_PATH_FILE not found. Nothing is installed."
         exit 2
     fi
+    # Remove karabiner configuration.
+    rm "${HOME}/Library/Application Support/Karabiner/private.xml"
 elif [ $INSTALL_TYPE = "install" ]; then
     echo -ne "$INSTALL_PATH\n$XDG_PATH" > $INSTALL_PATH_FILE
+    # Install karabiner configuration.
+    mkdir -p "${HOME}/Library/Application Support/Karabiner"
+    ln -s "`pwd`/karabiner/private.xml" "${HOME}/Library/Application Support/Karabiner/private.xml"
 else
     echo "I don't know action \"$INSTALL_TYPE\"."
     exit 3
