@@ -1,5 +1,5 @@
 ####################################################
-# .zshrc: kushou's main configuration file for zsh #
+# .zshrc: franck's main configuration file for zsh #
 ####################################################
 
 ##################################################

@@ -1,5 +1,5 @@
 """"""""""""""""""""""""""""""""""""""""""""
-" .vimrc: kushou's vim configuration file. "
+" .vimrc: franck's vim configuration file. "
 """"""""""""""""""""""""""""""""""""""""""""
 
 call pathogen#runtime_append_all_bundles()
