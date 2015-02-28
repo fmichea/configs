@@ -105,12 +105,11 @@ fi
 #####################################
 # Add brew bin directories on MacOSX.
 if [ "$HOST_OS" = "Darwin" ]; then
-    export PATH="$PATH:/usr/local/sbin:/usr/local/bin"
+    export PATH="$PATH:$(brew --prefix)/sbin:$(brew --prefix)/bin"
 fi
 
 ######################################################
 # Including .zsh_opt, location specific configuration.
-
 if [ -f "${HOME}/.zshrc_opt" ]; then
     source "${HOME}/.zshrc_opt"
 fi
