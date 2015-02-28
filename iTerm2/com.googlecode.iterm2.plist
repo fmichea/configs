@@ -27,7 +27,7 @@
 	<key>CopyLastNewline</key>
 	<false/>
 	<key>CopySelection</key>
-	<true/>
+	<false/>
 	<key>Default Bookmark Guid</key>
 	<string>B089D4BA-4C34-4A6B-812F-AFB63DA9D6E9</string>
 	<key>DimBackgroundWindows</key>
