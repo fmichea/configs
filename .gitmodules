@@ -4,3 +4,9 @@
 [submodule "vim/bundle/gitolite.vim"]
 	path = vim/bundle/gitolite.vim
 	url = git://github.com/tmatilai/gitolite.vim.git
+[submodule "vim/bundle/tabular"]
+	path = vim/bundle/tabular
+	url = https://github.com/godlygeek/tabular.git
+[submodule "vim/bundle/vim-puppet"]
+	path = vim/bundle/vim-puppet
+	url = https://github.com/rodjek/vim-puppet.git
