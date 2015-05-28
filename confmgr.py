@@ -14,7 +14,7 @@ _FILES_DIR = os.path.join(_ROOT, 'files')
 
 _HOME = os.path.expanduser('~')
 
-_SECTION = re.compile('^(?P<section_type>\w+):(?P<name>\w+)$')
+_SECTION = re.compile('^(?P<section_type>\w+):(?P<name>[a-zA-Z0-9\.-]+)$')
 
 _PLATFORMS = ['linux', 'darwin']
 
