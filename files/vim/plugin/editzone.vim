@@ -9,7 +9,7 @@ set statusline=%f\ %l:%c\ %m%=%p%%\ %y\ %r
 set noerrorbells
 set novisualbell
 
-set cursorline
+"set cursorline
 
 if version >= 703
    set colorcolumn=81

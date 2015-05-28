@@ -1,12 +1,12 @@
-[submodule "vim/bundle/ctrlp"]
-	path = vim/bundle/ctrlp
+[submodule "files/vim/bundle/ctrlp"]
+	path = files/vim/bundle/ctrlp
 	url = https://github.com/kien/ctrlp.vim.git
-[submodule "vim/bundle/gitolite.vim"]
-	path = vim/bundle/gitolite.vim
+[submodule "files/vim/bundle/gitolite.vim"]
+	path = files/vim/bundle/gitolite.vim
 	url = git://github.com/tmatilai/gitolite.vim.git
-[submodule "vim/bundle/tabular"]
-	path = vim/bundle/tabular
+[submodule "files/vim/bundle/tabular"]
+	path = files/vim/bundle/tabular
 	url = https://github.com/godlygeek/tabular.git
-[submodule "vim/bundle/vim-puppet"]
-	path = vim/bundle/vim-puppet
+[submodule "files/vim/bundle/vim-puppet"]
+	path = files/vim/bundle/vim-puppet
 	url = https://github.com/rodjek/vim-puppet.git
