@@ -171,7 +171,8 @@ def load_software_configurations():
 
 
 def _iter_softwares(args, softwares):
-    soft_names = sorted(softwares.keys() if not args.software else args.software)
+    forced = bool(args.software)
+    soft_names = sorted(softwares.keys() if not forced else args.software)
     for soft_name in soft_names:
         try:
             soft = softwares[soft_name]
@@ -181,7 +182,10 @@ def _iter_softwares(args, softwares):
             continue
         if sys.platform not in soft.platforms:
             warn = 'Software `{}` is not available for this platform.'
-            _debug(warn.format(soft_name), file=sys.stderr)
+            if forced:
+                _print('[warn]', warn.format(soft_name), file=sys.stderr)
+            else:
+                _debug(warn.format(soft_name))
             continue
         yield soft_name, soft
 
