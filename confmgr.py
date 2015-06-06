@@ -176,12 +176,12 @@ def _iter_softwares(args, softwares):
         try:
             soft = softwares[soft_name]
         except KeyError:
-            warn = '[warn] Software `%s` does not exist.'
+            warn = '[warn] Software `{}` does not exist.'
             _print(warn.format(soft_name), file=sys.stderr)
             continue
         if sys.platform not in soft.platforms:
-            warn = '[warn] Software `{}` is not available for this platform.'
-            _print(warn.format(soft_name), file=sys.stderr)
+            warn = 'Software `{}` is not available for this platform.'
+            _debug(warn.format(soft_name), file=sys.stderr)
             continue
         yield soft_name, soft
 
