@@ -15,7 +15,7 @@ _FILES_DIR = os.path.join(_ROOT, 'files')
 _SECTION = re.compile('^(?P<section_type>\w+):(?P<name>[a-zA-Z0-9\.-]+)$')
 _LIST_OF_VALUES = re.compile('\s*,\s*')
 
-_PLATFORMS = ['linux', 'darwin']
+_PLATFORMS = set(['linux', 'darwin'])
 
 
 class Status(object):
@@ -30,6 +30,8 @@ class Status(object):
 def _parse_platforms(value):
     if value is None:
         return _PLATFORMS
+    if isinstance(value, (set, list)):
+        return value
     values = _LIST_OF_VALUES.split(value)
     values = set([v for v in values if v.strip() != ''])
     for value in values:
@@ -46,10 +48,15 @@ def _debug(*a, **kw):
     print('[debug]', *a, **kw)
 
 
+def _format_list(l):
+    return ', '.join(sorted(l))
+
+
 def _print(*a, tabs=0, **kw):
     a = list(a)
     if tabs:
         a.insert(0, ' ' * (4 * tabs - 1))
+    a = [_format_list(v) if isinstance(v, (set, list)) else v for v in a]
     print(*a, **kw)
 
 
@@ -119,7 +126,9 @@ class ConfigurationFile:
 
 class SoftwareConfiguration:
     def __init__(self, filename):
-        self.name, self.files = None, collections.OrderedDict()
+        self.name = None
+        self.files = collections.OrderedDict()
+        self.platforms = None
         # Load the configuration file.
         config = configparser.ConfigParser()
         config.read(filename)
@@ -147,12 +156,23 @@ class SoftwareConfiguration:
         # all the defaults.
         if self.name is None:
             self.name = os.path.basename(filename)[:-len('.ini')]
-            self.platforms = None
             self.base_path = '~'
             self.setup_commands = []
             self.teardown_commands = []
         # Global treatment of paths.
         self.base_path = os.path.expanduser(self.base_path)
+        # Finalize platforms attributes.
+        if self.platforms != _PLATFORMS:
+            excluded_platforms = (_PLATFORMS - self.platforms)
+            for conf_file in self.files.values():
+                if conf_file.platforms != _PLATFORMS:
+                    if not conf_file.platforms.issubset(self.platforms):
+                        msg = 'Configuration file {0}\'s platforms is'
+                        msg += ' not a subset of {1}\'s platforms.'
+                        _debug(msg.format(conf_file.name, self.name))
+                    conf_file.platforms = conf_file.platforms - excluded_platforms
+                else:
+                    conf_file.platforms = self.platforms
 
     @property
     def platforms(self):
@@ -198,10 +218,10 @@ def info_command(args, softwares):
     for soft_name, soft in _iter_softwares(args, softwares):
         _print('Software:', soft_name)
         _print('Base:', soft.base_path, tabs=1)
-        _print('Platforms:', ', '.join(soft.platforms), tabs=1)
+        _print('Platforms:', soft.platforms, tabs=1)
         for filename, conf_file in soft.files.items():
             _print('Configuration filename:', filename, tabs=1)
-            _print('platforms:', ', '.join(conf_file.platforms), tabs=2)
+            _print('platforms:', conf_file.platforms, tabs=2)
             _print('source:', conf_file.source_path, tabs=2)
             _print('target:', conf_file.target_path, tabs=2)
             _print('status:', conf_file.status, tabs=2)
