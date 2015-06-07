@@ -59,9 +59,13 @@ class ConfigurationFile:
     def __init__(self, soft_conf, name, conf):
         self._soft_conf, self.name, self._conf = soft_conf, name, conf
         # generate filename
-        self.source_filename = self._conf.get('filename', self.name)
         self.platforms = self._conf.get('platforms')
-        self.target_filename = self.source_filename
+        if self._conf.get('filename') is not None:
+            self.source_filename = self._conf.get('filename')
+            self.target_filename = self.source_filename
+        else:
+            self.source_filename = self._conf.get('source_filename', self.name)
+            self.target_filename = self._conf.get('target_filename', self.source_filename)
         if not self._conf.getboolean('no_dot', False):
             self.target_filename = '.{}'.format(self.target_filename)
 
