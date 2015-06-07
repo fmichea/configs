@@ -12,8 +12,6 @@ _ROOT = os.path.abspath(os.path.dirname(__file__))
 _CONF_DIR = os.path.join(_ROOT, 'configurations')
 _FILES_DIR = os.path.join(_ROOT, 'files')
 
-_HOME = os.path.expanduser('~')
-
 _SECTION = re.compile('^(?P<section_type>\w+):(?P<name>[a-zA-Z0-9\.-]+)$')
 _LIST_OF_VALUES = re.compile('\s*,\s*')
 
@@ -136,7 +134,7 @@ class SoftwareConfiguration:
             if section_type == 'software':
                 self.name = name
                 self.platforms = section.get('platforms')
-                self.base_path = section.get('base_path', _HOME)
+                self.base_path = section.get('base_path', '~')
                 self.setup_commands = section.get('setup-commands', '')
                 self.setup_commands = self.setup_commands.strip().splitlines()
                 self.teardown_commands = section.get('teardown-commands', '')
@@ -146,9 +144,11 @@ class SoftwareConfiguration:
         if self.name is None:
             self.name = os.path.basename(filename)[:-len('.ini')]
             self.platforms = None
-            self.base_path = _HOME
+            self.base_path = '~'
             self.setup_commands = []
             self.teardown_commands = []
+        # Global treatment of paths.
+        self.base_path = os.path.expanduser(self.base_path)
 
     @property
     def platforms(self):
@@ -180,7 +180,7 @@ def _iter_softwares(args, softwares):
             warn = '[warn] Software `{}` does not exist.'
             _print(warn.format(soft_name), file=sys.stderr)
             continue
-        if sys.platform not in soft.platforms:
+        if not args.ignore_platform and sys.platform not in soft.platforms:
             warn = 'Software `{}` is not available for this platform.'
             if forced:
                 _print('[warn]', warn.format(soft_name), file=sys.stderr)
@@ -270,6 +270,8 @@ def main(args):
     subcommands, subparsers = dict(), parser.add_subparsers()
     for name, func, _help in _COMMANDS:
         sparser = subparsers.add_parser(name, help=_help)
+        sparser.add_argument('-I', '--ignore-platform', action='store_true',
+                             default=False, help='ignore platform')
         sparser.add_argument('software', nargs='*', help='software list (empty = all)')
         sparser.set_defaults(func=func)
         subcommands[name] = sparser
