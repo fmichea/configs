@@ -10,3 +10,6 @@
 [submodule "files/vim/bundle/vim-puppet"]
 	path = files/vim/bundle/vim-puppet
 	url = https://github.com/rodjek/vim-puppet.git
+[submodule "files/vim/bundle/thrift.vim"]
+	path = files/vim/bundle/thrift.vim
+	url = https://github.com/solarnz/thrift.vim.git
