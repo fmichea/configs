@@ -114,4 +114,11 @@ if [ -f "${HOME}/.zshrc_opt" ]; then
     source "${HOME}/.zshrc_opt"
 fi
 
+#############################################################################
+# Now finally, set the mandatory env variables that are mandatory to defaults
+# if they are not set.
+if [ -z "$EMAIL" ]; then
+    export EMAIL="franck.michea@gmail.com"
+fi
+
 # EOF
