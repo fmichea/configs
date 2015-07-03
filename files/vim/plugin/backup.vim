@@ -12,3 +12,5 @@ if version >= 703
    set undodir=~/.vimtmp/undo
    silent !mkdir -p ~/.vimtmp/undo
 endif
+
+let g:netrw_home=$XDG_CACHE_HOME.'/vim'
