@@ -21,7 +21,7 @@ _FILES_DIR = os.path.join(_ROOT, 'files')
 _SECTION = re.compile('^(?P<section_type>\w+):(?P<name>[a-zA-Z0-9\.-]+)$')
 _LIST_OF_VALUES = re.compile('\s*,\s*')
 
-_PLATFORMS = set(['linux', 'darwin'])
+_PLATFORMS = set(['linux2', 'darwin'])
 
 
 class Status(object):
