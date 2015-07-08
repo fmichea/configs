@@ -1,11 +1,17 @@
-#! /usr/bin/env python3
+#! /usr/bin/env python
+
+from __future__ import print_function
 
 import argparse
 import collections
-import configparser
 import os
 import re
 import sys
+
+try:
+    import configparser
+except ImportError:
+    import ConfigParser as configparser
 
 
 _ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -48,21 +54,54 @@ def _debug(*a, **kw):
     print('[debug]', *a, **kw)
 
 
+_debug.enabled = False
+
+
 def _format_list(l):
     return ', '.join(sorted(l))
 
 
-def _print(*a, tabs=0, **kw):
-    a = list(a)
+def _print(*a,  **kw):
+    a, tabs = list(a), kw.pop('tabs', 0)
     if tabs:
         a.insert(0, ' ' * (4 * tabs - 1))
     a = [_format_list(v) if isinstance(v, (set, list)) else v for v in a]
     print(*a, **kw)
 
 
-_debug.enabled = False
+def _parse_bool(s):
+    if isinstance(s, bool):
+        return s
+    val = s.lower().strip()
+    if val in ['0', 'off', 'no', 'false']:
+        return False
+    if val in ['1', 'on', 'yes', 'true']:
+        return True
+    raise ValueError('value "{0}" is not a valid boolean'.format(s))
 
-class ConfigurationFile:
+
+def _translate_configparser_to_dict(config):
+    res = dict()
+    for section_name in config.sections():
+        res[section_name] = dict(config.items(section_name))
+    return res
+
+
+class PlatformsHolder(object):
+    @property
+    def platforms(self):
+        if not hasattr(self, '_platforms'):
+            self._platforms = _parse_platforms(None)
+        return self._platforms
+
+    @platforms.setter
+    def platforms(self, value):
+        self._platforms = _parse_platforms(value)
+
+
+
+
+class ConfigurationFile(PlatformsHolder):
     def __init__(self, soft_conf, name, conf):
         self._soft_conf, self.name, self._conf = soft_conf, name, conf
         # generate filename
@@ -73,16 +112,8 @@ class ConfigurationFile:
         else:
             self.source_filename = self._conf.get('source_filename', self.name)
             self.target_filename = self._conf.get('target_filename', self.source_filename)
-        if not self._conf.getboolean('no_dot', False):
+        if not _parse_bool(self._conf.get('no_dot', False)):
             self.target_filename = '.{}'.format(self.target_filename)
-
-    @property
-    def platforms(self):
-        return self._platforms
-
-    @platforms.setter
-    def platforms(self, value):
-        self._platforms = _parse_platforms(value)
 
     @property
     def target_path(self):
@@ -124,7 +155,7 @@ class ConfigurationFile:
         return Status.INSTALLED
 
 
-class SoftwareConfiguration:
+class SoftwareConfiguration(PlatformsHolder):
     def __init__(self, filename):
         self.name = None
         self.files = collections.OrderedDict()
@@ -132,9 +163,10 @@ class SoftwareConfiguration:
         # Load the configuration file.
         config = configparser.ConfigParser()
         config.read(filename)
+        config = _translate_configparser_to_dict(config)
         # Load the information contained in the configuration file.
         _debug('Parsing configuration file', filename)
-        for section_name in config.sections():
+        for section_name in config.keys():
             match = _SECTION.match(section_name)
             if match is None:
                 _debug('Could not parse section name `{0}`.'.format(section_name))
@@ -173,14 +205,6 @@ class SoftwareConfiguration:
                     conf_file.platforms = conf_file.platforms - excluded_platforms
                 else:
                     conf_file.platforms = self.platforms
-
-    @property
-    def platforms(self):
-        return self._platforms
-
-    @platforms.setter
-    def platforms(self, value):
-        self._platforms = _parse_platforms(value)
 
 
 def load_software_configurations():
