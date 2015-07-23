@@ -13,3 +13,6 @@
 [submodule "files/vim/bundle/thrift.vim"]
 	path = files/vim/bundle/thrift.vim
 	url = https://github.com/solarnz/thrift.vim.git
+[submodule "files/vim/bundle/dart-vim-plugin"]
+	path = files/vim/bundle/dart-vim-plugin
+	url = https://github.com/dart-lang/dart-vim-plugin
