@@ -5,6 +5,7 @@ from __future__ import print_function
 import argparse
 import collections
 import os
+import platform
 import re
 import sys
 
@@ -21,7 +22,8 @@ _FILES_DIR = os.path.join(_ROOT, 'files')
 _SECTION = re.compile('^(?P<section_type>\w+):(?P<name>[a-zA-Z0-9\.-]+)$')
 _LIST_OF_VALUES = re.compile('\s*,\s*')
 
-_PLATFORMS = set(['linux2', 'darwin'])
+_CURRENT_PLATFORM = platform.system().lower()
+_PLATFORMS = set(['linux', 'darwin'])
 
 
 class Status(object):
@@ -142,7 +144,7 @@ class ConfigurationFile(PlatformsHolder):
     @property
     def status(self):
         source_path, target_path = self.source_path, self.target_path
-        if sys.platform not in self.platforms:
+        if _CURRENT_PLATFORM not in self.platforms:
             return Status.NOT_AVAILABLE_FOR_PLATFORM
         if not os.path.exists(source_path):
             return Status.SOURCE_NOT_FOUND
@@ -228,7 +230,7 @@ def _iter_softwares(args, softwares):
             warn = '[warn] Software `{}` does not exist.'
             _print(warn.format(soft_name), file=sys.stderr)
             continue
-        if not args.ignore_platform and sys.platform not in soft.platforms:
+        if not args.ignore_platform and _CURRENT_PLATFORM not in soft.platforms:
             warn = 'Software `{}` is not available for this platform.'
             if forced:
                 _print('[warn]', warn.format(soft_name), file=sys.stderr)
