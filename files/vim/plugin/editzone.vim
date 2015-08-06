@@ -3,6 +3,11 @@
 set number
 set relativenumber
 
+if version >= 704
+    autocmd WinEnter,FocusGained * :setlocal number relativenumber
+    autocmd WinLeave,FocusLost   * :setlocal number norelativenumber
+endif
+
 set laststatus=2
 set statusline=%f\ %l:%c\ %m%=%p%%\ %y\ %r
 
