@@ -16,3 +16,6 @@
 [submodule "files/vim/bundle/dart-vim-plugin"]
 	path = files/vim/bundle/dart-vim-plugin
 	url = https://github.com/dart-lang/dart-vim-plugin
+[submodule "files/vim/bundle/vim-indent-guides"]
+	path = files/vim/bundle/vim-indent-guides
+	url = git://github.com/nathanaelkane/vim-indent-guides.git

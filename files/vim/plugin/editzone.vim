@@ -17,13 +17,13 @@ set novisualbell
 set cursorline
 
 if version >= 703
-   set colorcolumn=81
+    set colorcolumn=81
+    if &t_Co == 256
+        autocmd VimEnter,Colorscheme * hi ColorColumn ctermbg=52
+    endif
 endif
 
 set list
 set listchars=tab:»\ ,eol:¬
 
 set timeout timeoutlen=5000 ttimeoutlen=100
-
-" Size of the ctrlp buffer.
-let g:ctrlp_max_height = 20

@@ -2,5 +2,6 @@
 
 if has('syntax')
    syntax on
-   colorscheme desert
 endif
+
+colorscheme desert256
