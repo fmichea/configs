@@ -19,3 +19,9 @@
 [submodule "files/vim/bundle/vim-indent-guides"]
 	path = files/vim/bundle/vim-indent-guides
 	url = git://github.com/nathanaelkane/vim-indent-guides.git
+[submodule "files/vim/bundle/ag.vim"]
+	path = files/vim/bundle/ag.vim
+	url = https://github.com/rking/ag.vim.git
+[submodule "files/vim/bundle/ack.vim"]
+	path = files/vim/bundle/ack.vim
+	url = https://github.com/mileszs/ack.vim.git

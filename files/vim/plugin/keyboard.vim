@@ -1,32 +1,21 @@
 " keyboard.vim - Key Bindings
 
-" F1
+" F1 - paster mode toggler
+map <F1> :set invpaste paste?<CR>
 set pastetoggle=<F1>
 
-" F[2-4]
-imap <silent> <F2> <ESC>:w<CR>
-imap <silent> <F3> <ESC>:x<CR>
-imap <silent> <F4> <ESC>:q<CR>
-
-map <silent> <F1> <nop>
+" F2 - saving
 map <silent> <F2> :w<CR>
-map <silent> <F3> :x<CR>
-map <silent> <F4> :q<CR>
+imap <silent> <F2> <C-O>:w<CR>
 
-" F[5-6]
-imap <silent> <F5> <ESC>:make<CR>
-imap <silent> <F6> <ESC>:cp<CR>
-imap <silent> <F7> <ESC>:cn<CR>
+" F[3-4] - searching
+map <silent> <F3> :nohlsearch<CR>
+imap <silent> <F3> <C-O>:nohlsearch<CR>
 
-map <silent> <F5> :make<CR>
-map <silent> <F6> :cp<CR>
-map <silent> <F7> :cn<CR>
+nnoremap <F4> :Ag<Space>
+inoremap <F4> <ESC>:Ag<Space>
 
-" Other stuff.
-map <C-f> ][%<up>0v<down>%
+" Split with Space+[vs]
+" Move across buffers with Space+[hjkl] or Double space.
 nnoremap <Space> <C-w>
 nnoremap <Space><Space> <C-w>w
-
-" CtrlP binding.
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'

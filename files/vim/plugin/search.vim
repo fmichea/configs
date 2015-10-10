@@ -5,4 +5,4 @@ set ignorecase
 set incsearch
 set gdefault
 set showmatch
-set nohlsearch
+set hlsearch
