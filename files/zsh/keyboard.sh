@@ -66,7 +66,7 @@ fi
 
 # Stop on slash in paths when using ^W.
 tcsh-backward-kill-word () {
-    local WORDCHARS="${WORDCHARS//[\/.-]/}"
+    local WORDCHARS="${WORDCHARS//[\/._:-]/}"
     zle backward-delete-word
 }
 zle -N backward-kill-word tcsh-backward-kill-word
