@@ -15,8 +15,8 @@ imap <silent> <F3> <C-O>:nohlsearch<CR>
 nnoremap <F4> :Ag!<Space><cword><CR>
 inoremap <F4> <ESC>:Ag!<Space><cword><CR>
 
-nnoremap <F4> :Ag!<Space>
-inoremap <F4> <ESC>:Ag!<Space>
+nnoremap <F5> :Ag!<Space>
+inoremap <F5> <ESC>:Ag!<Space>
 
 " Split with Space+[vs]
 " Move across buffers with Space+[hjkl] or Double space.
