@@ -1,1 +1,10 @@
-set guifont=DejaVu\ Sans\ Mono\ 8
+set guioptions-=l
+set guioptions-=L
+set guioptions-=r
+set guioptions-=R
+
+set guifont=Monaco:h9
+
+set visualbell t_vb=
+
+set nocursorline
