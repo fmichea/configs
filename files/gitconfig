@@ -27,6 +27,8 @@
     enabled = true
 
 [alias]
+    # open git gui in the background
+    bggui = !"nohup git gui &> /dev/null &"
     # easily create uniquely named branches
     dev-branch = !"git checkout -b ${USER}-`date '+%Y%m%d-%M%S'`"
     # graph of the history
