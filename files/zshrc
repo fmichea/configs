@@ -22,11 +22,12 @@ autoload -Uz compinit
 compinit
 
 setopt correct
-setopt hist_ignore_dups # Don't put duplicates in history.
-setopt no_bang_hist # Don't redefine ! (useful for commit messages etc...).
+setopt hist_ignore_dups         # Don't put duplicates in history.
+setopt no_bang_hist             # Don't redefine ! (useful for commit messages etc...).
 setopt nobeep
-setopt transient_rprompt # Don't keep RPROMPT when command is entered.
+setopt transient_rprompt        # Don't keep RPROMPT when command is entered.
 setopt prompt_subst
+setopt interactivecomments      # Allow comments in interactive shell.
 
 #########
 # Aliases
