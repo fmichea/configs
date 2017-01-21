@@ -22,3 +22,6 @@ inoremap <F5> <ESC>:Ag!<Space>
 " Move across buffers with Space+[hjkl] or Double space.
 nnoremap <Space> <C-w>
 nnoremap <Space><Space> <C-w>w
+
+" Insert tabs using Shift+Tab disregarding tab mode.
+inoremap <S-Tab> <C-V><Tab>
