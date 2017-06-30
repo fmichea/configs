@@ -101,13 +101,25 @@ function virtualenvwrapper_install {
     fi
 }
 
-if [ "$HOST_OS" = "Linux" ]; then
-    virtualenvwrapper_install "/usr/bin/virtualenvwrapper.sh"
-    virtualenvwrapper_install "/usr/share/virtualenvwrapper/virtualenvwrapper.sh"
-elif [ "$HOST_OS" = "Darwin" ]; then
-    virtualenvwrapper_install "/usr/local/bin/virtualenvwrapper.sh"
-    export VIRTUALENVWRAPPER_PYTHON="/usr/local/bin/python"
-fi
+virtualenv_funcs=(workon deactivate mkvirtualenv)
+
+function virtualenvwrapper_load_and_call {
+    unset -f "${virtualenv_funcs[@]}"
+
+    if [ "$HOST_OS" = "Linux" ]; then
+        virtualenvwrapper_install "/usr/bin/virtualenvwrapper.sh"
+        virtualenvwrapper_install "/usr/share/virtualenvwrapper/virtualenvwrapper.sh"
+    elif [ "$HOST_OS" = "Darwin" ]; then
+        virtualenvwrapper_install "/usr/local/bin/virtualenvwrapper.sh"
+        export VIRTUALENVWRAPPER_PYTHON="/usr/local/bin/python"
+    fi
+
+    "$@"
+}
+
+for func in "${virtualenv_funcs[@]}"; do
+    eval "${func}() { virtualenvwrapper_load_and_call ${func} \"\$@\"; }"
+done
 
 #####################################
 # Add brew bin directories on MacOSX.

@@ -5,6 +5,7 @@ from __future__ import print_function
 import argparse
 import collections
 import os
+import pipes
 import platform
 import re
 import sys
@@ -259,7 +260,7 @@ def install_command(args, softwares):
         for command in soft.setup_commands:
             command = command.format(root=_ROOT, base_path=soft.base_path)
             _print('=>', 'Executing:', command, tabs=1)
-            os.system(command)
+            os.system('/bin/sh -c {0}'.format(pipes.quote(command)))
         for filename, conf_file in soft.files.items():
             try:
                 if conf_file.can('install', force=args.force):
