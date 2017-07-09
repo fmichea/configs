@@ -64,3 +64,7 @@ function mkcd {
     mkdir -p "$dir"
     cd "$dir"
 }
+
+function title-tab-set {
+    echo -ne "\033]0;"$*"\007"
+}
