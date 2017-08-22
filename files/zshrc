@@ -2,8 +2,20 @@
 # .zshrc: franck's main configuration file for zsh #
 ####################################################
 
+##############################################################
+# Profiling of shell startup can be enabled for analysis here.
+
+PROFILE_STARTUP=false
+if [[ "$PROFILE_STARTUP" == true ]]; then
+    # http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html
+    PS4=$'%D{%M%S%.} %N:%i> '
+    exec 3>&2 2>$HOME/tmp/startlog.$$
+    setopt xtrace prompt_subst
+fi
+
 ##################################################
 # Global variable determining the current OS used.
+
 export HOST_OS=`uname`
 
 ################
@@ -145,3 +157,8 @@ if [ -z "$EMAIL" ]; then
 fi
 
 # EOF
+
+if [[ "$PROFILE_STARTUP" == true ]]; then
+    unsetopt xtrace
+    exec 2>&3 3>&-
+fi
