@@ -1,0 +1,18 @@
+#! /bin/bash
+
+HOST_OS=$(uname)
+OUTPUT="${HOME}/.zshrc_gen"
+
+append_command() {
+    cmd=$1
+
+    echo "# command: ${cmd}" >> "$OUTPUT"
+    sh -c "echo ${cmd}" >> "${OUTPUT}"
+}
+
+echo -n > "${OUTPUT}"
+
+if [ "Darwin" = "${HOST_OS}" ]; then
+    append_command 'export BREW_PREFIX="$(brew --prefix)"'
+    append_command 'export BREW_OPENSSL_PREFIX="$(brew --prefix openssl)"'
+fi

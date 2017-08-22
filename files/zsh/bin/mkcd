@@ -1,0 +1,11 @@
+#! /bin/sh
+
+dir="$1"
+
+if [ -n "${dir}" ]; then
+    echo "no directory provided" 1>&2
+    exit 1
+fi
+
+mkdir -p "$dir"
+cd "$dir"

@@ -11,6 +11,23 @@ export HOST_OS=`uname`
 
 [[ "$HOST_OS" = "Linux" && -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx &> /dev/null
 
+####################################
+# Useful function used in this file.
+
+load_if_exists() {
+    filename=$1
+
+    if [ -f "$filename" ]; then
+        source "$filename"
+    fi
+}
+
+############################################################################
+# This file may contain additional variables that are generated out of bound
+# and can be used in the configuration below.
+
+load_if_exists "${HOME}/.zshrc_gen"
+
 #####################
 # Main Configuration
 
@@ -29,26 +46,12 @@ setopt transient_rprompt        # Don't keep RPROMPT when command is entered.
 setopt prompt_subst
 setopt interactivecomments      # Allow comments in interactive shell.
 
-#########
-# Aliases
+##############################################################
+# Aliases + Keyboard configuration + Completion configuration.
 
-if [ -f "${HOME}/.zsh/aliases.sh" ]; then
-    source "${HOME}/.zsh/aliases.sh"
-fi
-
-########################
-# Keyboard configuration
-
-if [ -f "${HOME}/.zsh/keyboard.sh" ]; then
-    source "${HOME}/.zsh/keyboard.sh"
-fi
-
-##########################
-# Completion configuration
-
-if [ -f "${HOME}/.zsh/completion.sh" ]; then
-    source "${HOME}/.zsh/completion.sh"
-fi
+load_if_exists "${HOME}/.zsh/aliases.sh"
+load_if_exists "${HOME}/.zsh/keyboard.sh"
+load_if_exists "${HOME}/.zsh/completion.sh"
 
 #######################
 # Prompt Configuration
@@ -111,7 +114,7 @@ function virtualenvwrapper_load_and_call {
         virtualenvwrapper_install "/usr/share/virtualenvwrapper/virtualenvwrapper.sh"
     elif [ "$HOST_OS" = "Darwin" ]; then
         virtualenvwrapper_install "/usr/local/bin/virtualenvwrapper.sh"
-        export VIRTUALENVWRAPPER_PYTHON="/usr/local/bin/python"
+        export VIRTUALENVWRAPPER_PYTHON="/usr/local/bin/python2"
     fi
 
     "$@"
@@ -123,15 +126,16 @@ done
 
 #####################################
 # Add brew bin directories on MacOSX.
-if [ "$HOST_OS" = "Darwin" ]; then
-    export PATH="$PATH:$(brew --prefix)/sbin:$(brew --prefix)/bin"
+
+PATH="${HOME}/.zsh/bin:${HOME}/.local/bin:${PATH}"
+if [ -n "${BREW_PREFIX}" ]; then
+    export PATH="$PATH:${BREW_PREFIX}/sbin:${BREW_PREFIX}/bin"
 fi
 
 ######################################################
 # Including .zsh_opt, location specific configuration.
-if [ -f "${HOME}/.zshrc_opt" ]; then
-    source "${HOME}/.zshrc_opt"
-fi
+
+load_if_exists "${HOME}/.zshrc_opt"
 
 #############################################################################
 # Now finally, set the mandatory env variables that are mandatory to defaults

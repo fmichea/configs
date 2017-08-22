@@ -3,7 +3,7 @@
 
 autoload -Uz zgitinit; zgitinit
 
-function revstring {
+revstring() {
     git describe --tags --always "$1" 2>/dev/null ||
     git rev-parse --short "$1" 2>/dev/null
 }
@@ -16,7 +16,7 @@ coloratom() {
     echo $(( $off + $colorcode[${(L)atom}] ))
 }
 
-function colorword {
+colorword() {
     local fg=$1 bg=$2 att=$3
     local -a s
 
@@ -45,7 +45,7 @@ _prompt_precmd() {
     echo -ne "\a" 2> /dev/null
 }
 
-function _prompt_setup() {
+_prompt_setup() {
     typeset -A pr
     typeset -A altchar
     set -A altchar ${(s..)terminfo[acsc]}

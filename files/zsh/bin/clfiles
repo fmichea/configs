@@ -1,0 +1,3 @@
+#! /bin/bash
+
+exec find . \( -name "*~" -o -name "*.pyc" -o -name "*.o" \) -delete

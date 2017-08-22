@@ -1,0 +1,37 @@
+#! /bin/bash
+
+HOST_OS=$(uname)
+
+if [ "${HOST_OS}" = "Linux" ]; then
+    copy="xclip"
+    paste="xclip -o"
+elif [ "${HOST_OS}" = "Darwin" ]; then
+    copy="pbcopy"
+    paste="pbpaste"
+else
+    echo "OS not supported." 1>&2
+    exit 1
+fi
+
+filename=${1:--}
+
+if [ $# -gt 1 ]; then
+    if [ $# -eq 2 ]; then
+        filename="-"
+        start_line=$1
+        nb_lines=$2
+    elif [ $# -eq 3 ]; then
+        start_line=$2
+        nb_lines=$3
+    fi
+
+    head_count=$(( $start_line + $nb_lines ))
+    tail_count=$(( $nb_lines + 1 ))
+
+    CONTENT=$(cat "$filename" | head -n "$head_count" | tail -n "$tail_count")
+else
+    CONTENT=$(cat "$filename")
+fi
+
+echo "$CONTENT" | $copy
+$paste

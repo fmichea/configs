@@ -1,0 +1,10 @@
+#! /bin/bash
+
+HOST_OS=$(uname)
+
+if [ "$HOST_OS" != "Linux" ]; then
+    echo "error: Platform is not supported." 1>&2
+    exit 1
+fi
+
+exec sg no-network $@

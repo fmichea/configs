@@ -1,0 +1,12 @@
+#! /bin/bash
+
+HOST_OS=$(uname)
+
+if [ "$HOST_OS" = "Linux" ]; then
+    exec mktemp -d
+elif [ "$HOST_OS" = "Darwin" ]; then
+    exec mktemp -d /tmp/tmp.XXXXXXXX
+else
+    echo "error: OS not supported" 1>&2
+    exit 1
+fi

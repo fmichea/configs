@@ -1,0 +1,8 @@
+#! /bin/bash
+
+count=0
+for arg in $(seq 1 $#); do
+    echo "argv[${count}]: $1"
+    count=$(($count + 1))
+    shift
+done
