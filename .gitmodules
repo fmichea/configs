@@ -31,3 +31,6 @@
 [submodule "files/vim/bundle/vim-jsx"]
 	path = files/vim/bundle/vim-jsx
 	url = https://github.com/mxw/vim-jsx.git
+[submodule "files/vim/bundle/vim-colors-solarized"]
+	path = files/vim/bundle/vim-colors-solarized
+	url = https://github.com/altercation/vim-colors-solarized
