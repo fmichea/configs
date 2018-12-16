@@ -23,6 +23,7 @@ alias s='ls'
 alias sl='ls'
 
 alias cdtemp='cd $(tempdir)'
+alias mkcd='source $(which _mkcd)'
 
 export EDITOR="vim"
 
