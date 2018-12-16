@@ -162,3 +162,6 @@ if [[ "$PROFILE_STARTUP" == true ]]; then
     unsetopt xtrace
     exec 2>&3 3>&-
 fi
+
+# Disable brew analytics
+brew analytics off 2>&1 > /dev/null
