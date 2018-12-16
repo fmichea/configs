@@ -25,3 +25,6 @@ nnoremap <Space><Space> <C-w>w
 
 " Insert tabs using Shift+Tab disregarding tab mode.
 inoremap <S-Tab> <C-V><Tab>
+
+" Map ; to : to avoid having to use shift when using command.
+nnoremap ; :
