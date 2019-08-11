@@ -163,6 +163,9 @@ if [[ "$PROFILE_STARTUP" == true ]]; then
     exec 2>&3 3>&-
 fi
 
+# Disable brew analytics
+brew analytics off 2>&1 > /dev/null
+
 ####################
 # Load direnv hooks.
 if which direnv > /dev/null; then

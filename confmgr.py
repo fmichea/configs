@@ -32,7 +32,7 @@ class Status(object):
     NOT_AVAILABLE_FOR_PLATFORM = 'not available for platform'
     NOT_INSTALLED = 'not installed'
     SOURCE_NOT_FOUND = 'source not found'
-    UNKNOWN_NOT_A_SYMLINK = 'unkown: not a symlink'
+    UNKNOWN_NOT_A_SYMLINK = 'unknown: not a symlink'
     UNKNOWN_NOT_LINKED_TO_SOURCE = 'unknown: not linked to source'
 
 
@@ -120,7 +120,8 @@ class ConfigurationFile(PlatformsHolder):
 
     @property
     def target_path(self):
-        return os.path.join(self._soft_conf.base_path, self.target_filename)
+        return os.path.expanduser(os.path.join(
+            self._soft_conf.base_path, self.target_filename))
 
     @property
     def source_path(self):
