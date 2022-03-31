@@ -45,13 +45,14 @@ load_if_exists "${HOME}/.zshrc_gen"
 
 HISTFILE=~/.histfile
 HISTSIZE=1000
-SAVEHIST=1000
+SAVEHIST=$HISTSIZE
 
 autoload -Uz compinit
 compinit
 
 setopt correct
-setopt hist_ignore_dups         # Don't put duplicates in history.
+setopt hist_ignore_all_dups     # Don't put any duplicates in history.
+setopt hist_reduce_blanks       # Reduce amount of superfluous blank spaces in history.
 setopt no_bang_hist             # Don't redefine ! (useful for commit messages etc...).
 setopt nobeep
 setopt transient_rprompt        # Don't keep RPROMPT when command is entered.
@@ -180,3 +181,7 @@ fi
 export NVM_DIR="$HOME/.nvm"
 [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+####################
+# Yarn configuration
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
