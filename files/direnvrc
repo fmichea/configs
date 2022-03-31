@@ -7,3 +7,9 @@ layout_virtualenvwrapper() {
   local venv_path="${WORKON_HOME}/$1"
   layout_virtualenv $venv_path
 }
+
+use_nvm() {
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+  nvm use
+}
