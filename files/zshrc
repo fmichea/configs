@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 ####################################################
 # .zshrc: franck's main configuration file for zsh #
 ####################################################
@@ -68,33 +75,7 @@ load_if_exists "${HOME}/.zsh/completion.sh"
 
 #######################
 # Prompt Configuration
-
-fpath=($fpath "$HOME/.zsh/functions")
-typeset -U fpath
-autoload -Uz add-zsh-hook
-
-autoload colors zsh/terminfo
-if [[ "$terminfo[colors]" -ge 8 ]]; then
-    colors
-fi
-for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
-    eval CL_${${color}[1]}='%{$terminfo[bold]$fg[${(L)color}]%}'
-    eval CL_L${${color}[1]}='%{$fg[${(L)color}]%}'
-done
-CL_N="%{$terminfo[sgr0]%}"
-
-# Default prompt if not defined in another file loaded after.
-#
-# [root@localhost pwd]# ... (hour)
-# [username@localhost pwd]% ... (hour)
-
-PROMPT="${CL_B}[${CL_Y}%n${CL_B}@${CL_N}${CL_LR}%m ${CL_LM}%~${CL_N}${CL_B}]%#${CL_N} "
-RPROMPT="${CL_B}(%*)${CL_N}"
-
-# This file should overwrite PROMPT and RPROMPT.
-if ! [ $SSH_TTY ] && [ -f "${HOME}/.zsh/prompt.sh" ] && [[ "$HOST_OS" != "Linux" || -n "$DISPLAY" ]]; then
-    source "${HOME}/.zsh/prompt.sh"
-fi
+source "${HOME}/.zsh/bundle/powerlevel10k/powerlevel10k.zsh-theme"
 
 ##########
 # Aliases
@@ -185,3 +166,10 @@ export NVM_DIR="$HOME/.nvm"
 ####################
 # Yarn configuration
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+#######
+# Z-ZSH
+source "${HOME}/.zsh/bundle/zsh-z/zsh-z.plugin.zsh"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
