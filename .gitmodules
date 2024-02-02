@@ -3,7 +3,7 @@
 	url = https://github.com/kien/ctrlp.vim.git
 [submodule "files/vim/bundle/gitolite.vim"]
 	path = files/vim/bundle/gitolite.vim
-	url = git://github.com/tmatilai/gitolite.vim.git
+    url = https://github.com/tmatilai/gitolite.vim.git
 [submodule "files/vim/bundle/tabular"]
 	path = files/vim/bundle/tabular
 	url = https://github.com/godlygeek/tabular.git
@@ -18,7 +18,7 @@
 	url = https://github.com/dart-lang/dart-vim-plugin
 [submodule "files/vim/bundle/vim-indent-guides"]
 	path = files/vim/bundle/vim-indent-guides
-	url = git://github.com/nathanaelkane/vim-indent-guides.git
+	url = https://github.com/nathanaelkane/vim-indent-guides.git
 [submodule "files/vim/bundle/ag.vim"]
 	path = files/vim/bundle/ag.vim
 	url = https://github.com/rking/ag.vim.git

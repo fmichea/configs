@@ -122,7 +122,7 @@ done
 #####################################
 # Add brew bin directories on MacOSX.
 
-PATH="${HOME}/.zsh/bin:${HOME}/.local/bin:${PATH}"
+PATH="/opt/homebrew/bin:${HOME}/.zsh/bin:${HOME}/.local/bin:${PATH}"
 if [ -n "${BREW_PREFIX}" ]; then
     export PATH="$PATH:${BREW_PREFIX}/sbin:${BREW_PREFIX}/bin"
 fi
@@ -136,7 +136,7 @@ load_if_exists "${HOME}/.zshrc_opt"
 # Now finally, set the mandatory env variables that are mandatory to defaults
 # if they are not set.
 if [ -z "$EMAIL" ]; then
-    export EMAIL="franck.michea@gmail.com"
+    export EMAIL="franck@michea.dev"
 fi
 
 # EOF

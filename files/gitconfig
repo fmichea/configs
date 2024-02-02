@@ -38,3 +38,7 @@
     # french git
     poule = pull
     choucroute = checkout
+[gui]
+	recentrepo = /Users/franck/Projects/go/src/github.com/fmichea/therungg-pacepal-bot
+[init]
+	defaultBranch = main
