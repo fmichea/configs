@@ -5,9 +5,9 @@ from __future__ import print_function
 import argparse
 import collections
 import os
-import pipes
 import platform
 import re
+import shlex
 import sys
 
 try:
@@ -20,8 +20,8 @@ _ROOT = os.path.abspath(os.path.dirname(__file__))
 _CONF_DIR = os.path.join(_ROOT, 'configurations')
 _FILES_DIR = os.path.join(_ROOT, 'files')
 
-_SECTION = re.compile('^(?P<section_type>\w+):(?P<name>[a-zA-Z0-9\.-]+)$')
-_LIST_OF_VALUES = re.compile('\s*,\s*')
+_SECTION = re.compile(r'^(?P<section_type>\w+):(?P<name>[a-zA-Z0-9\.-]+)$')
+_LIST_OF_VALUES = re.compile(r'\s*,\s*')
 
 _CURRENT_PLATFORM = platform.system().lower()
 _PLATFORMS = set(['linux', 'darwin'])
@@ -261,7 +261,7 @@ def install_command(args, softwares):
         for command in soft.setup_commands:
             command = command.format(root=_ROOT, base_path=soft.base_path)
             _print('=>', 'Executing:', command, tabs=1)
-            os.system('/bin/sh -c {0}'.format(pipes.quote(command)))
+            os.system(shlex.join(['/bin/sh', '-c', command]))
         for filename, conf_file in soft.files.items():
             try:
                 if conf_file.can('install', force=args.force):
@@ -278,7 +278,7 @@ def install_command(args, softwares):
                         conf_file.status,
                     ), tabs=1)
             except (IOError, OSError) as exc:
-                msg = '/!\ Could not install {0} [{1}]: {2}'.format(
+                msg = '/!\\ Could not install {0} [{1}]: {2}'.format(
                     conf_file.target_path, type(exc).__name__, exc,
                 )
                 _print(msg, tabs=2)
@@ -298,7 +298,7 @@ def uninstall_command(args, softwares):
                         conf_file.status
                     ), tabs=1)
             except (IOError, OSError) as exc:
-                msg = '/!\ Could not uninstall {0} [{1}]: {2}'.format(
+                msg = '/!\\ Could not uninstall {0} [{1}]: {2}'.format(
                     conf_file.target_path, type(exc).__name__, exc,
                 )
                 _print(msg, tabs=2)
@@ -334,7 +334,10 @@ def main(args):
     # Load all the configurations.
     softwares = load_software_configurations()
     # Apply the action requested.
-    return args.func(args, softwares)
+    if 'func' in args:
+        return args.func(args, softwares)
+    else:
+        parser.print_help()
 
 
 if __name__ == '__main__':
