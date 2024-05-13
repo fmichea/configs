@@ -183,4 +183,5 @@ load_if_exists "${HOME}/.p10k.zsh"
 
 ########
 # chruby
-load_if_exists "$(brew --prefix)/opt/chruby/share/chruby/chruby.sh"
+load_if_exists "/opt/homebrew/opt/chruby/share/chruby/chruby.sh"
+load_if_exists "/usr/local/opt/chruby/share/chruby/chruby.sh"
