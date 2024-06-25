@@ -109,7 +109,7 @@ function virtualenvwrapper_load_and_call {
         virtualenvwrapper_install "/usr/share/virtualenvwrapper/virtualenvwrapper.sh"
     elif [ "$HOST_OS" = "Darwin" ]; then
         virtualenvwrapper_install "/usr/local/bin/virtualenvwrapper.sh"
-        export VIRTUALENVWRAPPER_PYTHON="/usr/local/bin/python2"
+        virtualenvwrapper_install "/opt/homebrew/bin/virtualenvwrapper.sh"
     fi
 
     "$@"
