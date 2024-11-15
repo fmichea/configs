@@ -51,7 +51,7 @@ load_if_exists "${HOME}/.zshrc_gen"
 # Main Configuration
 
 HISTFILE=~/.histfile
-HISTSIZE=1000
+HISTSIZE=1000000
 SAVEHIST=$HISTSIZE
 
 autoload -Uz compinit
