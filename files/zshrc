@@ -123,9 +123,16 @@ done
 # Add brew bin directories on MacOSX.
 
 PATH="/opt/homebrew/bin:${HOME}/.zsh/bin:${HOME}/.local/bin:${PATH}"
+
 if [ -n "${BREW_PREFIX}" ]; then
-    export PATH="$PATH:${BREW_PREFIX}/sbin:${BREW_PREFIX}/bin"
+    PATH="$PATH:${BREW_PREFIX}/sbin:${BREW_PREFIX}/bin"
 fi
+
+if [ -d "/opt/homebrew/opt/rabbitmq/sbin" ]; then
+    PATH="$PATH:/opt/homebrew/opt/rabbitmq/sbin"
+fi
+
+export PATH
 
 ######################################################
 # Including .zsh_opt, location specific configuration.
@@ -185,3 +192,7 @@ load_if_exists "${HOME}/.p10k.zsh"
 # chruby
 load_if_exists "/opt/homebrew/opt/chruby/share/chruby/chruby.sh"
 load_if_exists "/usr/local/opt/chruby/share/chruby/chruby.sh"
+
+#######
+# Ruby from Homebrew PATH.
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
