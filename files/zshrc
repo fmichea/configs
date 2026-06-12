@@ -1,3 +1,8 @@
+export WORKON_HOME="$HOME/.virtualenvs"
+
+# Direnv requires some initialization before Instant Prompt is enabled.
+(( ${+commands[direnv]} )) && emulate zsh -c "$(direnv export zsh)"
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -41,11 +46,6 @@ load_if_exists() {
     fi
 }
 
-############################################################################
-# This file may contain additional variables that are generated out of bound
-# and can be used in the configuration below.
-
-load_if_exists "${HOME}/.zshrc_gen"
 
 #####################
 # Main Configuration
@@ -55,11 +55,18 @@ HISTSIZE=1000000
 SAVEHIST=$HISTSIZE
 
 autoload -Uz compinit
-compinit
+if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
+    compinit
+else
+    compinit -C
+fi
 
 setopt correct
 setopt hist_ignore_all_dups     # Don't put any duplicates in history.
+setopt hist_ignore_space        # Don't save commands prefixed with a space.
 setopt hist_reduce_blanks       # Reduce amount of superfluous blank spaces in history.
+setopt extended_history         # Save timestamps in history.
+setopt inc_append_history       # Write to history immediately, not just at shell exit.
 setopt no_bang_hist             # Don't redefine ! (useful for commit messages etc...).
 setopt nobeep
 setopt transient_rprompt        # Don't keep RPROMPT when command is entered.
@@ -86,7 +93,6 @@ alias reload='. ${HOME}/.zshrc'
 ###################################
 # Virtualenv wrapper configuration.
 
-export WORKON_HOME="$HOME/.virtualenvs"
 
 function virtualenvwrapper_install {
     VENV_WRAPPER=$1
@@ -122,17 +128,14 @@ done
 #####################################
 # Add brew bin directories on MacOSX.
 
-PATH="/opt/homebrew/bin:${HOME}/.zsh/bin:${HOME}/.local/bin:${PATH}"
-
-if [ -n "${BREW_PREFIX}" ]; then
-    PATH="$PATH:${BREW_PREFIX}/sbin:${BREW_PREFIX}/bin"
-fi
+[[ -d /opt/homebrew ]] && BREW_PREFIX=/opt/homebrew || BREW_PREFIX=/usr/local
+PATH="$BREW_PREFIX/bin:$BREW_PREFIX/sbin:${HOME}/.zsh/bin:${HOME}/.local/bin:${PATH}"
 
 if [ -d "/opt/homebrew/opt/rabbitmq/sbin" ]; then
     PATH="$PATH:/opt/homebrew/opt/rabbitmq/sbin"
 fi
 
-export PATH
+export BREW_PREFIX PATH
 
 ######################################################
 # Including .zsh_opt, location specific configuration.
@@ -153,32 +156,27 @@ if [[ "$PROFILE_STARTUP" == true ]]; then
     exec 2>&3 3>&-
 fi
 
-# Disable brew analytics
-if hash brew &> /dev/null; then
-    brew analytics off 2>&1 > /dev/null
-fi
-
-####################
-# Load direnv hooks.
-if which direnv > /dev/null; then
-    eval "$(direnv hook zsh)"
-fi
+export HOMEBREW_NO_ANALYTICS=1
 
 ####################
 # NVM configuration.
 export NVM_DIR="$HOME/.nvm"
 
-# This loads nvm.
-load_if_exists "/opt/homebrew/opt/nvm/nvm.sh"
-load_if_exists "/usr/local/opt/nvm/nvm.sh"
+_load_nvm() {
+    load_if_exists "/opt/homebrew/opt/nvm/nvm.sh"
+    load_if_exists "/usr/local/opt/nvm/nvm.sh"
+    load_if_exists "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
+    load_if_exists "/usr/local/opt/nvm/etc/bash_completion.d/nvm"
+}
 
-# This loads nvm bash_completion.
-load_if_exists "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
-load_if_exists "/usr/local/opt/nvm/etc/bash_completion.d/nvm"
+for _nvm_cmd in nvm node npm npx; do
+    eval "${_nvm_cmd}() { unset -f nvm node npm npx; _load_nvm; ${_nvm_cmd} \"\$@\"; }"
+done
+unset _nvm_cmd
 
 ####################
 # Yarn configuration
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+[ -d "$HOME/.yarn/bin" ] && export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 #######
 # Z-ZSH
@@ -196,3 +194,9 @@ load_if_exists "/usr/local/opt/chruby/share/chruby/chruby.sh"
 #######
 # Ruby from Homebrew PATH.
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+
+######################
+# Claude Configuration
+alias claude-dev='claude --system-prompt "$(cat ~/.claude/contexts/dev.md)"'
+alias claude-review='claude --system-prompt "$(cat ~/.claude/contexts/review.md)"'
+alias claude-research='claude --system-prompt "$(cat ~/.claude/contexts/research.md)"'

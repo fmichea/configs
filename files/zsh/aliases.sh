@@ -22,8 +22,8 @@ alias l='ls'
 alias s='ls'
 alias sl='ls'
 
-alias cdtemp='cd $(tempdir)'
-alias mkcd='source $(which _mkcd)'
+cdtemp() { cd "$(mktemp -d)" }
+mkcd() { mkdir -p "$1" && cd "$1" }
 
 export EDITOR="vim"
 

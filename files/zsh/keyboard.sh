@@ -58,10 +58,10 @@ if [ "$HOST_OS" = "Linux" ]; then
     bindkey '^[Od' emacs-backward-word
     bindkey '^[Oc' emacs-forward-word
 elif [ "$HOST_OS" = "Darwin" ]; then
-    bindkey ";5A" history-beginning-search-backward
-    bindkey ';5B' history-beginning-search-forward
-    bindkey ';5D' emacs-backward-word
-    bindkey ';5C' emacs-forward-word
+    bindkey "\e[1;5A" history-beginning-search-backward
+    bindkey "\e[1;5B" history-beginning-search-forward
+    bindkey "\e[1;5D" emacs-backward-word
+    bindkey "\e[1;5C" emacs-forward-word
 fi
 
 # Stop on slash in paths when using ^W.
