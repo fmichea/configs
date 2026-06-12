@@ -1,0 +1,147 @@
+{
+  "cleanupPeriodDays": 7,
+  "permissions": {
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "LS",
+      "Edit",
+      "MultiEdit",
+      "Write(src/**)",
+      "Write(tests/**)",
+      "Bash(npm run *)",
+      "Bash(npm test *)",
+      "Bash(npx tsc *)",
+      "Bash(git status)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(gh pr list *)",
+      "Bash(gh pr view *)",
+      "Bash(gh pr diff *)",
+      "Bash(gh pr checks *)",
+      "Bash(gh pr review *)",
+      "Bash(gh issue list *)",
+      "Bash(gh issue view *)",
+      "Bash(gh repo view *)",
+      "Bash(gh repo list *)",
+      "Bash(gh run list *)",
+      "Bash(gh run view *)",
+      "Bash(gh workflow list *)",
+      "Bash(gh search repos *)",
+      "Bash(gh search code *)",
+      "Bash(gh search issues *)",
+      "Bash(gh search prs *)",
+      "Bash(gh api *)"
+    ],
+    "deny": [
+      "Read(**/.env*)",
+      "Read(**/.dev.vars*)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Read(**/*.p12)",
+      "Read(**/*.pfx)",
+      "Read(**/*.tfstate)",
+      "Read(**/*.tfstate.backup)",
+      "Read(**/*.kubeconfig)",
+      "Read(**/serviceAccount*.json)",
+      "Read(**/secrets/**)",
+      "Read(**/credentials/**)",
+      "Read(**/.aws/**)",
+      "Read(**/.ssh/**)",
+      "Read(**/.gnupg/**)",
+      "Read(**/.netrc)",
+      "Read(**/.pgpass)",
+      "Read(**/.docker/config.json)",
+      "Read(**/id_rsa*)",
+      "Read(**/id_ed25519*)",
+      "Read(**/firebase-debug.log)",
+      "Read(**/config/database.yml)",
+      "Read(**/config/credentials.json)",
+      "Read(**/.npmrc)",
+      "Read(**/.pypirc)",
+      "Write(**/.env*)",
+      "Write(**/secrets/**)",
+      "Write(**/.ssh/**)",
+      "Write(.github/workflows/*)",
+      "Bash(rm -rf *)",
+      "Bash(sudo *)",
+      "Bash(curl * | sh)",
+      "Bash(wget *)",
+      "Bash(npm publish *)",
+      "Bash(cat .env*)",
+      "Bash(cat *.env)",
+      "Bash(cat .env.*)",
+      "Bash(cat *.pem)",
+      "Bash(cat *.key)",
+      "Bash(cat *.p12)",
+      "Bash(cat *.pfx)",
+      "Bash(cat *.tfstate)",
+      "Bash(cat kubeconfig*)",
+      "Bash(cat credentials*)",
+      "Bash(cat id_rsa*)",
+      "Bash(cat id_ed25519*)",
+      "Bash(cat *.netrc)",
+      "Bash(cat *.pgpass)",
+      "Bash(cat *.npmrc)",
+      "Bash(cat *.pypirc)",
+      "Bash(less .env*)",
+      "Bash(less credentials*)",
+      "Bash(more .env*)",
+      "Bash(head .env*)",
+      "Bash(tail .env*)",
+      "Bash(env)",
+      "Bash(printenv)",
+      "Bash(printenv *)",
+      "Bash(grep * .env*)",
+      "Bash(grep -r AKIA *)",
+      "Bash(grep -r sk-ant *)",
+      "Bash(grep -r sk-live *)",
+      "Bash(grep -r ghp_ *)",
+      "Bash(awk * .env*)",
+      "Bash(sed * .env*)",
+      "Bash(aws configure list)",
+      "Bash(aws configure get *)",
+      "Bash(aws sts get-session-token)",
+      "Bash(aws sts get-session-token *)",
+      "Bash(gh auth token)",
+      "Bash(gh auth status --show-token)",
+      "Bash(security find-internet-password *)",
+      "Bash(security find-generic-password *)"
+    ],
+    "defaultMode": "acceptEdits"
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/secret-output-scan.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "ecc@ecc": true,
+    "keygate@keygate": true
+  },
+  "extraKnownMarketplaces": {
+    "ecc": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/affaan-m/ECC.git"
+      }
+    },
+    "keygate": {
+      "source": {
+        "source": "github",
+        "repo": "kanekoyuichi/keygate"
+      }
+    }
+  },
+  "theme": "dark"
+}
