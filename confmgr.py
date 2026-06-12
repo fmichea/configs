@@ -1,19 +1,13 @@
-#! /usr/bin/env python
-
-from __future__ import print_function
+#! /usr/bin/env python3
 
 import argparse
 import collections
+import configparser
 import os
 import platform
 import re
 import shlex
 import sys
-
-try:
-    import configparser
-except ImportError:
-    import ConfigParser as configparser
 
 
 _ROOT = os.path.abspath(os.path.dirname(__file__))

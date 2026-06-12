@@ -28,7 +28,7 @@ fi
 ##################################################
 # Global variable determining the current OS used.
 
-export HOST_OS=`uname`
+export HOST_OS=$(uname)
 
 ################
 # Login in a TTY
