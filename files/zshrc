@@ -159,20 +159,17 @@ fi
 export HOMEBREW_NO_ANALYTICS=1
 
 ####################
+# Load direnv hooks.
+(( ${+commands[direnv]} )) && eval "$(direnv hook zsh)"
+
+####################
 # NVM configuration.
 export NVM_DIR="$HOME/.nvm"
 
-_load_nvm() {
-    load_if_exists "/opt/homebrew/opt/nvm/nvm.sh"
-    load_if_exists "/usr/local/opt/nvm/nvm.sh"
-    load_if_exists "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
-    load_if_exists "/usr/local/opt/nvm/etc/bash_completion.d/nvm"
-}
-
-for _nvm_cmd in nvm node npm npx; do
-    eval "${_nvm_cmd}() { unset -f nvm node npm npx; _load_nvm; ${_nvm_cmd} \"\$@\"; }"
-done
-unset _nvm_cmd
+load_if_exists "/opt/homebrew/opt/nvm/nvm.sh"
+load_if_exists "/usr/local/opt/nvm/nvm.sh"
+load_if_exists "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
+load_if_exists "/usr/local/opt/nvm/etc/bash_completion.d/nvm"
 
 ####################
 # Yarn configuration
