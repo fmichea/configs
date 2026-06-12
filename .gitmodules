@@ -40,3 +40,6 @@
 [submodule "files/zsh/bundle/zsh-z"]
 	path = files/zsh/bundle/zsh-z
 	url = https://github.com/agkozak/zsh-z
+[submodule "files/claude/ecc"]
+	path = files/claude/ecc
+	url = https://github.com/affaan-m/ECC
