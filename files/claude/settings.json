@@ -111,6 +111,7 @@
     ],
     "defaultMode": "acceptEdits"
   },
+  "model": "sonnet",
   "hooks": {
     "PostToolUse": [
       {
@@ -143,5 +144,8 @@
       }
     }
   },
-  "theme": "dark"
+  "effortLevel": "high",
+  "tui": "fullscreen",
+  "theme": "dark",
+  "agentPushNotifEnabled": true
 }
