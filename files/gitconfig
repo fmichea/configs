@@ -1,44 +1,44 @@
 [user]
-    name = Franck Michea
+	name = Franck Michea
 
 [core]
-    excludesfile = ~/.gitignore
-    autocrlf = input
+	excludesfile = ~/.gitignore
+	autocrlf = input
 
 [push]
-    default = current
+	default = current
 
 [color]
-    diff = auto
-    status = auto
-    branch = auto
-    interactive = auto
-    ui = true
-    pager = true
+	diff = auto
+	status = auto
+	branch = auto
+	interactive = auto
+	ui = true
+	pager = true
 
 [color "status"]
-    added = yellow
-    changed = green
-    untracked = cyan
+	added = yellow
+	changed = green
+	untracked = cyan
 
 [branch]
-    autosetuprebase = always
+	autosetuprebase = always
 
 [rerere]
-    enabled = true
+	enabled = true
 
 [alias]
-    # open git gui in the background
-    bggui = !"nohup git gui &> /dev/null &"
-    # easily create uniquely named branches
-    dev-branch = !"git checkout -b ${USER}-`date '+%Y%m%d-%M%S'`"
-    # graph of the history
-    lg = !"git lg1"
-    lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%cr)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
-    lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%cD%C(reset) %C(bold green)(%cr)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
-    # french git
-    poule = pull
-    choucroute = checkout
+	# open git gui in the background
+	bggui = !"nohup git gui &> /dev/null &"
+	# easily create uniquely named branches
+	dev-branch = !"git checkout -b ${USER}-`date '+%Y%m%d-%M%S'`"
+	# graph of the history
+	lg = !"git lg1"
+	lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%cr)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%cD%C(reset) %C(bold green)(%cr)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+	# french git
+	poule = pull
+	choucroute = checkout
 
 [init]
 	defaultBranch = main
@@ -48,3 +48,6 @@
 	process = git-lfs filter-process
 	required = true
 	clean = git-lfs clean -- %f
+
+[include]
+	path = ~/.gitconfig.local
