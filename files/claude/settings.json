@@ -8,8 +8,8 @@
       "LS",
       "Edit",
       "MultiEdit",
-      "Write(src/**)",
-      "Write(tests/**)",
+      "Edit(src/**)",
+      "Edit(tests/**)",
       "Bash(npm run *)",
       "Bash(npm test *)",
       "Bash(npx tsc *)",
@@ -60,10 +60,10 @@
       "Read(**/config/credentials.json)",
       "Read(**/.npmrc)",
       "Read(**/.pypirc)",
-      "Write(**/.env*)",
-      "Write(**/secrets/**)",
-      "Write(**/.ssh/**)",
-      "Write(.github/workflows/*)",
+      "Edit(**/.env*)",
+      "Edit(**/secrets/**)",
+      "Edit(**/.ssh/**)",
+      "Edit(.github/workflows/*)",
       "Bash(rm -rf *)",
       "Bash(sudo *)",
       "Bash(curl * | sh)",
@@ -109,10 +109,48 @@
       "Bash(security find-internet-password *)",
       "Bash(security find-generic-password *)"
     ],
-    "defaultMode": "acceptEdits"
+    "defaultMode": "acceptEdits",
+    "additionalDirectories": ["~/Sysadmin", "~/Projects"]
   },
-  "model": "sonnet",
+  "model": "opus",
   "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.config/iterm2/cc-status 2>/dev/null || true"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PATH=\"/opt/homebrew/bin:/usr/local/bin${PATH:+:$PATH}\" node '/Users/franck/.claude/statusbar/update.js' notify"
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.config/iterm2/cc-status 2>/dev/null || true"
+          }
+        ]
+      },
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PATH=\"/opt/homebrew/bin:/usr/local/bin${PATH:+:$PATH}\" node '/Users/franck/.claude/statusbar/update.js' permreq"
+          }
+        ]
+      }
+    ],
     "PostToolUse": [
       {
         "matcher": "Bash",
@@ -123,20 +161,149 @@
             "timeout": 10
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.config/iterm2/cc-status 2>/dev/null || true"
+          }
+        ]
+      },
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PATH=\"/opt/homebrew/bin:/usr/local/bin${PATH:+:$PATH}\" node '/Users/franck/.claude/statusbar/update.js' post"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.config/iterm2/cc-status 2>/dev/null || true"
+          }
+        ]
+      },
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PATH=\"/opt/homebrew/bin:/usr/local/bin${PATH:+:$PATH}\" node '/Users/franck/.claude/statusbar/update.js' pre"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.config/iterm2/cc-status 2>/dev/null || true"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PATH=\"/opt/homebrew/bin:/usr/local/bin${PATH:+:$PATH}\" node '/Users/franck/.claude/statusbar/lifecycle.js' end"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.config/iterm2/cc-status 2>/dev/null || true"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PATH=\"/opt/homebrew/bin:/usr/local/bin${PATH:+:$PATH}\" node '/Users/franck/.claude/statusbar/lifecycle.js' start"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay /System/Library/Sounds/Blow.aiff"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.config/iterm2/cc-status 2>/dev/null || true"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PATH=\"/opt/homebrew/bin:/usr/local/bin${PATH:+:$PATH}\" node '/Users/franck/.claude/statusbar/update.js' stop"
+          }
+        ]
+      }
+    ],
+    "StopFailure": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.config/iterm2/cc-status 2>/dev/null || true"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.config/iterm2/cc-status 2>/dev/null || true"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.config/iterm2/cc-status 2>/dev/null || true"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PATH=\"/opt/homebrew/bin:/usr/local/bin${PATH:+:$PATH}\" node '/Users/franck/.claude/statusbar/update.js' prompt"
+          }
+        ]
       }
     ]
   },
   "enabledPlugins": {
-    "ecc@ecc": true,
     "keygate@keygate": true
   },
   "extraKnownMarketplaces": {
-    "ecc": {
-      "source": {
-        "source": "git",
-        "url": "https://github.com/affaan-m/ECC.git"
-      }
-    },
     "keygate": {
       "source": {
         "source": "github",
@@ -147,5 +314,6 @@
   "effortLevel": "high",
   "tui": "fullscreen",
   "theme": "dark",
+  "remoteControlAtStartup": false,
   "agentPushNotifEnabled": true
 }
