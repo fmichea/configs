@@ -1,5 +1,7 @@
-# Compiled zsh scripts, written by powerlevel10k next to its sources.
+# Files plugins generate next to their sources: compiled zsh scripts
+# (powerlevel10k) and vim help tags (:helptags).
 .zsh/bundle/**/*.zwc
+.vim/bundle/*/doc/tags
 
 {{- if ne .chezmoi.os "linux" }}
 .Xdefaults
