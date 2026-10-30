@@ -1,16 +1,17 @@
 # configs
 
-Configuration files of [Franck Michea](mailto:franck.michea@gmail.com), managed with [chezmoi](https://www.chezmoi.io/).
+Configuration files of [Franck Michea](mailto:franck@michea.dev), managed with [chezmoi](https://www.chezmoi.io/).
 They were written reading files from a lot of people, the list would now be too long and incomplete, thanks to all of them.
 
 ## Install
 
 ```sh
-git clone https://github.com/fmichea/configs.git ~/configs
-chezmoi init --source ~/configs --apply
+chezmoi init --source ~/configs --apply https://github.com/fmichea/configs.git
 ```
 
-chezmoi asks whether the machine is a development machine; answer yes to also install [configs-private](#what-goes-where). Unattended installs (fppm) add `--promptDefaults`, which answers no.
+chezmoi clones the repository into `~/configs` and installs it. On a machine with GitHub SSH access, use `--ssh fmichea/configs` as the last argument instead, so the clone can push.
+
+chezmoi asks whether the machine is a development machine; answer yes to also install [configs-private](#what-goes-where). Unattended installs add `--promptDefaults`, which answers no.
 
 ## Layout
 

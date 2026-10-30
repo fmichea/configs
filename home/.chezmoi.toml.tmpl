@@ -1,4 +1,4 @@
-{{- /* Non-interactive installs (fppm) pass --promptDefaults and get dev = false. */ -}}
+{{- /* Non-interactive installs pass --promptDefaults and get dev = false. */ -}}
 {{- $dev := promptBoolOnce . "dev" "Development machine (installs configs-private)" false -}}
 mode = "symlink"
 sourceDir = {{ .chezmoi.workingTree | quote }}
