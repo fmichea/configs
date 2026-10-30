@@ -84,3 +84,11 @@
     url = "https://github.com/agkozak/zsh-z/archive/dc9e2bc0cdbaa0a507371c248d3dcc9f58db8726.tar.gz"
     exact = true
     stripComponents = 1
+
+{{ if .dev -}}
+# Private configuration, applied as a second source by run_after_configs-private.sh.
+["configs-private"]
+    type = "git-repo"
+    url = "git@github.com:fmichea/configs-private.git"
+    refreshPeriod = "168h"
+{{- end }}

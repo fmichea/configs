@@ -1,0 +1,13 @@
+{{ if .dev -}}
+#!/bin/sh
+# Apply configs-private as a second chezmoi source. It keeps its own state file
+# because this run holds the lock on the main one.
+set -eu
+
+exec chezmoi apply \
+    --source {{ joinPath .chezmoi.destDir "configs-private" | quote }} \
+    --destination {{ .chezmoi.destDir | quote }} \
+    --config {{ .chezmoi.configFile | quote }} \
+    --persistent-state {{ joinPath (dir .chezmoi.configFile) "configs-private-state.boltdb" | quote }} \
+    --mode symlink
+{{ end -}}
