@@ -1,0 +1,94 @@
+# Editor and shell plugins, pinned to a commit. To update one, replace its
+# commit hash and run `chezmoi apply`.
+
+[".vim/bundle/ack.vim"]
+    type = "archive"
+    url = "https://github.com/mileszs/ack.vim/archive/eede0425f50d92be89ee8fb4560a5afb707c2a54.tar.gz"
+    exact = true
+    stripComponents = 1
+
+[".vim/bundle/ag.vim"]
+    type = "archive"
+    url = "https://github.com/rking/ag.vim/archive/4a0dd6e190f446e5a016b44fdaa2feafc582918e.tar.gz"
+    exact = true
+    stripComponents = 1
+
+[".vim/bundle/ctrlp"]
+    type = "archive"
+    url = "https://github.com/kien/ctrlp.vim/archive/564176f01d7f3f7f8ab452ff4e1f5314de7b0981.tar.gz"
+    exact = true
+    stripComponents = 1
+
+[".vim/bundle/dart-vim-plugin"]
+    type = "archive"
+    url = "https://github.com/dart-lang/dart-vim-plugin/archive/66eb9ec816215b789dbb728717ee2f2bfba0431f.tar.gz"
+    exact = true
+    stripComponents = 1
+
+[".vim/bundle/gitolite.vim"]
+    type = "archive"
+    url = "https://github.com/tmatilai/gitolite.vim/archive/990634e95f209ffca96970da1c117c0f67697d89.tar.gz"
+    exact = true
+    stripComponents = 1
+
+[".vim/bundle/tabular"]
+    type = "archive"
+    url = "https://github.com/godlygeek/tabular/archive/00e1e7fcdbc6d753e0bc8043e0d2546fa81bf367.tar.gz"
+    exact = true
+    stripComponents = 1
+
+[".vim/bundle/thrift.vim"]
+    type = "archive"
+    url = "https://github.com/solarnz/thrift.vim/archive/7c937d2a08e1154b2586729b67f0d1c8f5940e86.tar.gz"
+    exact = true
+    stripComponents = 1
+
+[".vim/bundle/vim-colors-solarized"]
+    type = "archive"
+    url = "https://github.com/altercation/vim-colors-solarized/archive/528a59f26d12278698bb946f8fb82a63711eec21.tar.gz"
+    exact = true
+    stripComponents = 1
+
+[".vim/bundle/vim-go"]
+    type = "archive"
+    url = "https://github.com/fatih/vim-go/archive/6bf64909889b6a0c814e2d85745d48f41c120d08.tar.gz"
+    exact = true
+    stripComponents = 1
+
+[".vim/bundle/vim-indent-guides"]
+    type = "archive"
+    url = "https://github.com/nathanaelkane/vim-indent-guides/archive/018298ead9d3aa9cd3b4ae222f81022a33978b09.tar.gz"
+    exact = true
+    stripComponents = 1
+
+[".vim/bundle/vim-jsx"]
+    type = "archive"
+    url = "https://github.com/mxw/vim-jsx/archive/eb656ed96435ccf985668ebd7bb6ceb34b736213.tar.gz"
+    exact = true
+    stripComponents = 1
+
+[".vim/bundle/vim-puppet"]
+    type = "archive"
+    url = "https://github.com/rodjek/vim-puppet/archive/d881b93dc4a8ed1374ad44439aeeb47808a6b91a.tar.gz"
+    exact = true
+    stripComponents = 1
+
+[".zsh/bundle/powerlevel10k"]
+    type = "archive"
+    url = "https://github.com/romkatv/powerlevel10k/archive/017395a266aa15011c09e64e44a1c98ed91c478c.tar.gz"
+    exact = true
+    stripComponents = 1
+
+[".zsh/bundle/zsh-z"]
+    type = "archive"
+    url = "https://github.com/agkozak/zsh-z/archive/dc9e2bc0cdbaa0a507371c248d3dcc9f58db8726.tar.gz"
+    exact = true
+    stripComponents = 1
+
+{{ if .dev -}}
+# Private configuration, applied as a second source by run_after_configs-private.sh.
+["configs-private"]
+    type = "git-repo"
+    url = "git@github.com:fmichea/configs-private.git"
+    refreshPeriod = "168h"
+{{- end }}
