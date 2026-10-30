@@ -1,5 +1,18 @@
 [user]
 	name = Franck Michea
+	email = franck@michea.dev
+	signingkey = ~/.ssh/id_ed25519.pub
+
+# Signing is opt-in: `git commit -S` for one commit, or
+# `git config commit.gpgsign true` inside a repository.
+[commit]
+	gpgsign = false
+
+[gpg]
+	format = ssh
+
+[gpg "ssh"]
+	allowedSignersFile = ~/.ssh/git-allowed-signers
 
 [core]
 	excludesfile = ~/.gitignore
@@ -39,6 +52,7 @@
 	# french git
 	poule = pull
 	choucroute = checkout
+	tatus = status
 
 [init]
 	defaultBranch = main
