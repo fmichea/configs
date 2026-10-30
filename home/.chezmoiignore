@@ -1,3 +1,6 @@
+# Compiled zsh scripts, written by powerlevel10k next to its sources.
+.zsh/bundle/**/*.zwc
+
 {{- if ne .chezmoi.os "linux" }}
 .Xdefaults
 .xinitrc
