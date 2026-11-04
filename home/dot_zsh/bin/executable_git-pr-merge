@@ -1,0 +1,165 @@
+#!/usr/bin/env python3
+"""git pr-merge [<branch>] [--merge]: merge a PR once its checks pass.
+
+Waits for the checks of the branch's open pull request (the current branch by
+default) and refuses if one fails. A pull request with no checks reported is
+merged right away. Squash-merges unless given --merge, deletes the remote and
+local branch, and removes the branch's worktree with `git wt-cleanup`.
+"""
+
+import argparse
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+REMOTE = "origin"
+
+
+class Refusal(Exception):
+    """A check failed: nothing was merged, and the message says why."""
+
+
+def run(*command: str, cwd: Path | None = None) -> str:
+    """Run command in cwd and return its stripped stdout; raise if it fails."""
+    result = subprocess.run(
+        command,
+        cwd=cwd,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return result.stdout.strip()
+
+
+def git(*args: str, cwd: Path | None = None) -> str:
+    """Run git with args in cwd and return its stripped stdout."""
+    return run("git", *args, cwd=cwd)
+
+
+def parse_args() -> argparse.Namespace:
+    """Parse the branch and --merge from the command line."""
+    parser = argparse.ArgumentParser(prog="git pr-merge", description=__doc__)
+    parser.add_argument(
+        "branch",
+        nargs="?",
+        help="branch of the pull request, the current branch by default",
+    )
+    parser.add_argument(
+        "--merge",
+        action="store_true",
+        help="create a merge commit instead of squashing",
+    )
+    return parser.parse_args()
+
+
+def main_checkout() -> Path:
+    """Return the main checkout's directory, also when run from a worktree."""
+    common_dir = git("rev-parse", "--path-format=absolute", "--git-common-dir")
+    return Path(common_dir).parent
+
+
+def linked_worktree(branch: str, root: Path) -> Path | None:
+    """Return the worktree branch is checked out in, unless it is root."""
+    path = None
+    for line in git("worktree", "list", "--porcelain").splitlines():
+        if line.startswith("worktree "):
+            path = Path(line.removeprefix("worktree "))
+        elif line == f"branch refs/heads/{branch}" and path.resolve() != root.resolve():
+            return path
+    return None
+
+
+def open_pr(branch: str) -> dict:
+    """Return the PR of branch with its head and checks; refuse unless open."""
+    fields = "number,state,headRefOid,statusCheckRollup"
+    pr = json.loads(run("gh", "pr", "view", branch, "--json", fields))
+    if pr["state"] != "OPEN":
+        raise Refusal(f"the pull request of {branch} is {pr['state'].lower()}, not open")
+    return pr
+
+
+def wait_for_checks(pr: dict) -> None:
+    """Wait for the PR's checks; refuse with their summary if one fails."""
+    number = str(pr["number"])
+    if not pr["statusCheckRollup"]:
+        print(f"no checks reported on #{number}; merging without waiting")
+        return
+    watch = subprocess.run(
+        ["gh", "pr", "checks", number, "--watch", "--fail-fast"],
+        capture_output=True,
+        text=True,
+    )
+    if watch.returncode != 0:
+        summary = subprocess.run(
+            ["gh", "pr", "checks", number],
+            capture_output=True,
+            text=True,
+        )
+        raise Refusal(f"checks of #{number} did not pass:\n{summary.stdout.strip()}")
+
+
+def merge(pr: dict, method: str, cwd: Path) -> None:
+    """Merge the PR at the head whose checks passed and delete its branch.
+
+    Run from the branch's worktree, gh deletes the remote branch and leaves the
+    worktree and local branch to `git wt-cleanup`. Run from the main checkout,
+    gh also deletes the local branch, after switching to the base branch if
+    needed.
+    """
+    output = run(
+        "gh",
+        "pr",
+        "merge",
+        str(pr["number"]),
+        method,
+        "--delete-branch",
+        "--match-head-commit",
+        pr["headRefOid"],
+        cwd=cwd,
+    )
+    print(output or f"merged #{pr['number']}")
+
+
+def current_branch() -> str:
+    """Return the current branch; refuse if HEAD is detached."""
+    branch = git("branch", "--show-current")
+    if not branch:
+        raise Refusal("HEAD is detached; name the branch of the pull request")
+    return branch
+
+
+def remove_worktree(branch: str, root: Path) -> None:
+    """Run `git wt-cleanup` on the merged branch; refuse with its reason."""
+    try:
+        print(run("git", "wt-cleanup", branch, cwd=root))
+    except subprocess.CalledProcessError as error:
+        raise Refusal(f"merged, but the worktree was kept: {error.stderr.strip()}")
+
+
+def merge_branch(branch: str | None, method: str) -> None:
+    """Merge the PR of branch once its checks pass, then clean up its worktree."""
+    root = main_checkout()
+    branch = branch or current_branch()
+    pr = open_pr(branch)
+    wait_for_checks(pr)
+    worktree = linked_worktree(branch, root)
+    merge(pr, method, cwd=worktree or root)
+    if worktree:
+        remove_worktree(branch, root)
+
+
+def main() -> None:
+    """Merge the PR given on the command line, or exit with the reason."""
+    args = parse_args()
+    method = "--merge" if args.merge else "--squash"
+    try:
+        merge_branch(args.branch, method)
+    except Refusal as refusal:
+        sys.exit(f"git pr-merge: {refusal}")
+    except subprocess.CalledProcessError as error:
+        sys.exit(f"git pr-merge: {error.stderr.strip()}")
+
+
+if __name__ == "__main__":
+    main()

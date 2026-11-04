@@ -1,0 +1,136 @@
+#!/usr/bin/env python3
+"""git pr-open --title <title> --body-file <file> [--allow-public]: open a PR.
+
+Pushes the current branch with its upstream set, then opens a pull request
+against the remote's default branch and prints its URL. Refuses on the default
+branch, with uncommitted changes or untracked files, and, without
+--allow-public, on a repository that is public or not owned by OWNER.
+"""
+
+import argparse
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+OWNER = "fmichea"
+REMOTE = "origin"
+
+
+class Refusal(Exception):
+    """A check failed: nothing was pushed, and the message says why."""
+
+
+def run(*command: str) -> str:
+    """Run command and return its stripped stdout; raise if it fails."""
+    result = subprocess.run(
+        command,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return result.stdout.strip()
+
+
+def git(*args: str) -> str:
+    """Run git with args and return its stripped stdout."""
+    return run("git", *args)
+
+
+def parse_args() -> argparse.Namespace:
+    """Parse the title, body file and --allow-public from the command line."""
+    parser = argparse.ArgumentParser(prog="git pr-open", description=__doc__)
+    parser.add_argument("--title", required=True, help="pull request title")
+    parser.add_argument("--body-file", required=True, help="file holding the description")
+    parser.add_argument(
+        "--allow-public",
+        action="store_true",
+        help=f"allow a public repository or one not owned by {OWNER}",
+    )
+    return parser.parse_args()
+
+
+def default_branch() -> str:
+    """Return the remote's default branch name, e.g. main.
+
+    Falls back to main when the remote's HEAD is not set locally.
+    """
+    try:
+        ref = git("symbolic-ref", "--short", f"refs/remotes/{REMOTE}/HEAD")
+    except subprocess.CalledProcessError:
+        return "main"
+    return ref.removeprefix(f"{REMOTE}/")
+
+
+def current_branch(base: str) -> str:
+    """Return the current branch; refuse if detached or on base."""
+    branch = git("branch", "--show-current")
+    if not branch:
+        raise Refusal("HEAD is detached, not on a branch")
+    if branch == base:
+        raise Refusal(f"on the default branch {base}; switch to a feature branch")
+    return branch
+
+
+def check_clean() -> None:
+    """Refuse if the working tree has uncommitted changes or untracked files."""
+    if git("status", "--porcelain"):
+        raise Refusal("uncommitted changes or untracked files; commit or remove them")
+
+
+def check_private_and_owned() -> None:
+    """Refuse unless the repository is private and owned by OWNER."""
+    repo = json.loads(run("gh", "repo", "view", "--json", "isPrivate,owner"))
+    owner = repo["owner"]["login"]
+    if repo["isPrivate"] and owner == OWNER:
+        return
+    visibility = "private" if repo["isPrivate"] else "public"
+    raise Refusal(
+        f"the repository is {visibility} and owned by {owner}; "
+        "rerun with --allow-public, which asks for approval"
+    )
+
+
+def check_body_file(body_file: str) -> None:
+    """Refuse if body_file does not exist."""
+    if not Path(body_file).is_file():
+        raise Refusal(f"{body_file} is not a file")
+
+
+def open_pr(title: str, body_file: str, allow_public: bool) -> str:
+    """Run the checks, push the branch, open the PR and return its URL."""
+    check_body_file(body_file)
+    base = default_branch()
+    branch = current_branch(base)
+    check_clean()
+    if not allow_public:
+        check_private_and_owned()
+    git("push", "--quiet", "--set-upstream", REMOTE, branch)
+    return run(
+        "gh",
+        "pr",
+        "create",
+        "--base",
+        base,
+        "--head",
+        branch,
+        "--title",
+        title,
+        "--body-file",
+        body_file,
+    )
+
+
+def main() -> None:
+    """Print the new PR's URL, or exit with the reason it was not opened."""
+    args = parse_args()
+    try:
+        print(open_pr(args.title, args.body_file, args.allow_public))
+    except Refusal as refusal:
+        sys.exit(f"git pr-open: {refusal}")
+    except subprocess.CalledProcessError as error:
+        sys.exit(f"git pr-open: {error.stderr.strip()}")
+
+
+if __name__ == "__main__":
+    main()

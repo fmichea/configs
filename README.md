@@ -30,6 +30,12 @@ Executable files (`~/.zsh/bin/*`, `~/.claude/hooks/*`, `~/.claude/bin/*`, virtua
 
 `git wt-add <branch>` creates a worktree in `.claude/worktrees/` of the main checkout, on a new branch from the remote's default branch. `git wt-cleanup <branch>` removes the worktree and the branch once its pull request is merged, and refuses otherwise. Both are scripts in `~/.zsh/bin`, and `~/.claude/hooks/git-c-allow.py` lets Claude Code run them without a prompt.
 
+## Pull requests
+
+`git pr-open --title <title> --body-file <file>` pushes the current branch and opens a pull request against the default branch. Claude Code runs it without a prompt on private repositories owned by `OWNER` (set at the top of the script); anywhere else it refuses unless given `--allow-public`, which always prompts.
+
+`git pr-merge [<branch>]` waits for the pull request's checks, refuses if one fails, then squash-merges (`--merge` for a merge commit), deletes the branch and removes its worktree with `git wt-cleanup`. A pull request with no checks reported merges right away. It always prompts.
+
 ## Claude Code permissions
 
 `~/.claude/hooks/permission-log.sh` logs every permission prompt to `~/.claude/permission-log.jsonl`. `~/.claude/bin/permission-report.py --since-days N` groups them by suggested rule, to find candidates for `permissions.allow` in `home/dot_claude/settings.json`.
