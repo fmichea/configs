@@ -1,5 +1,5 @@
 {
-  "cleanupPeriodDays": 7,
+  "cleanupPeriodDays": 90,
   "permissions": {
     "allow": [
       "Read",
@@ -91,8 +91,15 @@
       "Edit(.github/workflows/*)",
       "Bash(rm -rf *)",
       "Bash(sudo *)",
-      "Bash(curl * | sh)",
-      "Bash(wget *)",
+      "Bash(sh)",
+      "Bash(sh -)",
+      "Bash(sh -s *)",
+      "Bash(bash)",
+      "Bash(bash -)",
+      "Bash(bash -s *)",
+      "Bash(zsh)",
+      "Bash(zsh -)",
+      "Bash(zsh -s *)",
       "Bash(npm publish *)",
       "Bash(cat .env*)",
       "Bash(cat *.env)",
@@ -138,6 +145,8 @@
       "Bash(git diff --no-index *)"
     ],
     "ask": [
+      "Bash(curl *)",
+      "Bash(wget *)",
       "Read(~/.claude/permission-log.jsonl)",
       "Read(~/.claude/projects/**)"
     ],
