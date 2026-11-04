@@ -26,6 +26,12 @@ chezmoi runs in symlink mode: most files in `~` are symlinks into `home/`, so ed
 
 Executable files (`~/.zsh/bin/*`, `~/.claude/hooks/*`, virtualenvwrapper hooks, i3 startup script) are copies instead. Edit them in `home/` and run `chezmoi apply`.
 
+## Claude Code permissions
+
+`~/.claude/hooks/permission-log.sh` logs every permission prompt to `~/.claude/permission-log.jsonl`. `~/.claude/bin/permission-report.py --since-days N` groups them by suggested rule, to find candidates for `permissions.allow` in `home/dot_claude/settings.json`.
+
+Open decision: how to allow WebFetch of documentation. Wildcards such as `docs.*.*` or `*.github.io` match domains anyone can register or publish on, so a prompt injection could exfiltrate data through the URL path without a prompt; filtering on URL shape (no query string) does not prevent that. The alternative is allowing exact domains as they come up in the report. Until decided, only `cloudnative-pg.io` is allowed.
+
 ## What goes where
 
 - **configs (this repository, public):** anything a fresh server or a stranger could use: shell, editor, git and terminal config, Claude Code preferences, installer logic.
