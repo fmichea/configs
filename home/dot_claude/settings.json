@@ -16,6 +16,10 @@
       "Bash(git status)",
       "Bash(git diff *)",
       "Bash(git log *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(jq *)",
+      "Bash(yq *)",
       "Bash(gh pr list *)",
       "Bash(gh pr view *)",
       "Bash(gh pr diff *)",
@@ -32,7 +36,28 @@
       "Bash(gh search code *)",
       "Bash(gh search issues *)",
       "Bash(gh search prs *)",
-      "Bash(gh api *)"
+      "Bash(gh api *)",
+      "Bash(kubectl get *)",
+      "Bash(kubectl logs *)",
+      "Bash(kubectl explain *)",
+      "Bash(kubectl apply --dry-run=server *)",
+      "Bash(kubectl cnpg status *)",
+      "Bash(helm template *)",
+      "Bash(helm show *)",
+      "Bash(bundle exec rspec *)",
+      "Bash(gcx metrics query *)",
+      "Bash(gcx metrics labels *)",
+      "Bash(gcx metrics series *)",
+      "Bash(gcx metrics list-names *)",
+      "Bash(gcx metrics metadata *)",
+      "Bash(gcx logs query *)",
+      "Bash(gcx logs labels *)",
+      "Bash(gcx logs series *)",
+      "Bash(gcx docs *)",
+      "Bash(gcx config view *)",
+      "Bash(gcx resources get *)",
+      "Bash(gcx datasources list *)",
+      "WebFetch(domain:cloudnative-pg.io)"
     ],
     "deny": [
       "Read(**/.env*)",
@@ -107,7 +132,14 @@
       "Bash(gh auth token)",
       "Bash(gh auth status --show-token)",
       "Bash(security find-internet-password *)",
-      "Bash(security find-generic-password *)"
+      "Bash(security find-generic-password *)",
+      "Bash(kubectl get secret *)",
+      "Bash(kubectl get secrets *)",
+      "Bash(git diff --no-index *)"
+    ],
+    "ask": [
+      "Read(~/.claude/permission-log.jsonl)",
+      "Read(~/.claude/projects/**)"
     ],
     "defaultMode": "acceptEdits",
     "additionalDirectories": ["~/Sysadmin", "~/Projects"]
@@ -138,6 +170,15 @@
           {
             "type": "command",
             "command": "~/.config/iterm2/cc-status 2>/dev/null || true"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/permission-log.sh",
+            "timeout": 5
           }
         ]
       },
@@ -186,6 +227,16 @@
           {
             "type": "command",
             "command": "~/.config/iterm2/cc-status 2>/dev/null || true"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/git-c-allow.py",
+            "timeout": 5
           }
         ]
       },

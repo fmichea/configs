@@ -45,7 +45,22 @@ Applies to everything written for humans: replies, code comments, docs, commit m
 - New repositories use `main` as their initial branch.
 - Stage explicit paths (`git add <paths>`); never `git add -A`, `git add .` or `git commit --all`. Check `git status` for unexpected files before committing.
 - Commit and push only on a branch, never directly to the default branch.
-- Before creating a PR or pushing new commits to one, stop so I can skim the changes locally. Push only once I say so.
+- Before creating a PR or pushing new commits to one, stop so I can skim the changes locally. Push only once I say so. List each change to review as Markdown, not a code block: one field per line, ending each line but the last of a group with `\`, bold labels, the change description in italics, branch, worktree path and commit id in inline code. Separate changes with a `---` line between blank lines:
+
+  ```markdown
+  **Project:** repo-1\
+  **Branch:** `feat/change-1`\
+  **Worktree:** `.claude/worktrees/change-1`\
+  **Commit:** `4c77f67`
+
+  **Change:**\
+  *Add the database catalog*
+
+  ---
+
+  **Project:** repo-2
+  ...
+  ```
 - Base every PR on the default branch, never on another PR's branch. When order matters, write "merge after #N" in the description.
 - Split PRs so each is useful if merged alone; put bulk data that needs review in its own PRs, separate from code.
 - After opening a PR, wait for my review. Merge only when I say so, even if the merge method is already decided.
@@ -69,3 +84,13 @@ Applies to everything written for humans: replies, code comments, docs, commit m
 - Batch queries to external APIs into one request rather than per-item loops, which hit rate limits.
 - Use jq for JSON parsing.
 - Use the Edit tool rather than scripts to edit files, unless the file is large and a script avoids loading too much into context.
+- Put the subcommand before any flags, e.g. `kubectl get pods --namespace monitoring`, not `kubectl --namespace monitoring get pods`. Permission rules match from the start of the command.
+- Write temporary files to the scratchpad directory, not the system temp directory.
+- Run independent steps as separate Bash calls instead of chaining them with `&&` or `;`. Each call is then checked against the permission rules on its own.
+- Write commit messages with one `--message` per paragraph, the attribution trailer last, instead of a heredoc.
+
+## Monitoring
+
+- Query Prometheus with `gcx metrics query '<promql>'` and Loki with `gcx logs query '<logql>'`. Don't use `kubectl exec … promtool` or the API server proxy.
+- To show a trend, run the range query with `--output graph --share-link`. Paste the chart into the reply in a code block with the key numbers written out, and link the Grafana Explore URL.
+- Keep the pasted chart to three series or fewer, or aggregate, because colours are lost. With more series, give only the Grafana link.
