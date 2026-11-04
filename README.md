@@ -24,7 +24,11 @@ chezmoi asks whether the machine is a development machine; answer yes to also in
 
 chezmoi runs in symlink mode: most files in `~` are symlinks into `home/`, so editing `~/.gitconfig` edits the tracked file. Commit the change from `~/configs`.
 
-Executable files (`~/.zsh/bin/*`, `~/.claude/hooks/*`, virtualenvwrapper hooks, i3 startup script) are copies instead. Edit them in `home/` and run `chezmoi apply`.
+Executable files (`~/.zsh/bin/*`, `~/.claude/hooks/*`, `~/.claude/bin/*`, virtualenvwrapper hooks, i3 startup script) are copies instead. Edit them in `home/` and run `chezmoi apply`.
+
+## Git worktrees
+
+`git wt-add <branch>` creates a worktree in `.claude/worktrees/` of the main checkout, on a new branch from the remote's default branch. `git wt-cleanup <branch>` removes the worktree and the branch once its pull request is merged, and refuses otherwise. Both are scripts in `~/.zsh/bin`, and `~/.claude/hooks/git-c-allow.py` lets Claude Code run them without a prompt.
 
 ## Claude Code permissions
 

@@ -1,0 +1,79 @@
+#!/usr/bin/env python3
+"""git wt-add <branch> [<start-point>]: create a worktree on a new branch.
+
+The worktree goes in .claude/worktrees/<last part of the branch name> of the
+main checkout, also when run from another worktree. The branch starts from
+<start-point>, by default the remote's default branch after a fetch, and has
+no upstream until its first push.
+"""
+
+import argparse
+import subprocess
+import sys
+from pathlib import Path
+
+REMOTE = "origin"
+WORKTREES_DIR = Path(".claude") / "worktrees"
+
+
+def git(*args: str) -> str:
+    """Run git with args and return its stripped stdout; raise if it fails."""
+    result = subprocess.run(
+        ["git", *args],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return result.stdout.strip()
+
+
+def parse_args() -> argparse.Namespace:
+    """Parse the branch and optional start point from the command line."""
+    parser = argparse.ArgumentParser(prog="git wt-add", description=__doc__)
+    parser.add_argument("branch", help="new branch, e.g. feat/db-catalog")
+    parser.add_argument("start_point", nargs="?", help="commit to start from")
+    return parser.parse_args()
+
+
+def main_checkout() -> Path:
+    """Return the main checkout's directory, also when run from a worktree."""
+    common_dir = git("rev-parse", "--path-format=absolute", "--git-common-dir")
+    return Path(common_dir).parent
+
+
+def default_start_point() -> str:
+    """Return the remote's default branch, e.g. origin/main.
+
+    Falls back to origin/main when the remote's HEAD is not set locally.
+    """
+    try:
+        return git("symbolic-ref", "--short", f"refs/remotes/{REMOTE}/HEAD")
+    except subprocess.CalledProcessError:
+        return f"{REMOTE}/main"
+
+
+def worktree_path(root: Path, branch: str) -> Path:
+    """Return where the worktree of branch goes: feat/x gives .claude/worktrees/x."""
+    return root / WORKTREES_DIR / branch.rsplit("/", 1)[-1]
+
+
+def add_worktree(branch: str, start_point: str | None) -> Path:
+    """Fetch, create branch from start_point in a new worktree, return its path."""
+    path = worktree_path(main_checkout(), branch)
+    git("fetch", "--quiet", REMOTE)
+    start = start_point or default_start_point()
+    git("worktree", "add", "--quiet", "--no-track", "-b", branch, str(path), start)
+    return path
+
+
+def main() -> None:
+    """Print the new worktree's path, or exit with git's error."""
+    args = parse_args()
+    try:
+        print(add_worktree(args.branch, args.start_point))
+    except subprocess.CalledProcessError as error:
+        sys.exit(f"git wt-add: {error.stderr.strip()}")
+
+
+if __name__ == "__main__":
+    main()

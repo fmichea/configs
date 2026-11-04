@@ -70,6 +70,9 @@ def decision(home: Path, command: str) -> str | None:
         "git status",
         "git worktree add .claude/worktrees/topic -b topic main",
         "git worktree remove .claude/worktrees/topic",
+        "git wt-add feat/topic",
+        "git -C HOME/cwd/repo wt-add feat/topic origin/main",
+        "git -C HOME/cwd/repo wt-cleanup feat/topic",
     ],
 )
 def test_allows_safe_subcommand_inside_working_directory(home, command):
@@ -80,6 +83,7 @@ def test_allows_safe_subcommand_inside_working_directory(home, command):
     "command",
     [
         "git -C HOME/outside status",
+        "git -C HOME/outside wt-cleanup feat/topic",
         "git -C HOME/cwd/../outside status",
         "git -C HOME/cwd/repo push",
         "git -C HOME/cwd/repo worktree remove --force x",

@@ -30,6 +30,9 @@ SAFE_SUBCOMMANDS = {
     ("worktree", "remove"),
     ("branch", "--list"),
     ("branch", "--show-current"),
+    # ~/.zsh/bin/git-wt-*: refuse to remove anything unmerged or uncommitted.
+    ("wt-add",),
+    ("wt-cleanup",),
 }
 # Options that write files, read files outside the repository (`diff
 # --no-index` compares any two paths), run programs named on the command line,

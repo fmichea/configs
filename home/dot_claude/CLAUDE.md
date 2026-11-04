@@ -68,10 +68,11 @@ Applies to everything written for humans: replies, code comments, docs, commit m
 
 ## Worktrees
 
-- In repositories marked "Worktree: yes" in the project map, do every unit of work that modifies the repository in a git worktree under `.claude/worktrees/<name>/`, on its own branch. Elsewhere, work on a branch in the main checkout, and move the work to a worktree when a second unit of work starts in the same repository.
-- When a unit of work spans several worktree repositories, create a worktree in each, with the same `<name>`.
+- In repositories marked "Worktree: yes" in the project map, do every unit of work that modifies the repository in a git worktree on its own branch. Elsewhere, work on a branch in the main checkout, and move the work to a worktree when a second unit of work starts in the same repository.
+- Create a worktree with `git wt-add <branch> [<start-point>]`. It fetches, branches from the remote's default branch unless given a start point, and creates `.claude/worktrees/<name>/` in the main checkout, where `<name>` is the last part of the branch name.
+- When a unit of work spans several worktree repositories, create a worktree in each, with the same branch name.
 - The first time a repository gets a worktree, record its setup steps (dependency installs, `.worktreeinclude` entries) in that repository's CLAUDE.md.
-- Once the unit of work is merged, remove its worktrees and local branches.
+- Once the unit of work is merged, remove each worktree and its branch with `git wt-cleanup <branch>`. It refuses unless the pull request is merged, the branch has no commits outside it and the worktree has nothing uncommitted; report a refusal instead of working around it. For a branch in the main checkout, switch back to the default branch and delete the branch.
 
 ## Projects
 
