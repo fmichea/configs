@@ -1,0 +1,144 @@
+#!/usr/bin/env python3
+"""git wt-cleanup <branch>: remove the worktree and branch of a merged PR.
+
+Refuses unless the branch's pull request is merged, the local branch points at
+the commit that was merged, and the worktree has no changes or untracked
+files. Then removes the worktree, deletes the branch, and fast-forwards the
+default branch if the main checkout is on it.
+"""
+
+import argparse
+import json
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+REMOTE = "origin"
+
+
+class Refusal(Exception):
+    """A check failed: nothing was removed, and the message says why."""
+
+
+def run(*command: str, cwd: Path | None = None) -> str:
+    """Run command in cwd and return its stripped stdout; raise if it fails."""
+    result = subprocess.run(
+        command,
+        cwd=cwd,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return result.stdout.strip()
+
+
+def git(*args: str, cwd: Path | None = None) -> str:
+    """Run git with args in cwd and return its stripped stdout."""
+    return run("git", *args, cwd=cwd)
+
+
+def parse_args() -> argparse.Namespace:
+    """Parse the branch from the command line."""
+    parser = argparse.ArgumentParser(prog="git wt-cleanup", description=__doc__)
+    parser.add_argument("branch", help="branch of the merged pull request")
+    return parser.parse_args()
+
+
+def main_checkout() -> Path:
+    """Return the main checkout's directory, also when run from a worktree."""
+    common_dir = git("rev-parse", "--path-format=absolute", "--git-common-dir")
+    return Path(common_dir).parent
+
+
+def default_branch() -> str:
+    """Return the remote's default branch name, e.g. main.
+
+    Falls back to main when the remote's HEAD is not set locally.
+    """
+    try:
+        ref = git("symbolic-ref", "--short", f"refs/remotes/{REMOTE}/HEAD")
+    except subprocess.CalledProcessError:
+        return "main"
+    return ref.removeprefix(f"{REMOTE}/")
+
+
+def worktrees() -> dict[str, Path]:
+    """Map each checked-out branch to its worktree path."""
+    by_branch = {}
+    path = None
+    for line in git("worktree", "list", "--porcelain").splitlines():
+        if line.startswith("worktree "):
+            path = Path(line.removeprefix("worktree "))
+        elif line.startswith("branch refs/heads/"):
+            by_branch[line.removeprefix("branch refs/heads/")] = path
+    return by_branch
+
+
+def find_worktree(branch: str, root: Path) -> Path:
+    """Return the worktree path of branch.
+
+    Refuses if branch is not checked out, or is checked out in the main
+    checkout at root.
+    """
+    path = worktrees().get(branch)
+    if path is None:
+        raise Refusal(f"{branch} is not checked out in a worktree")
+    if path.resolve() == root.resolve():
+        raise Refusal(f"{branch} is checked out in the main checkout, not a worktree")
+    return path
+
+
+def check_merged(branch: str) -> None:
+    """Refuse unless branch's PR is merged and the branch is at its merged head."""
+    pr = json.loads(run("gh", "pr", "view", branch, "--json", "state,headRefOid"))
+    if pr["state"] != "MERGED":
+        raise Refusal(f"the pull request of {branch} is {pr['state'].lower()}, not merged")
+    if git("rev-parse", f"refs/heads/{branch}") != pr["headRefOid"]:
+        raise Refusal(f"{branch} has commits that are not in its merged pull request")
+
+
+def check_clean(path: Path) -> None:
+    """Refuse if the worktree at path has uncommitted changes or untracked files."""
+    if git("status", "--porcelain", cwd=path):
+        raise Refusal(f"{path} has uncommitted changes or untracked files")
+
+
+def update_default_branch(root: Path) -> None:
+    """Fast-forward the main checkout at root if it is on the default branch."""
+    branch = default_branch()
+    if git("branch", "--show-current", cwd=root) != branch:
+        print(f"{root} is not on {branch}; left it as is")
+        return
+    git("pull", "--ff-only", "--quiet", cwd=root)
+
+
+def cleanup(branch: str) -> None:
+    """Run the checks, then remove branch's worktree and the branch itself."""
+    root = main_checkout()
+    # The worktree being removed may be the current directory.
+    os.chdir(root)
+    path = find_worktree(branch, root)
+    check_merged(branch)
+    check_clean(path)
+    git("worktree", "remove", str(path))
+    # A squash-merged branch is not an ancestor of the default branch, so git
+    # only deletes it with --force; check_merged verified it was merged.
+    git("branch", "--delete", "--force", branch)
+    update_default_branch(root)
+    print(f"removed {path} and {branch}")
+
+
+def main() -> None:
+    """Clean up the branch given on the command line, or exit with the reason."""
+    args = parse_args()
+    try:
+        cleanup(args.branch)
+    except Refusal as refusal:
+        sys.exit(f"git wt-cleanup: {refusal}")
+    except subprocess.CalledProcessError as error:
+        sys.exit(f"git wt-cleanup: {error.stderr.strip()}")
+
+
+if __name__ == "__main__":
+    main()
