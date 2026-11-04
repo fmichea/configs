@@ -83,6 +83,7 @@ Applies to everything written for humans: replies, code comments, docs, commit m
 - When I am typing on a physical console without copy-paste, keep commands short and split into small steps.
 - Batch queries to external APIs into one request rather than per-item loops, which hit rate limits.
 - Use jq for JSON parsing.
+- Use `rg` to search file contents and `fd` to find files, instead of `grep -r`, `ag` and `find`.
 - Use the Edit tool rather than scripts to edit files, unless the file is large and a script avoids loading too much into context.
 - Put the subcommand before any flags, e.g. `kubectl get pods --namespace monitoring`, not `kubectl --namespace monitoring get pods`. Permission rules match from the start of the command.
 - Write temporary files to the scratchpad directory, not the system temp directory.
