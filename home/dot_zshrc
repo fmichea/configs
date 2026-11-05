@@ -55,12 +55,19 @@ HISTFILE=~/.histfile
 HISTSIZE=1000000
 SAVEHIST=$HISTSIZE
 
+# Full compinit, with its security audit, at most once a day; otherwise reuse
+# the dump with compinit -C. touch marks the dump fresh, since compinit only
+# rewrites it when completion files change.
 autoload -Uz compinit
-if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
-    compinit
-else
+zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
+fresh_zcompdump=($zcompdump(N.mh-24))
+if (( ${#fresh_zcompdump} )); then
     compinit -C
+else
+    compinit
+    touch "$zcompdump"
 fi
+unset zcompdump fresh_zcompdump
 
 setopt hist_ignore_all_dups     # Don't put any duplicates in history.
 setopt hist_ignore_space        # Don't save commands prefixed with a space.
@@ -124,12 +131,16 @@ export HOMEBREW_NO_ANALYTICS=1
 
 ####################
 # NVM configuration.
-export NVM_DIR="$HOME/.nvm"
+load_if_exists "${HOME}/.zsh/nvm.sh"
 
-load_if_exists "/opt/homebrew/opt/nvm/nvm.sh"
-load_if_exists "/usr/local/opt/nvm/nvm.sh"
-load_if_exists "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
-load_if_exists "/usr/local/opt/nvm/etc/bash_completion.d/nvm"
+###########################################################
+# fzf key bindings (Ctrl-T, Ctrl-R, Alt-C), listing with fd.
+if (( ${+commands[fd]} )); then
+    export FZF_DEFAULT_COMMAND='fd --type file --hidden --exclude .git'
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    export FZF_ALT_C_COMMAND='fd --type directory --hidden --exclude .git'
+fi
+(( ${+commands[fzf]} )) && source <(fzf --zsh)
 
 ####################
 # Yarn configuration
