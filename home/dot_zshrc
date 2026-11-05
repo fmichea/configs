@@ -1,3 +1,4 @@
+# Virtualenv directory used by `layout virtualenvwrapper` in ~/.direnvrc.
 export WORKON_HOME="$HOME/.virtualenvs"
 
 # Direnv requires some initialization before Instant Prompt is enabled.
@@ -61,7 +62,6 @@ else
     compinit -C
 fi
 
-setopt correct
 setopt hist_ignore_all_dups     # Don't put any duplicates in history.
 setopt hist_ignore_space        # Don't save commands prefixed with a space.
 setopt hist_reduce_blanks       # Reduce amount of superfluous blank spaces in history.
@@ -90,51 +90,11 @@ source "${HOME}/.zsh/bundle/powerlevel10k/powerlevel10k.zsh-theme"
 alias find='noglob find'
 alias reload='. ${HOME}/.zshrc'
 
-###################################
-# Virtualenv wrapper configuration.
-
-
-function virtualenvwrapper_install {
-    VENV_WRAPPER=$1
-
-    if [ -f "$VENV_WRAPPER" ]; then
-        # Create and install virtualenv directory.
-        mkdir -p "$WORKON_HOME"
-        # Load the virtualenv wrapper source.
-        source "$VENV_WRAPPER"
-    fi
-}
-
-virtualenv_funcs=(workon deactivate mkvirtualenv)
-
-function virtualenvwrapper_load_and_call {
-    unset -f "${virtualenv_funcs[@]}"
-
-    if [ "$HOST_OS" = "Linux" ]; then
-        virtualenvwrapper_install "/usr/bin/virtualenvwrapper.sh"
-        virtualenvwrapper_install "/usr/share/virtualenvwrapper/virtualenvwrapper.sh"
-    elif [ "$HOST_OS" = "Darwin" ]; then
-        virtualenvwrapper_install "/usr/local/bin/virtualenvwrapper.sh"
-        virtualenvwrapper_install "/opt/homebrew/bin/virtualenvwrapper.sh"
-    fi
-
-    "$@"
-}
-
-for func in "${virtualenv_funcs[@]}"; do
-    eval "${func}() { virtualenvwrapper_load_and_call ${func} \"\$@\"; }"
-done
-
 #####################################
 # Add brew bin directories on MacOSX.
 
 [[ -d /opt/homebrew ]] && BREW_PREFIX=/opt/homebrew || BREW_PREFIX=/usr/local
 PATH="$BREW_PREFIX/bin:$BREW_PREFIX/sbin:${HOME}/.zsh/bin:${HOME}/.local/bin:${PATH}"
-
-if [ -d "/opt/homebrew/opt/rabbitmq/sbin" ]; then
-    PATH="$PATH:/opt/homebrew/opt/rabbitmq/sbin"
-fi
-
 export BREW_PREFIX PATH
 
 ######################################################
@@ -191,9 +151,3 @@ load_if_exists "/usr/local/opt/chruby/share/chruby/chruby.sh"
 #######
 # Ruby from Homebrew PATH.
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-
-######################
-# Claude Configuration
-alias claude-dev='claude --system-prompt "$(cat ~/.claude/contexts/dev.md)"'
-alias claude-review='claude --system-prompt "$(cat ~/.claude/contexts/review.md)"'
-alias claude-research='claude --system-prompt "$(cat ~/.claude/contexts/research.md)"'

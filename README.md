@@ -24,7 +24,7 @@ chezmoi asks whether the machine is a development machine; answer yes to also in
 
 chezmoi runs in symlink mode: most files in `~` are symlinks into `home/`, so editing `~/.gitconfig` edits the tracked file. Commit the change from `~/configs`.
 
-Executable files (`~/.zsh/bin/*`, `~/.claude/hooks/*`, `~/.claude/bin/*`, virtualenvwrapper hooks, i3 startup script) are copies instead. Edit them in `home/` and run `chezmoi apply`.
+Executable files (`~/.zsh/bin/*`, `~/.claude/hooks/*`, `~/.claude/bin/*`, i3 startup script) are copies instead. Edit them in `home/` and run `chezmoi apply`.
 
 ## Git worktrees
 
