@@ -13,6 +13,26 @@ chezmoi clones the repository into `~/configs` and installs it. On a machine wit
 
 chezmoi asks whether the machine is a development machine; answer yes to also install [configs-private](#what-goes-where). Unattended installs add `--promptDefaults`, which answers no.
 
+## Dependencies
+
+The configuration uses these tools.
+
+- [chezmoi](https://www.chezmoi.io/)
+- [zsh](https://www.zsh.org/)
+- [git](https://git-scm.com/) and [Git LFS](https://git-lfs.com/)
+- [delta](https://github.com/dandavison/delta)
+- [vim](https://www.vim.org/)
+- [tmux](https://github.com/tmux/tmux)
+- [fzf](https://github.com/junegunn/fzf)
+- [fd](https://github.com/sharkdp/fd)
+- [ripgrep](https://github.com/BurntSushi/ripgrep)
+- [direnv](https://direnv.net/)
+- [nvm](https://github.com/nvm-sh/nvm)
+- [chruby](https://github.com/postmodern/chruby)
+- [Go](https://go.dev/): `chezmoi apply` installs [gopls](https://github.com/golang/tools/tree/master/gopls) with it, for vim-go.
+- Linux: [i3](https://i3wm.org/) and [i3status](https://i3wm.org/i3status/)
+- macOS: [Karabiner-Elements](https://karabiner-elements.pqrs.org/)
+
 ## Layout
 
 - `home/` is the chezmoi source state (see `.chezmoiroot`): `dot_zshrc` installs as `~/.zshrc`, `dot_config/i3` as `~/.config/i3`, and so on.
