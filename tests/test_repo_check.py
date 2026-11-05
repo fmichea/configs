@@ -6,10 +6,15 @@ from collections.abc import Callable
 from pathlib import Path
 
 import pytest
-
 from conftest import GIT_DIR, PYTHON_DIR
 
-HOOK = Path(__file__).resolve().parent.parent / "home" / "dot_claude" / "hooks" / "executable_repo-check.py"
+HOOK = (
+    Path(__file__).resolve().parent.parent
+    / "home"
+    / "dot_claude"
+    / "hooks"
+    / "executable_repo-check.py"
+)
 DAY = 24 * 3600
 
 
@@ -60,6 +65,7 @@ def mark(hook_env) -> Callable[[Path], subprocess.CompletedProcess]:
             capture_output=True,
             text=True,
             env=hook_env,
+            check=False,
         )
 
     return mark
@@ -169,6 +175,7 @@ def test_offer_ignores_invalid_input(hook_env):
         capture_output=True,
         text=True,
         env=hook_env,
+        check=False,
     )
 
     assert result.returncode == 0

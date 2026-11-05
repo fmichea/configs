@@ -89,12 +89,14 @@ def wait_for_checks(pr: dict) -> None:
         ["gh", "pr", "checks", number, "--watch", "--fail-fast"],
         capture_output=True,
         text=True,
+        check=False,
     )
     if watch.returncode != 0:
         summary = subprocess.run(
             ["gh", "pr", "checks", number],
             capture_output=True,
             text=True,
+            check=False,
         )
         raise Refusal(f"checks of #{number} did not pass:\n{summary.stdout.strip()}")
 

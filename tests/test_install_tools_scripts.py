@@ -4,22 +4,21 @@ from collections.abc import Callable
 from pathlib import Path
 
 import pytest
-
 from conftest import FAKE_BIN, PYTHON_DIR
 
 HOME_SOURCE = Path(__file__).resolve().parent.parent / "home"
 
-# (script, tool it runs, expected arguments; the last one is a prefix, before the version)
+# (script, tool it runs, expected calls; the last argument of each is a prefix, before the version)
 SCRIPTS = [
     (
         "run_onchange_after_install-go-tools.sh",
         "go",
-        ["install", "golang.org/x/tools/gopls@v"],
+        [["install", "golang.org/x/tools/gopls@v"]],
     ),
     (
         "run_onchange_after_install-python-tools.sh",
         "uv",
-        ["tool", "install", "keygate=="],
+        [["tool", "install", "keygate=="], ["tool", "install", "ruff=="]],
     ),
 ]
 
@@ -48,9 +47,10 @@ def run_script(tmp_path) -> Callable[[str, str, bool], list[list[str]]]:
 def test_installs_pinned_version_with_tool(run_script, script, tool, expected):
     calls = run_script(script, tool, with_tool=True)
 
-    assert len(calls) == 1
-    assert calls[0][:-1] == expected[:-1]
-    assert calls[0][-1].startswith(expected[-1])
+    assert [call[:-1] for call in calls] == [call[:-1] for call in expected]
+    assert all(
+        call[-1].startswith(prefix[-1]) for call, prefix in zip(calls, expected, strict=True)
+    )
 
 
 @pytest.mark.parametrize(("script", "tool", "expected"), SCRIPTS)

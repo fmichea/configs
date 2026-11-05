@@ -111,7 +111,7 @@ def test_allows_safe_subcommand_inside_working_directory(home, command):
         "git status foo#&& rm -rf x",
         "git status # ; rm -rf x",
         "git -C HOME/cwd/repo log > out.txt",
-        "git -C HOME/cwd/repo commit --message \"$(rm -rf x)\"",
+        'git -C HOME/cwd/repo commit --message "$(rm -rf x)"',
         "git -C HOME/cwd/repo commit --file - <<'EOF'\nmsg\nEOF",
         "git -C HOME/cwd/repo commit --message 'unterminated",
         "git",
@@ -129,6 +129,7 @@ def test_defers_on_invalid_input(home):
         capture_output=True,
         text=True,
         env={"HOME": str(home)},
+        check=False,
     )
 
     assert result.returncode == 0
