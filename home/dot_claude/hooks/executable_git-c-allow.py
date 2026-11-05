@@ -33,12 +33,20 @@ SAFE_SUBCOMMANDS = {
     # ~/.zsh/bin/git-wt-*: refuse to remove anything unmerged or uncommitted.
     ("wt-add",),
     ("wt-cleanup",),
+    # ~/.zsh/bin/git-pr-open: only private repositories owned by its OWNER.
+    ("pr-open",),
 }
 # Options that write files, read files outside the repository (`diff
 # --no-index` compares any two paths), run programs named on the command line,
-# or skip git's safety checks (`worktree remove --force` discards uncommitted
-# changes).
-UNSAFE_OPTION_PREFIXES = ("--output", "--no-index", "--upload-pack", "--force")
+# or skip safety checks (`worktree remove --force` discards uncommitted
+# changes, `pr-open --allow-public` publishes to a public repository).
+UNSAFE_OPTION_PREFIXES = (
+    "--output",
+    "--no-index",
+    "--upload-pack",
+    "--force",
+    "--allow-public",
+)
 UNSAFE_OPTIONS = {"-f", "-ff"}
 SHELL_OPERATOR_CHARS = set("();<>|&")
 EXPANSION_CHARS = set("$`\n")

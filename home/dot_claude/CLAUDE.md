@@ -61,10 +61,11 @@ Applies to everything written for humans: replies, code comments, docs, commit m
   **Project:** repo-2
   ...
   ```
+- Open a PR with `git pr-open --title <title> --body-file <file>`, which pushes the current branch and opens the PR against the default branch. It runs without a prompt, so run it only after my go-ahead. It refuses on a public repository or one I don't own; rerun it with `--allow-public`, which asks for my approval.
 - Base every PR on the default branch, never on another PR's branch. When order matters, write "merge after #N" in the description.
 - Split PRs so each is useful if merged alone; put bulk data that needs review in its own PRs, separate from code.
 - After opening a PR, wait for my review. Merge only when I say so, even if the merge method is already decided.
-- Merge PRs with `gh pr merge --squash --delete-branch`, unless I ask to keep the commits.
+- Merge PRs with `git pr-merge <branch>`. It waits for the checks and refuses if one fails, squash-merges, deletes the branch and runs `git wt-cleanup` on its worktree. Pass `--merge` only when I ask to keep the commits. Report a refusal instead of working around it.
 
 ## Worktrees
 
@@ -72,7 +73,7 @@ Applies to everything written for humans: replies, code comments, docs, commit m
 - Create a worktree with `git wt-add <branch> [<start-point>]`. It fetches, branches from the remote's default branch unless given a start point, and creates `.claude/worktrees/<name>/` in the main checkout, where `<name>` is the last part of the branch name.
 - When a unit of work spans several worktree repositories, create a worktree in each, with the same branch name.
 - The first time a repository gets a worktree, record its setup steps (dependency installs, `.worktreeinclude` entries) in that repository's CLAUDE.md.
-- Once the unit of work is merged, remove each worktree and its branch with `git wt-cleanup <branch>`. It refuses unless the pull request is merged, the branch has no commits outside it and the worktree has nothing uncommitted; report a refusal instead of working around it. For a branch in the main checkout, switch back to the default branch and delete the branch.
+- Once the unit of work is merged, remove each worktree and its branch with `git wt-cleanup <branch>`, unless `git pr-merge` already did. It refuses unless the pull request is merged, the branch has no commits outside it and the worktree has nothing uncommitted; report a refusal instead of working around it. For a branch in the main checkout, switch back to the default branch and delete the branch.
 
 ## Projects
 

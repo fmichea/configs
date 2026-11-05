@@ -1,0 +1,50 @@
+#!/usr/bin/env python3
+"""Stand-in for the gh CLI in tests, driven by files in $FAKE_GH_STATE.
+
+- `repo view` and `pr view` print repo.json and pr.json.
+- `pr checks` exits with the code in checks-exit.
+- `pr merge` marks pr.json as merged.
+- `pr create` prints $FAKE_GH_PR_URL.
+
+Every call is logged with its directory to calls.jsonl.
+"""
+
+import json
+import os
+import sys
+from pathlib import Path
+
+
+def log_call(state: Path, args: list[str]) -> None:
+    """Append args and the current directory to calls.jsonl."""
+    with (state / "calls.jsonl").open("a") as calls:
+        calls.write(json.dumps({"args": args, "cwd": os.getcwd()}) + "\n")
+
+
+def mark_merged(state: Path) -> None:
+    """Set the state of the PR in pr.json to MERGED."""
+    pr = json.loads((state / "pr.json").read_text())
+    (state / "pr.json").write_text(json.dumps({**pr, "state": "MERGED"}))
+
+
+def main() -> None:
+    """Answer the gh subcommand given on the command line."""
+    state = Path(os.environ["FAKE_GH_STATE"])
+    args = sys.argv[1:]
+    log_call(state, args)
+    subcommand = args[:2]
+    if subcommand == ["repo", "view"]:
+        print((state / "repo.json").read_text())
+    elif subcommand == ["pr", "view"]:
+        print((state / "pr.json").read_text())
+    elif subcommand == ["pr", "checks"]:
+        print("ci/jenkins/tests\tfail")
+        sys.exit(int((state / "checks-exit").read_text()))
+    elif subcommand == ["pr", "merge"]:
+        mark_merged(state)
+    elif subcommand == ["pr", "create"]:
+        print(os.environ["FAKE_GH_PR_URL"])
+
+
+if __name__ == "__main__":
+    main()

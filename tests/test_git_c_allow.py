@@ -73,6 +73,7 @@ def decision(home: Path, command: str) -> str | None:
         "git wt-add feat/topic",
         "git -C HOME/cwd/repo wt-add feat/topic origin/main",
         "git -C HOME/cwd/repo wt-cleanup feat/topic",
+        "git pr-open --title 'feat: x' --body-file body.md",
     ],
 )
 def test_allows_safe_subcommand_inside_working_directory(home, command):
@@ -84,6 +85,9 @@ def test_allows_safe_subcommand_inside_working_directory(home, command):
     [
         "git -C HOME/outside status",
         "git -C HOME/outside wt-cleanup feat/topic",
+        "git pr-open --title x --body-file body.md --allow-public",
+        "git -C HOME/cwd/repo pr-open --allow-public --title x --body-file b.md",
+        "git pr-merge feat/topic",
         "git -C HOME/cwd/../outside status",
         "git -C HOME/cwd/repo push",
         "git -C HOME/cwd/repo worktree remove --force x",
