@@ -65,6 +65,10 @@ Claude Code checks each part of a pipeline against the rules on its own, so a ru
 
 Open decision: how to allow WebFetch of documentation. Wildcards such as `docs.*.*` or `*.github.io` match domains anyone can register or publish on, so a prompt injection could exfiltrate data through the URL path without a prompt; filtering on URL shape (no query string) does not prevent that. The alternative is allowing exact domains as they come up in the report. Until decided, only `cloudnative-pg.io` is allowed.
 
+## Repository check
+
+The `/repo-check` skill (`~/.claude/skills/repo-check/`) audits a repository against the standards in `~/.claude/CLAUDE.md` and proposes fixes. At the start of a session, `~/.claude/hooks/repo-check.py offer` asks Claude to offer it in a repository not checked in the last 30 days. `repo-check.py mark` records a check, or a declined offer, as an empty file per repository in `~/.claude/repo-check/`.
+
 ## What goes where
 
 - **configs (this repository, public):** anything a fresh server or a stranger could use: shell, editor, git and terminal config, Claude Code preferences, installer logic.

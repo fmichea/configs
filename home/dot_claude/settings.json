@@ -57,6 +57,7 @@
       "Bash(gcx config view *)",
       "Bash(gcx resources get *)",
       "Bash(gcx datasources list *)",
+      "Bash(~/.claude/hooks/repo-check.py mark)",
       "WebFetch(domain:cloudnative-pg.io)"
     ],
     "deny": [
@@ -283,6 +284,16 @@
           {
             "type": "command",
             "command": "~/.config/iterm2/cc-status 2>/dev/null || true"
+          }
+        ]
+      },
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/repo-check.py offer",
+            "timeout": 5
           }
         ]
       },
