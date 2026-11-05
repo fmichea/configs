@@ -18,6 +18,16 @@
 [core]
 	excludesfile = ~/.gitignore
 	autocrlf = input
+	# delta where installed, less elsewhere.
+	pager = command -v delta >/dev/null 2>&1 && exec delta || exec less
+
+# Highlight hunks in `git add -p`; --color-only keeps the diff's shape.
+[interactive]
+	diffFilter = command -v delta >/dev/null 2>&1 && exec delta --color-only || exec cat
+
+[delta]
+	navigate = true  # n / N jump between files in the pager.
+	line-numbers = true
 
 [push]
 	default = current
