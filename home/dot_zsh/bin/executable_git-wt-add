@@ -5,15 +5,21 @@ The worktree goes in .claude/worktrees/<last part of the branch name> of the
 main checkout, also when run from another worktree. The branch starts from
 <start-point>, by default the remote's default branch after a fetch, and has
 no upstream until its first push.
+
+When the new branch has a .worktreeinclude file (gitignore syntax), the
+main checkout's files that match it and that the branch ignores are copied
+into the worktree, e.g. downloaded model files.
 """
 
 import argparse
+import shutil
 import subprocess
 import sys
 from pathlib import Path
 
 REMOTE = "origin"
 WORKTREES_DIR = Path(".claude") / "worktrees"
+INCLUDE_FILE = ".worktreeinclude"
 
 
 def git(*args: str) -> str:
@@ -25,6 +31,29 @@ def git(*args: str) -> str:
         text=True,
     )
     return result.stdout.strip()
+
+
+def git_paths(cwd: Path, *args: str, paths: list[str] | None = None) -> list[str]:
+    """Run a git command that reads and writes NUL-separated paths in cwd.
+
+    Exit status 1 means no paths matched, as for git check-ignore.
+    """
+    result = subprocess.run(
+        ["git", *args],
+        check=False,
+        cwd=cwd,
+        input="\0".join(paths or []),
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode not in (0, 1):
+        raise subprocess.CalledProcessError(
+            result.returncode,
+            result.args,
+            result.stdout,
+            result.stderr,
+        )
+    return [path for path in result.stdout.split("\0") if path]
 
 
 def parse_args() -> argparse.Namespace:
@@ -57,12 +86,40 @@ def worktree_path(root: Path, branch: str) -> Path:
     return root / WORKTREES_DIR / branch.rsplit("/", 1)[-1]
 
 
+def included_files(root: Path, path: Path) -> list[str]:
+    """Return root's untracked files that path's .worktreeinclude matches and path ignores."""
+    include = path / INCLUDE_FILE
+    if not include.is_file():
+        return []
+    candidates = git_paths(
+        root,
+        "ls-files",
+        "-z",
+        "--others",
+        "--ignored",
+        f"--exclude-from={include}",
+    )
+    if not candidates:
+        return []
+    return git_paths(path, "check-ignore", "-z", "--stdin", paths=candidates)
+
+
+def copy_included_files(root: Path, path: Path) -> None:
+    """Copy root's files listed by included_files into the worktree at path."""
+    for name in included_files(root, path):
+        destination = path / name
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(root / name, destination)
+
+
 def add_worktree(branch: str, start_point: str | None) -> Path:
     """Fetch, create branch from start_point in a new worktree, return its path."""
-    path = worktree_path(main_checkout(), branch)
+    root = main_checkout()
+    path = worktree_path(root, branch)
     git("fetch", "--quiet", REMOTE)
     start = start_point or default_start_point()
     git("worktree", "add", "--quiet", "--no-track", "-b", branch, str(path), start)
+    copy_included_files(root, path)
     return path
 
 
