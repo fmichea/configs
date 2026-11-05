@@ -58,6 +58,55 @@ def test_wt_add_fails_when_branch_exists(run, git, clone):
     assert result.stderr.startswith("git wt-add:")
 
 
+@pytest.fixture
+def include_rules(git, pusher) -> None:
+    """Push a .gitignore and a .worktreeinclude to origin's main."""
+    (pusher / ".gitignore").write_text("models/\n.env\n")
+    (pusher / ".worktreeinclude").write_text("models/\nnotes.txt\n")
+    git(pusher, "add", ".gitignore", ".worktreeinclude")
+    git(pusher, "commit", "--quiet", "--message", "include rules")
+    git(pusher, "push", "--quiet", "origin", "main")
+
+
+@pytest.mark.parametrize(
+    "name, copied",
+    [
+        ("models/model.bin", True),
+        ("models/nested/weights.bin", True),
+        (".env", False),
+        ("notes.txt", False),
+        ("draft.txt", False),
+    ],
+)
+def test_wt_add_copies_ignored_files_listed_in_worktreeinclude(
+    run,
+    clone,
+    include_rules,
+    name,
+    copied,
+):
+    source = clone / name
+    source.parent.mkdir(parents=True, exist_ok=True)
+    source.write_text(f"content of {name}")
+
+    result = run("git-wt-add", clone, "feat/topic")
+
+    assert result.returncode == 0, result.stderr
+    destination = Path(result.stdout.strip()) / name
+    assert destination.exists() == copied
+    if copied:
+        assert destination.read_text() == f"content of {name}"
+
+
+def test_wt_add_without_worktreeinclude_copies_nothing(run, clone):
+    (clone / "model.bin").write_text("weights")
+
+    result = run("git-wt-add", clone, "feat/topic")
+
+    assert result.returncode == 0, result.stderr
+    assert not (Path(result.stdout.strip()) / "model.bin").exists()
+
+
 def test_wt_cleanup_removes_merged_worktree_and_updates_main(
     run,
     git,
