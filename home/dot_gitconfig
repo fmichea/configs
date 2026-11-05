@@ -84,6 +84,12 @@
 [init]
 	defaultBranch = main
 
+# Scan staged changes for secrets in every repository, alongside its own hooks.
+# Opt a repository out with `git config hook.keygate.enabled false`.
+[hook "keygate"]
+	event = pre-commit
+	command = command -v keygate >/dev/null 2>&1 && exec keygate scan || echo "keygate not installed, scan skipped" >&2
+
 [filter "lfs"]
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
