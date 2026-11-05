@@ -1,57 +1,33 @@
 # Editor and shell plugins, pinned to a commit. To update one, replace its
 # commit hash and run `chezmoi apply`.
 
-[".vim/bundle/dart-vim-plugin"]
-    type = "archive"
-    url = "https://github.com/dart-lang/dart-vim-plugin/archive/66eb9ec816215b789dbb728717ee2f2bfba0431f.tar.gz"
-    exact = true
-    stripComponents = 1
-
 [".vim/bundle/fzf.vim"]
     type = "archive"
     url = "https://github.com/junegunn/fzf.vim/archive/023de3c0e158ff9c2b0992175af10be97c2f2158.tar.gz"
     exact = true
     stripComponents = 1
 
-[".vim/bundle/gitolite.vim"]
-    type = "archive"
-    url = "https://github.com/tmatilai/gitolite.vim/archive/990634e95f209ffca96970da1c117c0f67697d89.tar.gz"
-    exact = true
-    stripComponents = 1
-
 [".vim/bundle/tabular"]
     type = "archive"
-    url = "https://github.com/godlygeek/tabular/archive/00e1e7fcdbc6d753e0bc8043e0d2546fa81bf367.tar.gz"
-    exact = true
-    stripComponents = 1
-
-[".vim/bundle/thrift.vim"]
-    type = "archive"
-    url = "https://github.com/solarnz/thrift.vim/archive/7c937d2a08e1154b2586729b67f0d1c8f5940e86.tar.gz"
-    exact = true
-    stripComponents = 1
-
-[".vim/bundle/vim-colors-solarized"]
-    type = "archive"
-    url = "https://github.com/altercation/vim-colors-solarized/archive/528a59f26d12278698bb946f8fb82a63711eec21.tar.gz"
+    url = "https://github.com/godlygeek/tabular/archive/12437cd1b53488e24936ec4b091c9324cafee311.tar.gz"
     exact = true
     stripComponents = 1
 
 [".vim/bundle/vim-go"]
     type = "archive"
-    url = "https://github.com/fatih/vim-go/archive/6bf64909889b6a0c814e2d85745d48f41c120d08.tar.gz"
+    url = "https://github.com/fatih/vim-go/archive/47694979496d4bf2e90ce75d95f1dec3f41cbefb.tar.gz"
     exact = true
     stripComponents = 1
 
 [".vim/bundle/vim-indent-guides"]
     type = "archive"
-    url = "https://github.com/nathanaelkane/vim-indent-guides/archive/018298ead9d3aa9cd3b4ae222f81022a33978b09.tar.gz"
+    url = "https://github.com/preservim/vim-indent-guides/archive/a1e1390c0136e63e813d051de2003bf0ee18ae30.tar.gz"
     exact = true
     stripComponents = 1
 
 [".vim/bundle/vim-puppet"]
     type = "archive"
-    url = "https://github.com/rodjek/vim-puppet/archive/d881b93dc4a8ed1374ad44439aeeb47808a6b91a.tar.gz"
+    url = "https://github.com/rodjek/vim-puppet/archive/21b2b9ecaf8ef18ea4755ed7f82937eb97989c82.tar.gz"
     exact = true
     stripComponents = 1
 
