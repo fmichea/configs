@@ -30,6 +30,7 @@ The configuration uses these tools.
 - [nvm](https://github.com/nvm-sh/nvm)
 - [chruby](https://github.com/postmodern/chruby)
 - [Go](https://go.dev/): `chezmoi apply` installs [gopls](https://github.com/golang/tools/tree/master/gopls) with it, for vim-go.
+- [uv](https://docs.astral.sh/uv/): `chezmoi apply` installs [keygate](https://github.com/kanekoyuichi/keygate) with it, which git runs on every commit to scan staged changes for secrets.
 - Linux: [i3](https://i3wm.org/) and [i3status](https://i3wm.org/i3status/)
 - macOS: [Karabiner-Elements](https://karabiner-elements.pqrs.org/)
 

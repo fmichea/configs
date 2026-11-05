@@ -361,7 +361,7 @@
     ]
   },
   "enabledPlugins": {
-    "keygate@keygate": true
+    "keygate@keygate": false
   },
   "extraKnownMarketplaces": {
     "keygate": {

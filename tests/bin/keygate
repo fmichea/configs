@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+"""Stand-in for the keygate CLI in tests.
+
+Logs each call's arguments to $FAKE_KEYGATE_CALLS and exits with the code in
+$FAKE_KEYGATE_EXIT: 0 passes the scan, 1 blocks the commit.
+"""
+
+import json
+import os
+import sys
+
+
+def main() -> None:
+    """Log the arguments, then exit with the configured code."""
+    with open(os.environ["FAKE_KEYGATE_CALLS"], "a") as calls:
+        calls.write(json.dumps(sys.argv[1:]) + "\n")
+    sys.exit(int(os.environ["FAKE_KEYGATE_EXIT"]))
+
+
+if __name__ == "__main__":
+    main()
