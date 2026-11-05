@@ -1,7 +1,7 @@
 import json
 import subprocess
 import sys
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import pytest
@@ -72,7 +72,7 @@ def test_hook_appends_request_with_timestamp_and_prints_nothing(tmp_path):
     assert len(lines) == 2
     entry = json.loads(lines[0])
     assert entry["tool_input"] == {"command": "make build"}
-    assert datetime.fromisoformat(entry["ts"]) <= datetime.now(timezone.utc)
+    assert datetime.fromisoformat(entry["ts"]) <= datetime.now(UTC)
 
 
 def test_hook_ignores_invalid_input(tmp_path):
@@ -84,6 +84,7 @@ def test_hook_ignores_invalid_input(tmp_path):
         capture_output=True,
         text=True,
         env=hook_env(log),
+        check=False,
     )
 
     assert result.returncode == 0
@@ -155,12 +156,12 @@ def test_report_ignores_deny_suggestions(tmp_path):
 
 def test_report_filters_by_age_and_count(tmp_path):
     log = tmp_path / "log.jsonl"
-    old = datetime.now(timezone.utc) - timedelta(days=30)
+    old = datetime.now(UTC) - timedelta(days=30)
     entries = [
         {"ts": old.isoformat(), **bash_request("make old", "make old")},
-        {"ts": datetime.now(timezone.utc).isoformat(), **bash_request("make new", "make new")},
-        {"ts": datetime.now(timezone.utc).isoformat(), **bash_request("make new", "make new")},
-        {"ts": datetime.now(timezone.utc).isoformat(), **bash_request("make once", "make once")},
+        {"ts": datetime.now(UTC).isoformat(), **bash_request("make new", "make new")},
+        {"ts": datetime.now(UTC).isoformat(), **bash_request("make new", "make new")},
+        {"ts": datetime.now(UTC).isoformat(), **bash_request("make once", "make once")},
     ]
     write_log(log, entries)
 

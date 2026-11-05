@@ -38,6 +38,7 @@ def main_checkout(cwd: str) -> Path | None:
         cwd=cwd,
         capture_output=True,
         text=True,
+        check=False,
     )
     if result.returncode != 0:
         return None

@@ -123,6 +123,7 @@ def run(env) -> Callable[..., subprocess.CompletedProcess]:
             env=env,
             capture_output=True,
             text=True,
+            check=False,
         )
 
     return run

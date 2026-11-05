@@ -10,7 +10,7 @@ import json
 import os
 from collections import defaultdict
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 DEFAULT_LOG = Path.home() / ".claude" / "permission-log.jsonl"
@@ -132,7 +132,7 @@ def main() -> None:
         return
     cutoff = None
     if args.since_days is not None:
-        cutoff = datetime.now(timezone.utc) - timedelta(days=args.since_days)
+        cutoff = datetime.now(UTC) - timedelta(days=args.since_days)
     entries = [e for e in read_entries(args.log) if is_recent(e, cutoff)]
     print_report(aggregate(entries), args.min_count)
 

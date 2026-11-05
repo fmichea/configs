@@ -1,10 +1,8 @@
 import json
 import subprocess
-from collections.abc import Callable
 from pathlib import Path
 
 import pytest
-
 from conftest import FAKE_BIN, GIT_DIR, PYTHON_DIR
 
 GITCONFIG = Path(__file__).resolve().parent.parent / "home" / "dot_gitconfig"
@@ -52,6 +50,7 @@ class Repo:
             env=self.env(keygate_exit),
             capture_output=True,
             text=True,
+            check=False,
         )
 
     def add_local_hook(self) -> None:

@@ -1,0 +1,22 @@
+# Not a package: the Python scripts install with chezmoi and run on the system python3.
+[project]
+name = "configs"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.ruff]
+line-length = 100
+# Python scripts without a .py extension.
+extend-include = [
+    "home/dot_zsh/bin/executable_git-*",
+    "tests/bin/*",
+]
+
+[tool.ruff.lint]
+extend-select = ["E", "W"]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+]
