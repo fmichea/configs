@@ -26,7 +26,6 @@ Applies to everything written for humans: replies, code comments, docs, commit m
 - Write tests for new code.
 - Test behavior: given this input, we get this output or effect. A test must not depend on how the code is written.
 - Do not assert on internals, call order, private helpers, or mocks of code we own. A refactor that keeps behavior must not break tests.
-- In Python, use `pytest.mark.parametrize` instead of loops over cases, so each case reports on its own.
 - Run the relevant tests before reporting a task done. Report failures with their output.
 
 ## Security

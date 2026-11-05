@@ -30,7 +30,7 @@ The configuration uses these tools.
 - [nvm](https://github.com/nvm-sh/nvm)
 - [chruby](https://github.com/postmodern/chruby)
 - [Go](https://go.dev/): `chezmoi apply` installs [gopls](https://github.com/golang/tools/tree/master/gopls) with it, for vim-go.
-- [uv](https://docs.astral.sh/uv/): `chezmoi apply` installs [keygate](https://github.com/kanekoyuichi/keygate) with it, which git runs on every commit to scan staged changes for secrets.
+- [uv](https://docs.astral.sh/uv/): `chezmoi apply` installs with it [keygate](https://github.com/kanekoyuichi/keygate), which git runs on every commit to scan staged changes for secrets, and [ruff](https://docs.astral.sh/ruff/), which the Claude Code Python rules use.
 - Linux: [i3](https://i3wm.org/) and [i3status](https://i3wm.org/i3status/)
 - macOS: [Karabiner-Elements](https://karabiner-elements.pqrs.org/)
 
@@ -64,6 +64,14 @@ Executable files (`~/.zsh/bin/*`, `~/.claude/hooks/*`, `~/.claude/bin/*`, i3 sta
 Claude Code checks each part of a pipeline against the rules on its own, so a rule such as `Bash(curl * | sh)` never matches. The deny rules on bare `sh`, `bash` and `zsh` and their `-` and `-s` forms block piping anything into a shell; `curl` and `wget` always ask.
 
 Open decision: how to allow WebFetch of documentation. Wildcards such as `docs.*.*` or `*.github.io` match domains anyone can register or publish on, so a prompt injection could exfiltrate data through the URL path without a prompt; filtering on URL shape (no query string) does not prevent that. The alternative is allowing exact domains as they come up in the report. Until decided, only `cloudnative-pg.io` is allowed.
+
+## Python rules
+
+`~/.claude/rules/python.md` holds the Python conventions: style with ruff, types, idioms, pytest, uv. Claude Code loads it only once it reads or edits a Python file or a `pyproject.toml`. This repository's own Python follows it, configured in `pyproject.toml`.
+
+## Tests
+
+`uv run pytest tests` runs the tests of the scripts and hooks. `uvx ruff check .` and `uvx ruff format --check .` lint them.
 
 ## Repository check
 
