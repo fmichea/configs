@@ -55,11 +55,22 @@ HISTFILE=~/.histfile
 HISTSIZE=1000000
 SAVEHIST=$HISTSIZE
 
+# Extra completion definitions, which compinit must find on fpath: the
+# zsh-completions plugin, and the completions Homebrew formulae install, which
+# macOS's /bin/zsh does not look for.
+typeset -U fpath
+fpath=(
+    "${HOME}/.zsh/bundle/zsh-completions/src"
+    /opt/homebrew/share/zsh/site-functions(N/)
+    $fpath
+)
+
 # Full compinit, with its security audit, at most once a day; otherwise reuse
 # the dump with compinit -C. touch marks the dump fresh, since compinit only
-# rewrites it when completion files change.
+# rewrites it when completion files change. Each zsh version keeps its own
+# dump, since /bin/zsh and Homebrew's zsh have different fpaths.
 autoload -Uz compinit
-zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
+zcompdump="${ZDOTDIR:-$HOME}/.zcompdump-${ZSH_VERSION}"
 fresh_zcompdump=($zcompdump(N.mh-24))
 if (( ${#fresh_zcompdump} )); then
     compinit -C
@@ -142,6 +153,11 @@ if (( ${+commands[fd]} )); then
 fi
 (( ${+commands[fzf]} )) && source <(fzf --zsh)
 
+####################################################################
+# fzf-tab: pick completions with fzf. It must be the last to bind Tab,
+# after fzf's own bindings.
+(( ${+commands[fzf]} )) && load_if_exists "${HOME}/.zsh/bundle/fzf-tab/fzf-tab.plugin.zsh"
+
 ####################
 # Yarn configuration
 [ -d "$HOME/.yarn/bin" ] && export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
@@ -162,3 +178,7 @@ load_if_exists "/usr/local/opt/chruby/share/chruby/chruby.sh"
 #######
 # Ruby from Homebrew PATH.
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+
+############################################################################
+# Command line syntax highlighting. It wraps every widget, so it loads last.
+load_if_exists "${HOME}/.zsh/bundle/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
