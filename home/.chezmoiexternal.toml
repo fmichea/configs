@@ -1,27 +1,15 @@
 # Editor and shell plugins, pinned to a commit. To update one, replace its
 # commit hash and run `chezmoi apply`.
 
-[".vim/bundle/ack.vim"]
-    type = "archive"
-    url = "https://github.com/mileszs/ack.vim/archive/eede0425f50d92be89ee8fb4560a5afb707c2a54.tar.gz"
-    exact = true
-    stripComponents = 1
-
-[".vim/bundle/ag.vim"]
-    type = "archive"
-    url = "https://github.com/rking/ag.vim/archive/4a0dd6e190f446e5a016b44fdaa2feafc582918e.tar.gz"
-    exact = true
-    stripComponents = 1
-
-[".vim/bundle/ctrlp"]
-    type = "archive"
-    url = "https://github.com/kien/ctrlp.vim/archive/564176f01d7f3f7f8ab452ff4e1f5314de7b0981.tar.gz"
-    exact = true
-    stripComponents = 1
-
 [".vim/bundle/dart-vim-plugin"]
     type = "archive"
     url = "https://github.com/dart-lang/dart-vim-plugin/archive/66eb9ec816215b789dbb728717ee2f2bfba0431f.tar.gz"
+    exact = true
+    stripComponents = 1
+
+[".vim/bundle/fzf.vim"]
+    type = "archive"
+    url = "https://github.com/junegunn/fzf.vim/archive/023de3c0e158ff9c2b0992175af10be97c2f2158.tar.gz"
     exact = true
     stripComponents = 1
 
@@ -58,12 +46,6 @@
 [".vim/bundle/vim-indent-guides"]
     type = "archive"
     url = "https://github.com/nathanaelkane/vim-indent-guides/archive/018298ead9d3aa9cd3b4ae222f81022a33978b09.tar.gz"
-    exact = true
-    stripComponents = 1
-
-[".vim/bundle/vim-jsx"]
-    type = "archive"
-    url = "https://github.com/mxw/vim-jsx/archive/eb656ed96435ccf985668ebd7bb6ceb34b736213.tar.gz"
     exact = true
     stripComponents = 1
 

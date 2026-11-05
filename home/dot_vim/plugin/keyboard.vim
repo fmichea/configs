@@ -8,15 +8,16 @@ set pastetoggle=<F1>
 map <silent> <F2> :w<CR>
 imap <silent> <F2> <C-O>:w<CR>
 
-" F[3-4] - searching
+" F3 - clear search highlighting
 map <silent> <F3> :nohlsearch<CR>
 imap <silent> <F3> <C-O>:nohlsearch<CR>
 
-nnoremap <F4> :Ag!<Space><cword><CR>
-inoremap <F4> <ESC>:Ag!<Space><cword><CR>
+" F[4-5] - searching files with ripgrep: the word under the cursor, or a prompt.
+nnoremap <F4> :Rg<Space><C-R><C-W><CR>
+inoremap <F4> <ESC>:Rg<Space><C-R><C-W><CR>
 
-nnoremap <F5> :Ag!<Space>
-inoremap <F5> <ESC>:Ag!<Space>
+nnoremap <F5> :Rg<Space>
+inoremap <F5> <ESC>:Rg<Space>
 
 " Split with Space+[vs]
 " Move across buffers with Space+[hjkl] or Double space.

@@ -2,5 +2,14 @@
 " .vimrc: franck's vim configuration file. "
 """"""""""""""""""""""""""""""""""""""""""""
 
+" fzf's base vim plugin, needed by fzf.vim. Homebrew installs it outside vim's
+" runtime path; Arch's fzf package installs it in vim's default one.
+for s:fzf_dir in ['/opt/homebrew/opt/fzf', '/usr/local/opt/fzf']
+    if isdirectory(s:fzf_dir)
+        execute 'set runtimepath+=' . s:fzf_dir
+        break
+    endif
+endfor
+
 call pathogen#infect()
 call pathogen#helptags()
