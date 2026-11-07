@@ -15,6 +15,7 @@ Applies to everything written for humans: replies, code comments, docs, commit m
 - When arguments don't fit on one line, put each on its own line, with a trailing comma after the last (Black style).
 - Never hand-edit generated files (e.g. `BUILD.bazel` from Gazelle, Job DSL `*.groovy`); change the source and rerun the generator.
 - Keep vendored upstream files (CRDs, chart output) byte-identical. Remove content only if upstream offers a variant without it; carry necessary local changes as patches.
+- Strongly prefer permissively licensed dependencies (MIT, BSD, Apache-2.0). A copyleft dependency (GPL, AGPL, LGPL, MPL, ...) needs my explicit approval: name its license and what it obliges us to do (source disclosure, network use, linking) before adding it. When offering a copyleft dependency, also offer permissively licensed alternatives.
 
 ## Verification
 
@@ -37,10 +38,11 @@ Applies to everything written for humans: replies, code comments, docs, commit m
 ## Process
 
 - When I have not specified exactly what a change entails, agree on the solution with me before implementing it. Describe the approach in plain words in chat, present options with a recommendation, and wait for my approval.
+- For a bug fix that needs cleanup, make the cleanup a separate change first, then fix the bug. When I say the fix is urgent, keep it surgical instead.
 
 ## Git
 
-- Commit messages start with a conventional commit type: `feat:`, `fix:`, `refactor:`, `docs:`, `test:`, `chore:`.
+- Commit messages start with a conventional commit type: `feat:`, `fix:`, `refactor:`, `docs:`, `test:`, `chore:`. The subject is one sentence in the imperative mood, under 72 characters.
 - New repositories use `main` as their initial branch.
 - Stage explicit paths (`git add <paths>`); never `git add -A`, `git add .` or `git commit --all`. Check `git status` for unexpected files before committing.
 - Commit and push only on a branch, never directly to the default branch.
