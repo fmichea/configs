@@ -1,6 +1,6 @@
 ---
 name: repo-check
-description: Audit the current repository against the user's standards (CLAUDE.md, project map, default branch, tests, secrets, README) and propose fixes. Use when the user runs /repo-check or accepts the offer to run it.
+description: Audit the current repository against the user's standards (CLAUDE.md, project map, default branch, tests, secrets, README, project scripts) and propose fixes. Use when the user runs /repo-check or accepts the offer to run it.
 ---
 
 # Repository check
@@ -17,6 +17,7 @@ Run each check, read-only. Look at files and run the commands the repository doc
 4. **Tests:** the repository has tests, the documented command runs them, and they pass.
 5. **Secrets:** `.gitignore` covers `.env`-style files and other local secrets the project uses, and `git config get hook.keygate.enabled` is not `false`.
 6. **README:** it exists and says what the repository is and how to run it.
+7. **Project scripts:** each project or monorepo component with code has the `tools/` scripts of the global CLAUDE.md ("Project scripts") it needs: `dependencies-install.sh`, `run-tests.sh` and `run-lint.sh` always, `startup-script.sh` when it runs a service, `dev-script.sh` when it has development tasks. The project's CLAUDE.md lists them, and its CI calls them rather than the tools behind them. Not applicable to a repository without code.
 
 ## Report
 
