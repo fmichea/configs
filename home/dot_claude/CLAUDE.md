@@ -17,6 +17,18 @@ Applies to everything written for humans: replies, code comments, docs, commit m
 - Keep vendored upstream files (CRDs, chart output) byte-identical. Remove content only if upstream offers a variant without it; carry necessary local changes as patches.
 - Strongly prefer permissively licensed dependencies (MIT, BSD, Apache-2.0). A copyleft dependency (GPL, AGPL, LGPL, MPL, ...) needs my explicit approval: name its license and what it obliges us to do (source disclosure, network use, linking) before adding it. When offering a copyleft dependency, also offer permissively licensed alternatives.
 
+## Project scripts
+
+Each project, or each component of a monorepo (`backend/`, `frontend/`), has a `tools/` directory of scripts named by purpose. The names are the same in every project, whatever the language, so a person, CI or Claude runs any project the same way without knowing its toolchain:
+
+- `tools/dependencies-install.sh [devel]`: install dependencies; `devel` adds the development ones.
+- `tools/run-tests.sh [args…]`: run the tests, coverage always on; extra arguments go to the test runner.
+- `tools/run-lint.sh`: lint and check formatting without changing files; its header says how to fix.
+- `tools/startup-script.sh <component>`: start a long-running part of the project (API, worker, dev server).
+- `tools/dev-script.sh <task>`: one-off development tasks (migrate, shell, code generation).
+
+Each script is bash, changes to the project root itself so it runs from anywhere, and fails on the first error. Add a script when the project needs it; don't add empty ones. The project's CLAUDE.md lists them, and CI calls them instead of the tools behind them: the shared Jenkins test jobs run `dependencies-install.sh devel`, `run-tests.sh` and `run-lint.sh`.
+
 ## Verification
 
 - Do not guess about things that change often: package versions, config schemas, API and CLI flags. Check them against the source of truth (registry, official docs, `--help`, the installed tool).
