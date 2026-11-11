@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""git pr-open --title <title> --body-file <file> [--allow-public]: open a PR.
+"""git pr-open --title <title> --body-file <file> [--base <branch>] [--allow-public]: open a PR.
 
 Pushes the current branch with its upstream set, then opens a pull request
-against the remote's default branch and prints its URL. Refuses on the default
-branch, with uncommitted changes or untracked files, and, without
+against --base, or the remote's default branch without it, and prints its URL.
+Refuses on the default branch or the base branch, when the base branch is not
+on the remote, with uncommitted changes or untracked files, and, without
 --allow-public, on a repository that is public or not owned by OWNER.
 """
 
@@ -38,10 +39,14 @@ def git(*args: str) -> str:
 
 
 def parse_args() -> argparse.Namespace:
-    """Parse the title, body file and --allow-public from the command line."""
+    """Parse the title, body file, --base and --allow-public from the command line."""
     parser = argparse.ArgumentParser(prog="git pr-open", description=__doc__)
     parser.add_argument("--title", required=True, help="pull request title")
     parser.add_argument("--body-file", required=True, help="file holding the description")
+    parser.add_argument(
+        "--base",
+        help="branch to open the PR against (default: the remote's default branch)",
+    )
     parser.add_argument(
         "--allow-public",
         action="store_true",
@@ -62,14 +67,24 @@ def default_branch() -> str:
     return ref.removeprefix(f"{REMOTE}/")
 
 
-def current_branch(base: str) -> str:
-    """Return the current branch; refuse if detached or on base."""
+def current_branch(default: str, base: str) -> str:
+    """Return the current branch; refuse if detached, on default or on base."""
     branch = git("branch", "--show-current")
     if not branch:
         raise Refusal("HEAD is detached, not on a branch")
+    if branch == default:
+        raise Refusal(f"on the default branch {default}; switch to a feature branch")
     if branch == base:
-        raise Refusal(f"on the default branch {base}; switch to a feature branch")
+        raise Refusal(f"on the base branch {base}; switch to a feature branch")
     return branch
+
+
+def check_base_on_remote(base: str) -> None:
+    """Refuse unless base exists as a branch on the remote."""
+    try:
+        git("ls-remote", "--exit-code", "--heads", REMOTE, base)
+    except subprocess.CalledProcessError:
+        raise Refusal(f"the base branch {base} is not on {REMOTE}") from None
 
 
 def check_clean() -> None:
@@ -97,11 +112,16 @@ def check_body_file(body_file: str) -> None:
         raise Refusal(f"{body_file} is not a file")
 
 
-def open_pr(title: str, body_file: str, allow_public: bool) -> str:
-    """Run the checks, push the branch, open the PR and return its URL."""
+def open_pr(title: str, body_file: str, base: str | None, allow_public: bool) -> str:
+    """Run the checks, push the branch, open the PR against base and return its URL.
+
+    base defaults to the remote's default branch.
+    """
     check_body_file(body_file)
-    base = default_branch()
-    branch = current_branch(base)
+    default = default_branch()
+    base = base or default
+    branch = current_branch(default, base)
+    check_base_on_remote(base)
     check_clean()
     if not allow_public:
         check_private_and_owned()
@@ -125,7 +145,7 @@ def main() -> None:
     """Print the new PR's URL, or exit with the reason it was not opened."""
     args = parse_args()
     try:
-        print(open_pr(args.title, args.body_file, args.allow_public))
+        print(open_pr(args.title, args.body_file, args.base, args.allow_public))
     except Refusal as refusal:
         sys.exit(f"git pr-open: {refusal}")
     except subprocess.CalledProcessError as error:

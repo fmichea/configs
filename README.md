@@ -53,7 +53,7 @@ Executable files (`~/.zsh/bin/*`, `~/.claude/hooks/*`, `~/.claude/bin/*`, i3 sta
 
 ## Pull requests
 
-`git pr-open --title <title> --body-file <file>` pushes the current branch and opens a pull request against the default branch. Claude Code runs it without a prompt on private repositories owned by `OWNER` (set at the top of the script); anywhere else it refuses unless given `--allow-public`, which always prompts.
+`git pr-open --title <title> --body-file <file> [--base <branch>]` pushes the current branch and opens a pull request against the default branch, or against `--base`, a branch that must already be on the remote (a long-lived integration branch, for instance). Claude Code runs it without a prompt on private repositories owned by `OWNER` (set at the top of the script); anywhere else it refuses unless given `--allow-public`, which always prompts.
 
 `git pr-merge [<branch>]` waits for the pull request's checks, refuses if one fails, then squash-merges (`--merge` for a merge commit), deletes the branch and removes its worktree with `git wt-cleanup`. A pull request with no checks reported merges right away. It always prompts.
 
