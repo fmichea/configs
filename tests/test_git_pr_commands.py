@@ -138,6 +138,41 @@ def test_pr_open_allow_public_opens_pr(pr_open, git, clone, gh, topic_branch, ma
     assert result.stdout.strip() == gh.pr_url
 
 
+@pytest.fixture
+def long_lived_branch(git, pusher) -> str:
+    """Name of a branch on origin that pull requests can target instead of main."""
+    git(pusher, "push", "--quiet", "origin", "main:feat/long-lived")
+    return "feat/long-lived"
+
+
+def test_pr_open_with_base_opens_pr_against_it(pr_open, gh, topic_branch, long_lived_branch):
+    result = pr_open("--base", long_lived_branch)
+
+    assert result.returncode == 0, result.stderr
+    [create] = gh.calls("pr", "create")
+    assert create["args"][2:6] == ["--base", long_lived_branch, "--head", "feat/topic"]
+
+
+def test_pr_open_refuses_base_missing_from_remote(pr_open, git, origin, gh, topic_branch):
+    result = pr_open("--base", "feat/missing")
+
+    assert result.returncode != 0
+    assert "feat/missing" in result.stderr
+    assert not git(origin, "branch", "--list", "feat/topic")
+    assert not gh.calls("pr", "create")
+
+
+def test_pr_open_refuses_on_the_base_branch(pr_open, git, clone, gh, long_lived_branch):
+    git(clone, "fetch", "--quiet", "origin")
+    git(clone, "switch", "--quiet", long_lived_branch)
+
+    result = pr_open("--base", long_lived_branch)
+
+    assert result.returncode != 0
+    assert result.stderr.startswith("git pr-open:")
+    assert not gh.calls("pr", "create")
+
+
 def test_pr_open_refuses_missing_body_file(pr_open, git, origin, tmp_path, topic_branch):
     result = pr_open(body_file=tmp_path / "missing.md")
 
