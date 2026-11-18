@@ -58,6 +58,8 @@
       "Bash(gcx resources get *)",
       "Bash(gcx datasources list *)",
       "Bash(~/.claude/hooks/repo-check.py mark)",
+      "Write(~/Writing/work-tracking/Sessions/**)",
+      "Edit(~/Writing/work-tracking/Sessions/**)",
       "WebFetch(domain:cloudnative-pg.io)"
     ],
     "deny": [
@@ -152,7 +154,7 @@
       "Read(~/.claude/projects/**)"
     ],
     "defaultMode": "acceptEdits",
-    "additionalDirectories": ["~/Sysadmin", "~/Projects"]
+    "additionalDirectories": ["~/Sysadmin", "~/Projects", "~/Writing"]
   },
   "model": "opus",
   "hooks": {
@@ -276,6 +278,15 @@
             "command": "PATH=\"/opt/homebrew/bin:/usr/local/bin${PATH:+:$PATH}\" node '/Users/franck/.claude/statusbar/lifecycle.js' end"
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/Writing/work-tracking/Scripts/session.py end 2>/dev/null || true",
+            "timeout": 5
+          }
+        ]
       }
     ],
     "SessionStart": [
@@ -302,6 +313,15 @@
           {
             "type": "command",
             "command": "PATH=\"/opt/homebrew/bin:/usr/local/bin${PATH:+:$PATH}\" node '/Users/franck/.claude/statusbar/lifecycle.js' start"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/Writing/work-tracking/Scripts/session.py start 2>/dev/null || true",
+            "timeout": 5
           }
         ]
       }
